@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Choropleth Map</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+  <style>
+    .county { stroke: #fff; stroke-width: 0.5; }
+    #tooltip {
+      position: absolute;
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 5px;
+      font-size: 12px;
+      pointer-events: none;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="tooltip"></div>
+  <svg width="1000" height="600"></svg>
+  <script>
+    const width = 1000, height = 600, svg = d3.select("svg"), tooltip = d3.select("#tooltip");
+    const countyUrl = 'https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/counties.json';
+    const educationUrl = 'https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/for_user_education.json';
+
+    Promise.all([fetch(countyUrl).then(r => r.json()), fetch(educationUrl).then(r => r.json())])
+      .then(([countyData, educationData]) => {
+        const counties = topojson.feature(countyData, countyData.objects.counties);
+        const colorScale = d3.scaleQuantize()
+          .domain([0, d3.max(educationData, d => d.bachelorsOrHigher)])
+          .range(d3.schemeBlues[9]);
+
+        svg.selectAll(".county").data(counties.features).enter().append("path")
+          .attr("class", "county")
+          .attr("d", d3.geoPath())
+          .attr("fill", d => {
+            const match = educationData.find(edu => edu.fips === d.id);
+            return match ? colorScale(match.bachelorsOrHigher) : "#ccc";
+          });
+      });
+  </script>
+</body>
+</html>

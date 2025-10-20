@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Treemap</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    .cell { stroke: #fff; stroke-width: 1; }
+    .tooltip {
+      position: absolute;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      padding: 5px 10px;
+      font-size: 12px;
+      border-radius: 5px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+  </style>
+</head>
+<body>
+  <label for="dataSelection">Select Dataset:</label>
+  <select id="dataSelection">
+    <option value="https://cdn.freecodecamp.org/testable-projects-fcc/data/tree_map/kickstarter-funding-data.json">Kickstarter</option>
+    <option value="https://cdn.freecodecamp.org/testable-projects-fcc/data/tree_map/movie-data.json">Movies</option>
+    <option value="https://cdn.freecodecamp.org/testable-projects-fcc/data/tree_map/video-game-sales-data.json">Video Games</option>
+  </select>
+
+  <script>
+    const w = 1000, h = 800, color = d3.scaleOrdinal(d3.schemeCategory10);
+    const svg = d3.select('body').append('svg').attr('width', w).attr('height', h);
+    const tooltip = d3.select('body').append('div').attr('class', 'tooltip');
+
+    function loadData(url) {
+      d3.json(url).then(data => {
+        svg.selectAll('*').remove();
+        const root = d3.hierarchy(data).sum(d => d.value).sort((a, b) => b.value - a.value);
+        d3.treemap().size([w, h]).padding(1)(root);
+
+        const cells = svg.selectAll('.cell').data(root.leaves()).enter().append('g')
+          .attr('class', 'cell')
+          .attr('transform', d => `translate(${d.x0}, ${d.y0})`);
+
+        cells.append('rect')
+          .attr('width', d => d.x1 - d.x0)
+          .attr('height', d => d.y1 - d.y0)
+          .attr('fill', d => color(d.parent.data.name))
+          .on('mouseover', (e, d) => {
+            tooltip.style('opacity', 1)
+              .style('left', `${e.pageX + 5}px`)
+              .style('top', `${e.pageY - 28}px`)
+              .html(`Name: ${d.data.name}<br>Category: ${d.parent.data.name}<br>Value: ${d.data.value}`);
+          })
+          .on('mouseout', () => tooltip.style('opacity', 0));
+
+        cells.append('text')
+          .attr('x', 4)
+          .attr('y', 14)
+          .text(d => d.data.name.length > 10 ? d.data.name.slice(0, 10) + '…' : d.data.name);
+      });
+    }
+
+    loadData(document.getElementById('dataSelection').value);
+    document.getElementById('dataSelection').addEventListener('change', e => loadData(e.target.value));
+  </script>
+</body>
+</html>

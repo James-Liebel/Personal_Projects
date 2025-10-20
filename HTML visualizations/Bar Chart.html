@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>United States GDP</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <script>
+    const dataset = [
+      ["1947-01-01", 243.1], ["1950-01-01", 293.8], ["1960-01-01", 526.4],
+      ["1970-01-01", 1075.9], ["1980-01-01", 2862.5], ["1990-01-01", 5979.6],
+      ["2000-01-01", 10284.8], ["2010-01-01", 14992.1], ["2020-01-01", 21433.2]
+    ];
+
+    const w = 600, h = 400, padding = 50;
+    const parseDate = d3.timeParse("%Y-%m-%d");
+    const xScale = d3.scaleTime()
+      .domain(d3.extent(dataset, d => parseDate(d[0])))
+      .range([padding, w - padding]);
+    const yScale = d3.scaleLinear()
+      .domain([0, d3.max(dataset, d => d[1])])
+      .range([h - padding, padding]);
+
+    const svg = d3.select('body').append('svg').attr('height', h).attr('width', w);
+    svg.append('text').attr('id', 'title').attr('x', w / 2).attr('y', padding / 2).text('United States GDP');
+
+    const xAxis = d3.axisBottom(xScale).ticks(d3.timeYear.every(10)).tickFormat(d3.timeFormat('%Y'));
+    svg.append('g').attr('id', 'x-axis').attr('transform', `translate(0, ${h - padding})`).call(xAxis);
+
+    const yAxis = d3.axisLeft(yScale).ticks(8);
+    svg.append('g').attr('id', 'y-axis').attr('transform', `translate(${padding}, 0)`).call(yAxis);
+
+    const barWidth = (w - 2 * padding) / dataset.length;
+
+    svg.selectAll('rect')
+      .data(dataset)
+      .enter()
+      .append('rect')
+      .attr('class', 'bar')
+      .attr('x', d => xScale(parseDate(d[0])) - barWidth / 2)
+      .attr('y', d => yScale(d[1]))
+      .attr('width', barWidth)
+      .attr('height', d => h - padding - yScale(d[1]))
+      .attr('fill', 'blue');
+  </script>
+</body>
+</html>

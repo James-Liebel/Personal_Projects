@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scatter Plot</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <script>
+    const dataset = [
+      [1994, 39.32], [1995, 38.67], [1996, 39.10], [1997, 38.91], [1998, 39.45],
+      [1999, 39.02], [2000, 39.29], [2001, 38.88], [2002, 39.41], [2003, 38.70],
+      [2004, 38.53], [2005, 39.25], [2006, 38.60], [2007, 38.80], [2008, 39.12],
+      [2009, 38.75], [2010, 39.50], [2011, 39.00], [2012, 38.57], [2013, 39.33],
+      [2014, 38.92], [2015, 38.47], [2016, 38.62]
+    ];
+
+    const w = 600, h = 300, padding = 50;
+
+    const xScale = d3.scaleLinear().domain([1994, 2016]).range([padding, w - padding]);
+    const yScale = d3.scaleLinear().domain([36.5, 39.5]).range([h - padding, padding]);
+
+    const svg = d3.select('body').append('svg').attr('width', w).attr('height', h);
+
+    svg.append('text')
+      .attr('id', 'title')
+      .attr('x', w / 2)
+      .attr('y', padding / 2)
+      .attr('text-anchor', 'middle')
+      .text('Doping in Professional Bicycle Racing');
+
+    const xAxis = d3.axisBottom(xScale).ticks(10).tickFormat(d3.format("d"));
+    svg.append("g")
+      .attr("id", "x-axis")
+      .attr("transform", `translate(0,${h - padding})`)
+      .call(xAxis);
+
+    const yAxis = d3.axisLeft(yScale)
+      .ticks(10)
+      .tickFormat(d => `${Math.floor(d)}:${Math.round((d - Math.floor(d)) * 60)}`);
+    svg.append("g")
+      .attr("id", "y-axis")
+      .attr("transform", `translate(${padding},0)`)
+      .call(yAxis);
+
+    svg.selectAll('circle')
+      .data(dataset)
+      .enter()
+      .append('circle')
+      .attr("class", "dot")
+      .attr("cx", d => xScale(d[0]))
+      .attr("cy", d => yScale(d[1]))
+      .attr("r", 5)
+      .attr('fill', 'blue');
+
+    svg.append('text')
+      .attr('x', -h / 2)
+      .attr('y', padding / 2.5)
+      .attr('transform', 'rotate(-90)')
+      .attr('text-anchor', 'middle')
+      .text('Time in minutes');
+  </script>
+</body>
+</html>
