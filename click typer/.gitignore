@@ -7,3 +7,8 @@ credentials/
 .credentials/
 client_secret.json
 token.json
+# Secrets
+credentials/
+.credentials/
+client_secret.json
+token.json
