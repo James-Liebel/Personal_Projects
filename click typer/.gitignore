@@ -2,3 +2,8 @@
 credentials/
 .env
 __pycache__/
+# Secrets
+credentials/
+.credentials/
+client_secret.json
+token.json
