@@ -13,20 +13,36 @@ from tenacity import retry, stop_after_attempt, wait_fixed, wait_exponential, re
 # 🧠 CONFIG — edit these freely
 # =============================
 
-DOC_ID = "11eXPFU44JnxAFFhwF5OjW2HO7Xs-1n4A9WvLStGV4V0"
-MARKER = "*"
-WPM = 75
+DOC_ID = "14avfHf5sHoBJLbQRuHHrTygqwno1dNPAOvGNhIAD_A8"
+MARKER = "     "
+WPM = 85
 
 # Typing realism
-TYPO_PROB = 0.07
+TYPO_PROB = 0.1
 RANDOM_PAUSE_PROB = 0.10
-THINK_TIME_RANGE = (0.24, 1.3)
+THINK_TIME_RANGE = (0.1, 0.4)
 WORDS_PER_BATCH_LIMIT = 5
 CHARS_PER_BATCH_LIMIT = 22
 
 # Strictly correct, non-typo text
 TEXT_TO_TYPE = (
-    "I have always pushed myself to be the best at anything I do. In the classroom, competitions, or through service, I find it invigorating to reach new goals. I want to find challenges in new areas and become an expert in data science. UChicago’s liberal education will allow me to explore passions beyond my major. I have taken ceramics classes and love the creative process, and I am eager to take more courses in the arts to balance my technical studies. This is why the University of Chicago is the perfect place to continue my education."
+
+"""The Drum Awards for Marketing (Americas) 2025 highlighted ten major trends shaping the industry’s evolution across creativity, technology, and culture.
+
+1. **Cultural agility** – Brands like CarBravo succeeded by tapping into cultural moments, proving that timely, value-driven campaigns resonate deeply.
+2. **AI-driven personalization** – Headspace showed how AI can create emotionally intelligent personalization at scale while maintaining brand sensitivity.
+3. **Experience as brand equity** – Ford’s revival of Michigan Central Station demonstrated how live experiences can strengthen brand identity and public perception.
+4. **Emotion in B2B** – Mack Trucks proved that emotional storytelling can boost engagement and sales even in industrial sectors.
+5. **Insight-led innovation** – Hilton turned consumer data into actionable brand assets that fueled media, product, and PR success.
+6. **Gaming as audience gateway** – Coldplay’s Roblox campaign illustrated how immersive gaming connects brands with younger audiences.
+7. **Tech transforming traditional media** – NBCUniversal’s real-time data visualization redefined audience engagement and news storytelling.
+8. **Purpose-led cultural messaging** – Elf Beauty’s “Change the Board Game” campaign used activism to drive awareness and real corporate change.
+9. **Cross-platform fan ecosystems** – Integrating content across multiple channels, like Coldplay’s campaign, built stronger and broader fan engagement.
+10. **Empathetic storytelling** – Fuck Cancer’s honest approach to health communication showed the power of raw, human-centered narratives.
+
+Overall, the 2025 winners revealed that modern marketing isn’t just about selling—it’s about moving culture, building community, and humanizing brands through creativity and authenticity.
+"""
+
 )
 
 # =====================================
