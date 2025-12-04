@@ -13,9 +13,9 @@ from tenacity import retry, stop_after_attempt, wait_fixed, wait_exponential, re
 # 🧠 CONFIG — edit these freely
 # =============================
 
-DOC_ID = "14avfHf5sHoBJLbQRuHHrTygqwno1dNPAOvGNhIAD_A8"
+DOC_ID = "19oAs41jvi62tVE5u3WV2WvWl_wMfWVVceVbtZK-exYo"
 MARKER = "     "
-WPM = 85
+WPM = 70
 
 # Typing realism
 TYPO_PROB = 0.1
@@ -27,31 +27,191 @@ CHARS_PER_BATCH_LIMIT = 22
 # Strictly correct, non-typo text
 TEXT_TO_TYPE = (
 
-"""The Drum Awards for Marketing (Americas) 2025 highlighted ten major trends shaping the industry’s evolution across creativity, technology, and culture.
+"""In real life and in literature, people are constantly figuring out how much of their actual selves to show to the world.  Most people end up creating some version of themselves that feels safe or acceptable, but when that version drifts too far from the truth, real problems start.  Sometimes the performance just cracks and destroys what looked stable.  Other times it leads to unexpected freedom.  When people create false versions of themselves, they aren't just deceiving others.  They're trapping themselves in lives that aren't real.  Oscar Wilde's The Importance of Being Earnest and Henrik Ibsen's A Doll's House both explore the theme of appearance versus reality, but they do it in completely different ways that show different consequences.  Wilde treats deception as something playful that reveals how ridiculous Victorian society can be, while Ibsen treats deception as something that suffocates a person until they can no longer live inside the illusion.
 
-1. **Cultural agility** – Brands like CarBravo succeeded by tapping into cultural moments, proving that timely, value-driven campaigns resonate deeply.
-2. **AI-driven personalization** – Headspace showed how AI can create emotionally intelligent personalization at scale while maintaining brand sensitivity.
-3. **Experience as brand equity** – Ford’s revival of Michigan Central Station demonstrated how live experiences can strengthen brand identity and public perception.
-4. **Emotion in B2B** – Mack Trucks proved that emotional storytelling can boost engagement and sales even in industrial sectors.
-5. **Insight-led innovation** – Hilton turned consumer data into actionable brand assets that fueled media, product, and PR success.
-6. **Gaming as audience gateway** – Coldplay’s Roblox campaign illustrated how immersive gaming connects brands with younger audiences.
-7. **Tech transforming traditional media** – NBCUniversal’s real-time data visualization redefined audience engagement and news storytelling.
-8. **Purpose-led cultural messaging** – Elf Beauty’s “Change the Board Game” campaign used activism to drive awareness and real corporate change.
-9. **Cross-platform fan ecosystems** – Integrating content across multiple channels, like Coldplay’s campaign, built stronger and broader fan engagement.
-10. **Empathetic storytelling** – Fuck Cancer’s honest approach to health communication showed the power of raw, human-centered narratives.
+Ibsen's A Doll's House gives one of the most serious examples of what happens when a gap forms between how someone appears and who they actually are.  From the start, Nora Helmer performs the role of the perfect Victorian wife.  She acts cheerful, harmless, and dependent, and Torvald encourages this performance through pet names that make her seem small.  Nora accepts these labels because she's been trained to her whole life.  Her marriage depends on her acting this way, since Torvald's identity requires him to appear strong and in control.  But Ibsen signals early on that Nora's behavior is scripted.  She hides macaroons, rushes around nervously, and forces lightheartedness that feels artificial.  Scholar Joan Templeton argues that Nora isn't foolish or childish by nature, but instead "has internalized the role assigned to her by a society that values appearance over individuality" (Templeton 30).  Nora seems happy because she's been performing happiness for so long that it feels normal.  She begins the play convinced that maintaining the appearance of a perfect marriage is the same thing as having one.
 
-Overall, the 2025 winners revealed that modern marketing isn’t just about selling—it’s about moving culture, building community, and humanizing brands through creativity and authenticity.
+The secret loan and forgery Nora committed years earlier reveals how deeply she's been forced into this performance.  She illegally borrowed money to save Torvald's life, but she had to hide it because the truth would ruin the structure of their marriage.  Torvald cannot accept the idea that Nora is capable of independent action.  The appearance of their relationship requires Nora to be dependent, even though she's taken on significant responsibility in reality.  Krogstad's threat to reveal the forgery puts Nora in an impossible spot.  This isn't just a legal problem.  It's a threat to the illusion that holds her marriage together.
+
+When Torvald discovers the truth, Nora's illusion collapses entirely.  Instead of appreciating her sacrifice, he attacks her character and panics about his public reputation.  Only after Krogstad sends a second letter that clears Nora does Torvald suddenly return to his affectionate role.  But Nora no longer believes in the performance.  She tells Torvald, "You have never loved me.  You only thought it was fun to be in love with me" (Ibsen 106).  That simple line exposes the reality behind years of appearances.  Torvald loved the idea of her, not the real person.  Nora realizes she's been living in what scholar Gail Finney describes as "a carefully constructed theatrical space designed to confine and display her" (Finney 90).  The doll's house isn't just her home but her identity.  Leaving means destroying the appearance that's defined her entire life, but it's the only way she can discover who she actually is.  For Ibsen, the collapse of a false identity is painful, but it's necessary if someone wants to live an honest life.
+
+Wilde's The Importance of Being Earnest approaches the same theme but turns the tension between appearance and reality into a comedy about how absurd social expectations can be.  Jack Worthing and Algernon Moncrieff create fake identities not because they're desperate but because they feel bored and trapped by Victorian rules.  Jack invents an imaginary brother named Ernest, which allows him to escape to the city whenever he wants, and Algernon invents a sick friend named Bunbury, which he uses as an excuse to avoid unwanted obligations.  Their lies are deliberate and controlled, and instead of making them feel guilty, the lies make them feel more alive.
+
+What Wilde shows is a society where everyone is already performing something.  Lady Bracknell is obsessed with appearances to the point where she rejects Jack not for anything he's done but because he was found in a handbag.  Her concern isn't the man himself but how he reflects on her social world.  Scholar Ian Small writes that Wilde's characters live in a world where "identity depends less on personal truth than on social performance" (Small 160).  In other words, honesty doesn't matter as much as the appearance of respectability.  This makes Jack and Algernon's double lives seem almost logical.  Their lies reflect their true desires more honestly than their social identities do.
+
+What separates Wilde from Ibsen most clearly is what happens when the truth comes out.  When the lies unravel at the end of Earnest, nothing serious happens.  Instead of punishment or destruction, the characters accidentally stumble into a perfect solution.  Jack discovers he really is named Ernest, his invented identity becomes real, and the marriages proceed without issues.  Unlike Nora, who must abandon everything to reclaim her identity, Jack and Algernon get rewarded for their deception.  Wilde uses the ending to reveal how ridiculous Victorian society is.  Since society already runs on shallow, performative rules, the only successful way to navigate it is to play along.
+
+Comparing the two plays reveals their opposite perspectives on deception.  Nora lies because her society leaves her no space to be honest.  Jack and Algernon lie because their society leaves them no space to breathe.  Nora's false identity eventually traps her.  Jack and Algernon's false identities free them temporarily from expectations they find stupid.  The consequences are different because each playwright sees society differently.  For Ibsen, appearances are harmful structures that limit individuality.  For Wilde, appearances are exaggerated games that people must learn to play.
+
+The genres of the plays match their perspectives.  Ibsen's realism insists on confronting painful truths, especially about gender roles and marriage.  Wilde's comedy allows him to critique the same pressures without destroying his characters' lives.  Even though the plays take opposite approaches, they both highlight how powerful and dangerous the divide between appearance and reality can be.
+
+This theme remains relevant today because people constantly create versions of themselves, especially online.  Social media encourages curated identities that may not match reality at all.  Some people use these versions of themselves the way Wilde's characters use false identities, as ways to escape pressure or express desires they cannot show in real life.  Others become trapped in these performances the way Nora becomes trapped in hers.  The tension between the real self and the performed self has not gone away, which is why both plays still feel meaningful.
+
+In the end, A Doll's House and The Importance of Being Earnest explore the same theme but arrive at opposite conclusions.  Ibsen argues that a false identity can suffocate a person until the entire structure collapses.  Wilde argues that a false identity can help a person escape the worst parts of society.  Both playwrights recognize that people always perform parts of themselves, and both ask us to consider whether those performances help us live honestly or push us deeper into roles that hide who we really are.
+
 """
 
 )
 
 # =====================================
-# 🤖 Gemini AI Setup (robust, no *-exp, auto-fallback on 429)
+# 🤖 AI Setup (OpenAI first, then Gemini fallback)
 # =====================================
 
-AI_MUTATE = False
-gemini_mutate = None
 
+# Try OpenAI first, then Gemini as fallback
+mutate_func = None
+AI_MUTATE = False
+mutate_provider = None
+
+
+def _setup_openai():
+    """Try to set up OpenAI for sentence mutation."""
+    try:
+        from openai import OpenAI
+    except ImportError:
+        print("ℹ️ OpenAI package not installed. Install with: pip install openai")
+        return None, False
+    
+    api_key = os.environ.get("OPENAI_API_KEY")
+    if not api_key:
+        print("ℹ️ OPENAI_API_KEY not found in environment. Falling back to Gemini.")
+        return None, False
+    
+    try:
+        client = OpenAI(api_key=api_key)
+        print("✅ OpenAI sentence mutation enabled (GPT-4o).")
+    except Exception as e:
+        print(f"⚠️ OpenAI setup failed: {e}")
+        return None, False
+    
+    state = {"disabled": False}
+    
+    def _mutate(sentence: str) -> str:
+        if state["disabled"]:
+            return sentence
+
+        word_count = len(sentence.split())
+        min_change_pct = 30 if word_count < 10 else 40
+
+        prompt = (
+            "You are rephrasing a sentence for a high school student's essay. "
+            "CRITICAL RULES:\n"
+            "1. MUST change at least 40% of the words - use synonyms and different phrasing\n"
+            "2. Keep the EXACT SAME meaning and tone (semi-informal, analytical)\n"
+            "3. Preserve ALL punctuation in the EXACT same positions (commas, periods, quotes, colons, etc.)\n"
+            "4. Match the original sentence length (within 10%)\n"
+            "5. Maintain the same academic/analytical voice of a high school AP student\n"
+            "6. Do NOT make it sound more formal or sophisticated than the original\n\n"
+            "Original sentence:\n"
+            f"{sentence}\n\n"
+            "Rephrased version (different words, same punctuation, same meaning):"
+        )
+
+        # System message with stronger instructions
+        system_msg = (
+            "You rephrase sentences while preserving exact punctuation positions and student voice. "
+            "You ALWAYS change the words significantly - never return the same sentence. "
+            "You match the tone and formality level of the original exactly."
+        )
+        
+        # Retry logic for rate limits (up to 3 attempts with exponential backoff)
+        max_retries = 3
+        
+        for attempt in range(max_retries):
+            try:
+                # Decide which prompt to use based on attempt number
+                current_prompt = prompt
+                current_temp = 1.2
+                
+                if attempt > 0:
+                    # Use more aggressive prompt on retries
+                    current_prompt = (
+                        f"IMPORTANT: You MUST change the words in this sentence. Do not return it unchanged. "
+                        f"Use synonyms and rephrase, but keep punctuation identical.\n\n"
+                        f"Original sentence:\n{sentence}\n\n"
+                        f"Rephrased (MUST be different):"
+                    )
+                    current_temp = 1.3 + (attempt * 0.1)  # Increase temp with each retry
+                
+                response = client.chat.completions.create(
+                    model="gpt-4o",
+                    messages=[
+                        {"role": "system", "content": system_msg},
+                        {"role": "user", "content": current_prompt}
+                    ],
+                    max_tokens=200,
+                    temperature=current_temp
+                )
+                
+                text = response.choices[0].message.content.strip().strip('"').strip("'")
+                
+                # Debug: show what we got back
+                if attempt == 0:
+                    print(f"  🔍 AI returned: {text[:80]}..." if len(text) > 80 else f"  🔍 AI returned: {text}")
+                
+                # Check if same as original
+                if text == sentence:
+                    if attempt == 0:
+                        print(f"  ⚠️ AI returned identical sentence, retrying with more aggressive prompt...")
+                    if attempt < max_retries - 1:
+                        time.sleep(0.5)  # Brief pause before retry
+                        continue  # Try again with more aggressive prompt
+                    else:
+                        print(f"  ❌ All retry attempts failed, using original sentence")
+                        return sentence
+                
+                if not text:
+                    if attempt < max_retries - 1:
+                        continue
+                    return sentence
+                
+                # Verify punctuation matches - check both count and positions
+                orig_punct = [(i, c) for i, c in enumerate(sentence) if c in '.!?,:;\'"()-']
+                new_punct = [(i, c) for i, c in enumerate(text) if c in '.!?,:;\'"()-']
+                
+                # Check if punctuation count and types match
+                if len(orig_punct) != len(new_punct):
+                    if attempt == 0:
+                        print(f"  ⚠️ Punctuation count mismatch: orig={len(orig_punct)}, new={len(new_punct)}, retrying...")
+                    if attempt < max_retries - 1:
+                        time.sleep(0.5)
+                        continue
+                    return sentence
+                
+                # Check if punctuation characters match in order
+                orig_punct_chars = [c for (_, c) in orig_punct]
+                new_punct_chars = [c for (_, c) in new_punct]
+                if orig_punct_chars != new_punct_chars:
+                    if attempt == 0:
+                        print(f"  ⚠️ Punctuation order mismatch, retrying...")
+                    if attempt < max_retries - 1:
+                        time.sleep(0.5)
+                        continue
+                    return sentence
+                
+                # Success! We got different text with matching punctuation
+                print(f"  ✅ Mutation accepted (punctuation preserved, words changed)")
+                return text
+                
+            except Exception as e:
+                msg = str(e)
+                if "429" in msg or "quota" in msg.lower() or "rate limit" in msg.lower():
+                    if attempt < max_retries - 1:
+                        wait_time = 2 ** attempt
+                        print(f"  ⏳ Rate limited, waiting {wait_time}s...")
+                        time.sleep(wait_time)
+                        continue
+                    else:
+                        print(f"  ❌ Rate limit exceeded after all retries")
+                        return sentence
+                if "context_length" not in msg.lower():
+                    print(f"⚠️ OpenAI mutation failed: {e}")
+                return sentence
+        
+        return sentence
+    
+    return _mutate, True
+    
 def _setup_gemini():
     try:
         import google.generativeai as genai
@@ -90,8 +250,24 @@ def _setup_gemini():
 
     model_name = _pick_model()
     try:
-        generation_config = {"max_output_tokens": 60, "temperature": 0.9}
-        model = genai.GenerativeModel(model_name, generation_config=generation_config)
+        # Increased max_output_tokens to handle longer sentences
+        generation_config = {
+            "max_output_tokens": 200,
+            "temperature": 0.9,
+            "top_p": 0.95
+        }
+        # Configure safety settings to be less restrictive
+        safety_settings = [
+            {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
+            {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
+            {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
+            {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"},
+        ]
+        model = genai.GenerativeModel(
+            model_name,
+            generation_config=generation_config,
+            safety_settings=safety_settings
+        )
         print(f"✅ Gemini sentence mutation enabled (model: {model_name}).")
     except Exception as e:
         print(f"⚠️ Gemini model init failed ({model_name}): {e}")
@@ -111,12 +287,35 @@ def _setup_gemini():
         )
         try:
             resp = model.generate_content([prompt])
-            text = getattr(resp, "text", None)
-            if not text and getattr(resp, "candidates", None):
-                parts = resp.candidates[0].content.parts
-                if parts and hasattr(parts[0], "text"):
-                    text = parts[0].text
-            out = (text or "").strip().strip('"').strip("'")
+            
+            # Check for finish_reason issues first
+            if resp.candidates:
+                candidate = resp.candidates[0]
+                finish_reason = getattr(candidate, "finish_reason", None)
+                if finish_reason and finish_reason != "STOP":
+                    # Content was filtered or stopped for other reasons
+                    if finish_reason == "SAFETY":
+                        # Silently skip if safety-filtered
+                        return sentence
+                    # For other finish reasons, try to get text anyway
+            
+            # Try to extract text
+            text = None
+            try:
+                text = resp.text
+            except (ValueError, AttributeError):
+                # Fallback: manually extract from candidates
+                if resp.candidates:
+                    candidate = resp.candidates[0]
+                    if hasattr(candidate, "content") and hasattr(candidate.content, "parts"):
+                        parts = candidate.content.parts
+                        if parts and len(parts) > 0:
+                            text = getattr(parts[0], "text", None)
+            
+            if not text:
+                return sentence
+            
+            out = text.strip().strip('"').strip("'")
             # Always double check: strict output match
             if not out or out == sentence:
                 return sentence
@@ -132,17 +331,31 @@ def _setup_gemini():
                 print("⚠️ Gemini quota/rate-limit detected — disabling AI mutation for this run.")
                 state["disabled"] = True
                 return sentence
-            print(f"⚠️ Gemini mutation failed: {e}")
+            # Only print error if it's not a common filtering issue
+            if "finish_reason" not in msg.lower() and "part" not in msg.lower():
+                print(f"⚠️ Gemini mutation failed: {e}")
             return sentence
 
     return _mutate, True
 
-gemini_mutate, AI_MUTATE = _setup_gemini()
+# Try OpenAI first, then Gemini as fallback
+mutate_func, AI_MUTATE = _setup_openai()
+if not AI_MUTATE:
+    print("🔄 OpenAI not available, trying Gemini...")
+    mutate_func, AI_MUTATE = _setup_gemini()
+    if AI_MUTATE:
+        mutate_provider = "Gemini"
+        print("✅ Successfully switched to Gemini for sentence mutation.")
+    else:
+        print("no ai mutate enabled")
+        mutate_provider = None
+else:
+    mutate_provider = "OpenAI"
 
 # =============================
 # --- Fake edits configuration ---
 # =============================
-FAKE_EDIT_PROB = 0.10          # dialed down to reduce write bursts
+FAKE_EDIT_PROB = 0.03          # dialed down to reduce write bursts and stay under rate limits
 FAKE_EDIT_TYPES = {            # weights for which edit to perform
     "word": 0.55,              # delete last word(s) and retype
     "fidget": 0.30,            # small deletion, type junk, delete, then correct
@@ -151,6 +364,46 @@ FAKE_EDIT_TYPES = {            # weights for which edit to perform
 MAX_WORDS_BACK = 2             # how many words to delete on a 'word' edit
 MAX_FIDGET_CHARS = 2           # small, realistic blips to ease quota
 SENTENCE_EDIT_MIN_CHARS = 18   # only consider sentence retype when we’ve typed at least this many chars
+
+# =============================
+# Rate Limiting (Google Docs API: 60 writes/minute)
+# =============================
+
+class RateLimiter:
+    """Ensures we don't exceed Google Docs API rate limits (60 writes/minute)."""
+    def __init__(self, max_requests_per_minute=55):  # Conservative: 55 instead of 60
+        self.max_requests = max_requests_per_minute
+        self.request_times = []
+        self.min_interval = 60.0 / max_requests_per_minute  # seconds between requests
+    
+    def wait_if_needed(self):
+        """Wait if we're approaching the rate limit."""
+        now = time.time()
+        # Remove requests older than 1 minute
+        self.request_times = [t for t in self.request_times if now - t < 60.0]
+        
+        if len(self.request_times) >= self.max_requests:
+            # We've hit the limit, wait until oldest request expires
+            oldest = min(self.request_times)
+            wait_time = 60.0 - (now - oldest) + 0.1  # small buffer
+            if wait_time > 0:
+                print(f"⏳ Rate limit: waiting {wait_time:.1f}s...")
+                time.sleep(wait_time)
+                # Clean up again after waiting
+                now = time.time()
+                self.request_times = [t for t in self.request_times if now - t < 60.0]
+        
+        # Ensure minimum interval between requests
+        if self.request_times:
+            last_request = max(self.request_times)
+            elapsed = now - last_request
+            if elapsed < self.min_interval:
+                time.sleep(self.min_interval - elapsed)
+        
+        self.request_times.append(time.time())
+
+# Global rate limiter instance
+_rate_limiter = RateLimiter(max_requests_per_minute=55)
 
 # =============================
 # Utilities
@@ -196,10 +449,12 @@ def typo_and_correction_sequence(word: str):
 
 @retry(stop=stop_after_attempt(5), wait=wait_fixed(2), reraise=True)
 def _batch_insert_safe(docs_client, doc_id, start_index, text):
+    _rate_limiter.wait_if_needed()
     _batch_insert(docs_client, doc_id, start_index, text)
 
 # Retry delete with exponential backoff on rate limits
 def _delete_request(docs_client, doc_id, start_index, num_chars):
+    _rate_limiter.wait_if_needed()
     requests = [{
         "deleteContentRange": {
             "range": {"startIndex": start_index, "endIndex": start_index + num_chars}
@@ -533,15 +788,10 @@ def fallback_mutate(sentence: str) -> str:
     return sentence
 
 def mutate_sentence(sentence: str) -> str:
-    if AI_MUTATE and callable(gemini_mutate):
-        out = gemini_mutate(sentence)
-        orig_punct = [(i, c) for i, c in enumerate(sentence) if c in '.!?,:;\'"()-']
-        new_punct = [(i, c) for i, c in enumerate(out) if c in '.!?,:;\'"()-'] if out else []
-        if out and out != sentence and len(orig_punct) == len(new_punct) and [c for (_, c) in orig_punct] == [c for (_, c) in new_punct]:
-            return out
-        else:
-            return sentence
-    return fallback_mutate(sentence)
+    """Mutate sentence if AI is enabled, otherwise return original unchanged."""
+    if not AI_MUTATE or not callable(mutate_func):
+        return sentence  # Always return original when mutations are disabled
+    return mutate_func(sentence)
 
 def smart_typing_with_sentence_mutation(docs_client, doc_id: str, start_index: int, text: str, marker: str):
     _replace_all_text(docs_client, doc_id, marker, "")
@@ -553,11 +803,17 @@ def smart_typing_with_sentence_mutation(docs_client, doc_id: str, start_index: i
 
     for i, m in enumerate(matches, 1):
         original = m.group()                 # sentence including its punctuation
-        mutated = mutate_sentence(original)  # should equal original per guard
-        assert mutated == original, (
-            f"Sentence mutation altered text; strict fidelity required!\n"
-            f"Original: {original}\nMutated: {mutated}"
-        )
+        mutated = mutate_sentence(original)  # AI may rephrase while preserving punctuation
+        
+        # If mutations are disabled, ensure we get the exact original back
+        if not AI_MUTATE:
+            if mutated != original:
+                print(f"⚠️ Warning: Mutation returned different text when AI_MUTATE is False. Using original.")
+                mutated = original
+        
+        # Debug output for first few sentences to verify mutation is working
+        if AI_MUTATE and i <= 3 and mutated != original:
+            print(f"  ↳ Mutated: {mutated[:60]}...")
 
         print(f"Typing sentence {i}/{len(matches)}...")
         idx = type_sentence(docs_client, doc_id, idx, mutated)
@@ -573,7 +829,7 @@ def smart_typing_with_sentence_mutation(docs_client, doc_id: str, start_index: i
             min_delay, max_delay = calc_delays_from_wpm(WPM)
             idx = type_token_in_chunks(docs_client, doc_id, idx, gap, min_delay, max_delay)
 
-    print(f"✅ Typing complete at ~{WPM} WPM (AI mutate: {'Gemini' if AI_MUTATE else 'none'})")
+    print(f"✅ Typing complete at ~{WPM} WPM (AI mutate: {mutate_provider if AI_MUTATE else 'none'})")
 
 # =============================
 # Entry point
