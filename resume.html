@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>James Liebel Resume</title>
+    <style>
+        @media print {
+            body { margin: 0; padding: 10px; }
+            .no-print { display: none; }
+        }
+        body {
+            font-family: 'Calibri', 'Arial', sans-serif;
+            max-width: 850px;
+            margin: 20px auto;
+            padding: 40px;
+            background: white;
+            color: #333;
+            line-height: 1.35;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2c3e50;
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 30px;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        .contact-info {
+            margin-top: 6px;
+            font-size: 10.5px;
+            color: #555;
+        }
+        .contact-info a {
+            color: #2980b9;
+            text-decoration: none;
+        }
+        h2 {
+            color: #2c3e50;
+            font-size: 13px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 3px;
+            margin-top: 14px;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .section {
+            margin-bottom: 14px;
+        }
+        .entry {
+            margin-bottom: 11px;
+        }
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 3px;
+        }
+        .job-title {
+            font-weight: bold;
+            font-size: 11px;
+            color: #2c3e50;
+        }
+        .company {
+            font-style: italic;
+            font-size: 11px;
+            color: #555;
+        }
+        .date {
+            font-size: 10px;
+            color: #777;
+            font-style: italic;
+        }
+        .description {
+            font-size: 10.5px;
+            margin-top: 3px;
+            margin-left: 0px;
+        }
+        ul {
+            margin: 3px 0;
+            padding-left: 18px;
+        }
+        li {
+            font-size: 10.5px;
+            margin-bottom: 2px;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            font-size: 10.5px;
+        }
+        .skill-category {
+            margin-bottom: 6px;
+        }
+        .skill-category strong {
+            display: block;
+            color: #2c3e50;
+            margin-bottom: 2px;
+            font-size: 10.5px;
+        }
+        .cert-list {
+            font-size: 10.5px;
+            line-height: 1.5;
+        }
+        .buttons {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            margin: 0 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .summary {
+            font-size: 10.5px;
+            line-height: 1.45;
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+    </style>
+</head>
+<body>
+    <div class="buttons no-print">
+        <button onclick="window.print()">📄 Download PDF (Press Ctrl+P or Cmd+P)</button>
+        <button onclick="copyToClipboard()">📋 Copy Text for Word</button>
+    </div>
+    <div class="no-print" style="text-align: center; padding: 10px; background: #fff3cd; margin: 10px 0; border-radius: 5px; font-size: 12px;">
+        <strong>💡 Quick Download:</strong> Press <kbd>Ctrl+P</kbd> (Windows) or <kbd>Cmd+P</kbd> (Mac), then select "Save as PDF"
+    </div>
+
+    <div class="header">
+        <h1>JAMES LIEBEL</h1>
+        <div class="contact-info">
+            10 Camargo Pines, Cincinnati, OH 45243 | (513) 965-1578 | 
+            <a href="mailto:Jamesliebel40@gmail.com">Jamesliebel40@gmail.com</a> | 
+            <a href="https://github.com/James-Liebel">github.com/James-Liebel</a> | 
+            <a href="https://linkedin.com/in/james-liebel">LinkedIn</a>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Professional Summary</h2>
+        <p class="summary">
+            High school senior pursuing data science internship with strong foundation in machine learning, statistical analysis, and Python programming. Currently completing GCP Data Engineer Professional, IBM Machine Learning Professional, and Microsoft PL-300 certifications. Experienced in building ML pipelines, data visualization, and statistical modeling. Co-President of Machine Learning Club with hands-on experience teaching Python and computational thinking. Seeking summer 2026 internship to apply data science skills to real-world business problems.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Education</h2>
+        <div class="entry">
+            <div class="entry-header">
+                <div>
+                    <span class="job-title">Indian Hill High School</span>
+                    <span class="company"> — Cincinnati, OH</span>
+                </div>
+                <span class="date">Expected Graduation: May 2026</span>
+            </div>
+            <div class="description">
+                <strong>GPA:</strong> 4.0 Unweighted | 4.57 Weighted | <strong>SAT:</strong> 1490 (99th percentile) | <strong>National Honor Society</strong><br>
+                <strong>Relevant Coursework:</strong> AP Computer Science A, AP Calculus AB, AP Statistics, AP Physics 1, AP Economics
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Technical Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <strong>Programming & Data Science</strong>
+                Python (NumPy, Pandas, Scikit-learn), SQL, JavaScript, R, Statistical Analysis
+            </div>
+            <div class="skill-category">
+                <strong>Machine Learning</strong>
+                Supervised/Unsupervised Learning, TensorFlow, Feature Engineering, Model Evaluation, Hyperparameter Tuning
+            </div>
+            <div class="skill-category">
+                <strong>Data Visualization & BI</strong>
+                Matplotlib, Seaborn, Power BI, Tableau, Dashboard Design, Data Storytelling
+            </div>
+            <div class="skill-category">
+                <strong>Cloud & Data Engineering</strong>
+                Google Cloud Platform (BigQuery, Vertex AI, Dataflow), Azure, ETL/ELT Pipelines, Data Warehousing
+            </div>
+            <div class="skill-category">
+                <strong>Tools & Frameworks</strong>
+                Git/GitHub, Jupyter Notebooks, Cursor AI, Apache Spark (basics)
+            </div>
+            <div class="skill-category">
+                <strong>Statistics & Math</strong>
+                Hypothesis Testing, A/B Testing, Regression Analysis, Probability, Calculus
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Professional Certifications</h2>
+        <div class="cert-list">
+            <strong>In Progress:</strong> GCP Data Engineer Professional | IBM Machine Learning Professional | Microsoft PL-300 (Power BI Data Analyst)<br>
+            <strong>Completed:</strong> IBM Data Science Professional Certificate
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Data Science Projects & Technical Experience</h2>
+        <div class="entry">
+            <div class="entry-header">
+                <div>
+                    <span class="job-title">Machine Learning & Data Analytics Portfolio</span>
+                    <span class="company"> — Personal Projects (github.com/James-Liebel)</span>
+                </div>
+                <span class="date">2024 - Present</span>
+            </div>
+            <ul>
+                <li>Built end-to-end machine learning pipelines using Python, implementing feature engineering, model training with Scikit-learn, and hyperparameter tuning to optimize performance metrics</li>
+                <li>Developed predictive models using supervised learning algorithms (regression, classification) achieving 85%+ accuracy on validation datasets with proper cross-validation techniques</li>
+                <li>Created interactive dashboards and data visualizations in Power BI and Python (Matplotlib, Seaborn) to communicate insights from datasets containing 10,000+ records</li>
+                <li>Implemented ETL processes to clean, transform, and load data from multiple sources, handling missing values and data normalization for analysis-ready datasets</li>
+                <li>Applied statistical hypothesis testing and A/B testing methodologies to derive actionable business insights</li>
+                <li>Deployed cloud-based data solutions using GCP BigQuery for data warehousing and large-scale data analysis</li>
+            </ul>
+        </div>
+        
+        <div class="entry">
+            <div class="entry-header">
+                <div>
+                    <span class="job-title">Python Programming Instructor</span>
+                    <span class="company"> — Primary Education Volunteer Program</span>
+                </div>
+                <span class="date">2023 - Present</span>
+            </div>
+            <ul>
+                <li>Taught Python fundamentals and algorithmic problem-solving to 20+ elementary students, developing curriculum focused on computational thinking and debugging techniques</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Leadership Experience</h2>
+        <div class="entry">
+            <div class="entry-header">
+                <div>
+                    <span class="job-title">Co-President</span>
+                    <span class="company"> — Machine Learning Club</span>
+                </div>
+                <span class="date">2024 - 2025</span>
+            </div>
+            <ul>
+                <li>Lead weekly workshops on ML algorithms, neural networks, and AI applications covering TensorFlow, Keras, and Scikit-learn for 25+ members</li>
+            </ul>
+        </div>
+
+        <div class="entry">
+            <div class="entry-header">
+                <div>
+                    <span class="job-title">Founder & Co-President</span>
+                    <span class="company"> — BASE (Business Association for Student Education)</span>
+                </div>
+                <span class="date">2024 - 2025</span>
+            </div>
+            <ul>
+                <li>Founded club focused on business analytics and data-driven decision making, teaching Python data analysis and statistical methods to 30+ members</li>
+            </ul>
+        </div>
+
+        <div class="entry">
+            <div class="entry-header">
+                <div>
+                    <span class="job-title">State Qualifier</span>
+                    <span class="company"> — DECA (Business Case Competitions)</span>
+                </div>
+                <span class="date">2024 - 2025</span>
+            </div>
+            <ul>
+                <li>Competed in business case competitions requiring data analysis, market research, and presentation of data-driven recommendations</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Additional Experience</h2>
+        <div class="entry">
+            <div class="entry-header">
+                <div>
+                    <span class="job-title">Lifeguard</span>
+                    <span class="company"> — Indian Hill Swim Club</span>
+                </div>
+                <span class="date">2023 - Present</span>
+            </div>
+            <ul>
+                <li>Supervised 40+ patrons daily, demonstrating attention to detail, risk assessment, and decision-making under pressure in fast-paced environment</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function copyToClipboard() {
+            // Get all the resume content excluding buttons
+            const resume = document.querySelector('body').cloneNode(true);
+            const buttons = resume.querySelector('.buttons');
+            if (buttons) buttons.remove();
+            
+            const content = resume.innerText;
+            
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(content).then(() => {
+                    alert('✅ Resume copied to clipboard! You can now paste it into Word or Google Docs.');
+                }).catch(err => {
+                    fallbackCopy(content);
+                });
+            } else {
+                fallbackCopy(content);
+            }
+        }
+        
+        function fallbackCopy(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                alert('✅ Resume copied to clipboard!');
+            } catch (err) {
+                alert('❌ Copy failed. Please use Ctrl+P to print as PDF instead.');
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function downloadDoc() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
+
