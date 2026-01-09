@@ -1,0 +1,13 @@
+google-api-python-client
+google-auth-oauthlib
+google-auth
+cryptography
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+# tensorflow (install manually if needed for ML projects)
+notebook
+python-dotenv
+tenacity
