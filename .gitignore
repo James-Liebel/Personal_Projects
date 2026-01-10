@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+
+# Sensitive Files
+credentials.json
+token.pickle
+master.key
+*.key
+
+# Private Tools (User Requested)
+Self_Typing_Demo.py
+click typer/
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/

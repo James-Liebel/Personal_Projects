@@ -15,7 +15,7 @@ pip install -r requirements.txt
 > `pip install tensorflow`
 
 ### 2. Google Automation Setup
-Several scripts in this repository (`Password_Automizer.py`, `Self_Typing_Demo.py`, and `click typer`) interact with Google Docs/Drive via the official API.
+Several scripts in this repository interact with Google Docs/Drive via the official API.
 
 **Prerequisites:**
 *   You must obtain a `credentials.json` file from the [Google Cloud Console](https://console.cloud.google.com/apis/credentials).
@@ -26,8 +26,6 @@ Several scripts in this repository (`Password_Automizer.py`, `Self_Typing_Demo.p
 
 ### 🛠️ Automation & Utilities
 *   **`Password_Automizer.py`**: A secure CLI manager for storing encrypted passwords within a Google Doc.
-*   **`Self_Typing_Demo.py`**: A demonstration script that mimics realistic human typing patterns (typos, pauses, backtracks) directly into a Google Doc.
-*   **`click typer/`**: A dedicated directory for a click-based typing automation tool.
 *   **`resume.html`**: The HTML source for my resume.
 
 ### 🧠 Data Science & Machine Learning
