@@ -14,8 +14,8 @@ master.key
 *.key
 
 # Private Tools (User Requested)
-Self_Typing_Demo.py
-click typer/
+projects/tools/self_typing_demo.py
+projects/tools/click_typer/
 
 # Jupyter Notebook Checkpoints
 .ipynb_checkpoints/

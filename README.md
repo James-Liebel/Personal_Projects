@@ -1,52 +1,78 @@
-# Personal Projects Portfolio
+# Personal Data Science & Engineering Portfolio
 
-Welcome to my personal projects repository! This collection showcases a variety of Python scripts, machine learning models, and automation tools.
+Welcome to my personal portfolio repository. This collection houses a diverse range of projects spanning machine learning, game development, web visualization, and utility tools.
 
-## 🚀 Quick Start
+## 📂 Project Structure
 
-### 1. Environment Setup
-Ensure you have Python installed, then install the required dependencies for all projects:
+This repository is organized as follows:
 
-```bash
-pip install -r requirements.txt
-```
+- **`projects/`**
+  - **`machine_learning/`**: A comprehensive collection of ML models, including regressions, clustering algorithms, neural networks, and deep learning implementations.
+  - **`finance/`**: Quantitative finance and mathematics notebooks.
+  - **`games/`**: Python-based games (e.g., Pygame projects).
+  - **`web/`**: Web visualizations and HTML-based projects (including Resume).
+  - **`tools/`**: Automation scripts and utility tools.
+  - **`sandbox/`**: Experimental code and rough drafts.
 
-> **Note:** The `tensorflow` library (used for Image Classifier) is commented out in `requirements.txt` as it may have compatibility issues with newer Python versions (3.14+). Please install it manually if you intend to run the Machine Learning notebooks:
-> `pip install tensorflow`
+## 🚀 Getting Started
 
-### 2. Google Automation Setup
-Several scripts in this repository interact with Google Docs/Drive via the official API.
+### Prerequisites
 
-**Prerequisites:**
-*   You must obtain a `credentials.json` file from the [Google Cloud Console](https://console.cloud.google.com/apis/credentials).
-*   Place `credentials.json` in the **root directory** of this project.
-*   **Note:** On the first run of any of these scripts, a browser window will open asking you to authenticate. A `token.pickle` (or similar) file will be created to store your session.
+- Python 3.10+
+- Recommended: `pip`, `virtualenv`
 
-## 📂 Project Directory
+### Installation
 
-### 🛠️ Automation & Utilities
-*   **`Password_Automizer.py`**: A secure CLI manager for storing encrypted passwords within a Google Doc.
-*   **`resume.html`**: The HTML source for my resume.
+1. Clone the repository (if not already local).
+2. Create and activate a virtual environment:
+   ```bash
+   python -m venv .venv
+   # Windows
+   .\.venv\Scripts\activate
+   # Linux/Mac
+   source .venv/bin/activate
+   ```
 
-### 🧠 Data Science & Machine Learning
-*   **`Machine Learning/`**: Contains various models including:
-    *   Image Classification (TensorFlow)
-    *   Neural Networks for numerical data
-    *   Sentiment Analysis on news text
-*   **`Regression/`**: Projects focused on predictive modeling:
-    *   Housing Price Predictor
-    *   Healthcare cost regression
-*   **`Visualizations/`**: Jupyter notebooks demonstrating data visualization techniques (Heatmaps, Scatter plots).
-*   **`HTML visualizations/`**: Standalone HTML files rendering interactive charts.
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### 📊 Math & Finance
-*   **`Math and Finance/`**: Tools for financial analysis and mathematical simulations:
-    *   Financial Calculator
-    *   Graphing Calculator
-    *   Statistics Simulation
+   > **Note:** TensorFlow might need specific version handling depending on your Python version.
+
+## 🛠 Featured Projects & Usage
+
+### 🔐 Password Automizer
+A secure CLI manager for storing encrypted passwords within a Google Doc.
+- **Location:** `projects/tools/password_automizer.py`
+- **Setup:**
+   1. Obtain `credentials.json` from Google Cloud Console.
+   2. Place `credentials.json` in the **root directory** of this project.
+- **Usage:**
+   ```bash
+   python projects/tools/password_automizer.py --doc-id YOUR_DOC_ID
+   ```
+
+### 🧠 Machine Learning
+Various models including Image Classification, Fraud Detection, and Housing Price prediction.
+- **Location:** `projects/machine_learning/`
+    - `image_classifier.ipynb`
+    - `fraud_detection_setup.ipynb`
+    - `housing_price_predictor.ipynb` (in `regression/`)
+- **Notebooks:** Run Jupyter Notebook from the root or subfolders:
+   ```bash
+   jupyter notebook
+   ```
+
+### 🌐 Web & Resume
+- **Resume:** Located at `projects/web/resume.html`.
 
 ### 🎮 Games
-*   **`Games/`**: Fun interactive notebooks, including a Traffic Simulator.
+- **Traffic Simulator:** located at `projects/games/traffic_simulator.ipynb`.
 
----
-*Created and maintained by James Liebel.*
+## ⚠️ Notes
+- `master.key` and `token.pickle` are generated locally for security tools. **Do not commit these.**
+- Some scripts rely on specific Google API permissions.
+
+## 📫 Contact
+Created and maintained by James Liebel.

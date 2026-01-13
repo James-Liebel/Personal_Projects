@@ -7,7 +7,9 @@ numpy
 matplotlib
 seaborn
 scikit-learn
-# tensorflow (install manually if needed for ML projects)
+xgboost
+torch
+keras>=3.0
 notebook
 python-dotenv
 tenacity

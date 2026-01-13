@@ -1,0 +1,2 @@
+projects/machine_learning/datasets/*.csv filter=lfs diff=lfs merge=lfs -text
+projects/machine_learning/datasets/*.zip filter=lfs diff=lfs merge=lfs -text
