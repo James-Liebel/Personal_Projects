@@ -10,7 +10,7 @@
     <meta property="og:description" content="Aspiring Data Scientist with expertise in machine learning, predictive modeling, and big data analytics.">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary">
-    <title>James Liebel - Data Science Resume</title>
+    <title>James Liebel - Data Science Resume & Portfolio</title>
     <style>
         @media print {
             body {
@@ -25,16 +25,80 @@
             .buttons {
                 display: none;
             }
+
+            .navigation {
+                display: none;
+            }
+
+            .projects-section {
+                display: none;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
             font-family: 'Calibri', 'Arial', sans-serif;
-            max-width: 850px;
-            margin: 0 auto;
-            padding: 20px 40px;
-            background: white;
+            background: #f5f5f5;
             color: #333;
             line-height: 1.3;
+        }
+
+        .navigation {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-right: 30px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .resume-container {
+            max-width: 850px;
+            margin: 30px auto;
+            padding: 20px 40px;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
 
         .header {
@@ -170,6 +234,7 @@
             cursor: pointer;
             font-size: 13px;
             font-weight: bold;
+            transition: background 0.3s;
         }
 
         button:hover {
@@ -200,9 +265,104 @@
             font-weight: 600;
         }
 
+        .projects-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 40px;
+        }
+
+        .projects-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .projects-header h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            border: none;
+            text-transform: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .project-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .project-card h3 {
+            color: #2c3e50;
+            font-size: 18px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+
+        .project-card p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .project-link {
+            display: inline-block;
+            padding: 8px 15px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 13px;
+            transition: background 0.3s;
+        }
+
+        .project-link:hover {
+            background: #2980b9;
+        }
+
+        .project-link.secondary {
+            background: #95a5a6;
+        }
+
+        .project-link.secondary:hover {
+            background: #7f8c8d;
+        }
+
         @media (max-width: 768px) {
-            body {
+            .resume-container {
                 padding: 15px 20px;
+            }
+
+            .nav-container {
+                padding: 0 20px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-links {
+                margin-top: 10px;
+                gap: 15px;
             }
 
             .skills-grid {
@@ -217,204 +377,306 @@
             .date {
                 margin-top: 3px;
             }
+
+            .projects-section {
+                padding: 0 20px;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="buttons no-print">
-        <button onclick="window.print()">📄 Save as PDF</button>
-    </div>
+    <nav class="navigation no-print">
+        <div class="nav-container">
+            <div class="nav-title">James Liebel | Data Science Portfolio</div>
+            <div class="nav-links">
+                <a href="#resume">Resume</a>
+                <a href="#visualizations">Visualizations</a>
+                <a href="#projects">Projects</a>
+                <a href="https://github.com/James-Liebel" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://linkedin.com/in/james-liebel" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </div>
+        </div>
+    </nav>
 
-    <div class="header">
-        <h1>JAMES LIEBEL</h1>
-        <div class="contact-info">
-            10 Camargo Pines, Cincinnati, OH 45243 | (513) 965-1578 |
-            <a href="mailto:Jamesliebel40@gmail.com">Jamesliebel40@gmail.com</a> |
-            <a href="https://github.com/James-Liebel" target="_blank" rel="noopener noreferrer">github.com/James-Liebel</a> |
-            <a href="https://linkedin.com/in/james-liebel" target="_blank" rel="noopener noreferrer">linkedin.com/in/james-liebel</a>
+    <div id="resume" class="resume-container">
+        <div class="buttons no-print">
+            <button onclick="window.print()">📄 Save as PDF</button>
+        </div>
+
+        <div class="header">
+            <h1>JAMES LIEBEL</h1>
+            <div class="contact-info">
+                10 Camargo Pines, Cincinnati, OH 45243 | (513) 965-1578 |
+                <a href="mailto:Jamesliebel40@gmail.com">Jamesliebel40@gmail.com</a> |
+                <a href="https://github.com/James-Liebel" target="_blank" rel="noopener noreferrer">github.com/James-Liebel</a> |
+                <a href="https://linkedin.com/in/james-liebel" target="_blank" rel="noopener noreferrer">linkedin.com/in/james-liebel</a>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>PROFESSIONAL SUMMARY</h2>
+            <p class="summary">
+                Incoming <strong>University of Chicago</strong> student (Class of 2030) majoring in <strong>Data Science &
+                    Statistics</strong>. Aspiring <strong>Data Scientist</strong> with a strong foundation in
+                <strong>predictive modeling</strong>,
+                <strong>machine learning pipelines</strong>, and <strong>big data analytics</strong>. Proven ability to
+                conceptualize and execute
+                complex data science projects using Python, SQL, and Deep Learning frameworks (TensorFlow, Keras). Seeking a
+                Summer 2026
+                internship to apply rigorous statistical methods and machine learning techniques to drive data-driven
+                decision making.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>EDUCATION</h2>
+            <div class="entry">
+                <div class="entry-header">
+                    <div>
+                        <span class="university">The University of Chicago</span>, Chicago, IL
+                    </div>
+                    <span class="date">Expected Graduation: May 2030</span>
+                </div>
+                <div class="description">
+                    <strong>Major:</strong> Data Science & Statistics<br>
+                    <strong>Relevant Coursework:</strong> AP Statistics, AP Computer Science A, AP Calculus BC
+                </div>
+            </div>
+            <div class="entry">
+                <div class="description">
+                    <strong>Certifications:</strong> IBM Data Science Professional Certificate, Google Cloud (GCP) Machine
+                    Learning Engineer (In-Progress), Microsoft PL-300 (Power BI) (In-Progress).
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>TECHNICAL SKILLS</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <strong>Languages & Scripting</strong>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python (Advanced)</span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">C++ (Basics)</span>
+                        <span class="skill-tag">R</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">HTML</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <strong>Machine Learning & AI</strong>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Scikit-Learn</span>
+                        <span class="skill-tag">XGBoost</span>
+                        <span class="skill-tag">TensorFlow/Keras</span>
+                        <span class="skill-tag">Neural Networks</span>
+                        <span class="skill-tag">Deep Learning</span>
+                        <span class="skill-tag">NLP (NLTK, VADER)</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <strong>Data Engineering & Cloud</strong>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Pandas/NumPy</span>
+                        <span class="skill-tag">Feature Engineering</span>
+                        <span class="skill-tag">ETL Pipelines</span>
+                        <span class="skill-tag">GCP BigQuery</span>
+                        <span class="skill-tag">Git/Version Control</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <strong>Visualization</strong>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Matplotlib</span>
+                        <span class="skill-tag">Seaborn</span>
+                        <span class="skill-tag">Power BI</span>
+                        <span class="skill-tag">Plotly/Dash</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>DATA SCIENCE PROJECTS</h2>
+
+            <div class="entry">
+                <div class="entry-header">
+                    <div>
+                        <span class="job-title">Credit Card Fraud Detection System (XGBoost)</span>
+                    </div>
+                    <span class="date">See on GitHub</span>
+                </div>
+                <ul>
+                    <li>Engineered a robust fraud detection pipeline using <strong>XGBoost</strong> and <strong>Random
+                            Forest</strong> classifiers on
+                        a highly imbalanced dataset (284k+ transactions).</li>
+                    <li>Implemented <strong>SMOTE</strong> (Synthetic Minority Over-sampling Technique) and
+                        <strong>RobustScaler</strong> to handle
+                        class imbalance and outliers, improving model Recall to 91%.
+                    </li>
+                    <li>Evaluated performance using <strong>Precision-Recall Curves</strong>, <strong>F1-Score</strong>, and
+                        <strong>Confusion Matrices</strong> to
+                        accurately identify anomalies in large-scale datasets.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="entry">
+                <div class="entry-header">
+                    <div>
+                        <span class="job-title">News Sentiment Analysis Pipeline (NLP)</span>
+                    </div>
+                    <span class="date">See on GitHub</span>
+                </div>
+                <ul>
+                    <li>Developed a Natural Language Processing (NLP) pipeline to extract insights and sentiment trends from
+                        unstructured text data.</li>
+                    <li>Utilized <strong>VADER</strong> sentiment analysis and <strong>TF-IDF</strong> vectorization to
+                        process and classify thousands of
+                        news headlines efficiently.</li>
+                    <li>Visualized sentiment velocity over time to demonstrate the capability of transforming qualitative
+                        text
+                        into structured time-series data.</li>
+                </ul>
+            </div>
+
+            <div class="entry">
+                <div class="entry-header">
+                    <div>
+                        <span class="job-title">SpaceX Falcon 9 Landing Prediction</span>
+                    </div>
+                    <span class="date">See on GitHub</span>
+                </div>
+                <ul>
+                    <li>Built a binary classification model (Logistic Regression, SVM, KNN) to predict the successful
+                        landing of Falcon 9 rocket stages.</li>
+                    <li>Performed extensive <strong>Exploratory Data Analysis (EDA)</strong> to identify key correlations
+                        between payload
+                        mass, orbit type, and landing success rates.</li>
+                    <li>Optimized model hyperparameters using <strong>GridSearchCV</strong>, achieving a test accuracy of
+                        90%.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>EXPERIENCE & LEADERSHIP</h2>
+            <div class="entry">
+                <div class="entry-header">
+                    <div>
+                        <span class="job-title">Machine Learning Portfolio Developer</span>
+                    </div>
+                    <span class="date">2024 – Present</span>
+                </div>
+                <ul>
+                    <li>Curated a diverse portfolio of data science projects demonstrating proficiency in <strong>Supervised
+                            Learning</strong>, <strong>Unsupervised Learning</strong>, and <strong>Deep Learning</strong>.
+                    </li>
+                    <li>Documented all code with professional <strong>READMEs</strong> and clear Jupyter Notebook
+                        visualizations to
+                        showcase reproducibility and communication skills.</li>
+                </ul>
+            </div>
+
+            <div class="entry">
+                <div class="entry-header">
+                    <div>
+                        <span class="job-title">Co-President, Machine Learning Club</span>
+                    </div>
+                    <span class="date">2023 – Present</span>
+                </div>
+                <ul>
+                    <li>Lead weekly workshops on neural network architectures and the mathematics of AI for 25+ high school
+                        students.</li>
+                    <li>Organized a school-wide hackathon focused on "AI for Social Good," mentoring teams on data
+                        acquisition and model deployment.</li>
+                </ul>
+            </div>
         </div>
     </div>
 
-    <div class="section">
-        <h2>PROFESSIONAL SUMMARY</h2>
-        <p class="summary">
-            Incoming <strong>University of Chicago</strong> student (Class of 2030) majoring in <strong>Data Science &
-                Statistics</strong>. Aspiring <strong>Data Scientist</strong> with a strong foundation in
-            <strong>predictive modeling</strong>,
-            <strong>machine learning pipelines</strong>, and <strong>big data analytics</strong>. Proven ability to
-            conceptualize and execute
-            complex data science projects using Python, SQL, and Deep Learning frameworks (TensorFlow, Keras). Seeking a
-            Summer 2026
-            internship to apply rigorous statistical methods and machine learning techniques to drive data-driven
-            decision making.
-        </p>
-    </div>
-
-    <div class="section">
-        <h2>EDUCATION</h2>
-        <div class="entry">
-            <div class="entry-header">
-                <div>
-                    <span class="university">The University of Chicago</span>, Chicago, IL
-                </div>
-                <span class="date">Expected Graduation: May 2030</span>
-            </div>
-            <div class="description">
-                <strong>Major:</strong> Data Science & Statistics<br>
-                <strong>Relevant Coursework:</strong> AP Statistics, AP Computer Science A, AP Calculus BC
-            </div>
+    <div id="visualizations" class="projects-section no-print">
+        <div class="projects-header">
+            <h2>Data Visualizations</h2>
         </div>
-        <div class="entry">
-            <div class="description">
-                <strong>Certifications:</strong> IBM Data Science Professional Certificate, Google Cloud (GCP) Machine
-                Learning Engineer (In-Progress), Microsoft PL-300 (Power BI) (In-Progress).
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>TECHNICAL SKILLS</h2>
-        <div class="skills-grid">
-            <div class="skill-category">
-                <strong>Languages & Scripting</strong>
-                <div class="skill-tags">
-                    <span class="skill-tag">Python (Advanced)</span>
-                    <span class="skill-tag">SQL</span>
-                    <span class="skill-tag">C++ (Basics)</span>
-                    <span class="skill-tag">R</span>
-                    <span class="skill-tag">Java</span>
-                    <span class="skill-tag">HTML</span>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3>Bar Chart</h3>
+                <p>Interactive bar chart visualization showcasing data insights and trends.</p>
+                <div class="project-links">
+                    <a href="projects/web/visualizations/bar_chart.html" class="project-link" target="_blank">View Visualization</a>
                 </div>
             </div>
-            <div class="skill-category">
-                <strong>Machine Learning & AI</strong>
-                <div class="skill-tags">
-                    <span class="skill-tag">Scikit-Learn</span>
-                    <span class="skill-tag">XGBoost</span>
-                    <span class="skill-tag">TensorFlow/Keras</span>
-                    <span class="skill-tag">Neural Networks</span>
-                    <span class="skill-tag">Deep Learning</span>
-                    <span class="skill-tag">NLP (NLTK, VADER)</span>
+            <div class="project-card">
+                <h3>Choropleth Map</h3>
+                <p>Geographic data visualization using choropleth mapping techniques.</p>
+                <div class="project-links">
+                    <a href="projects/web/visualizations/choropleth_map.html" class="project-link" target="_blank">View Visualization</a>
                 </div>
             </div>
-            <div class="skill-category">
-                <strong>Data Engineering & Cloud</strong>
-                <div class="skill-tags">
-                    <span class="skill-tag">Pandas/NumPy</span>
-                    <span class="skill-tag">Feature Engineering</span>
-                    <span class="skill-tag">ETL Pipelines</span>
-                    <span class="skill-tag">GCP BigQuery</span>
-                    <span class="skill-tag">Git/Version Control</span>
+            <div class="project-card">
+                <h3>Heatmap</h3>
+                <p>Heatmap visualization displaying correlation patterns and data density.</p>
+                <div class="project-links">
+                    <a href="projects/web/visualizations/heatmap.html" class="project-link" target="_blank">View Visualization</a>
                 </div>
             </div>
-            <div class="skill-category">
-                <strong>Visualization</strong>
-                <div class="skill-tags">
-                    <span class="skill-tag">Matplotlib</span>
-                    <span class="skill-tag">Seaborn</span>
-                    <span class="skill-tag">Power BI</span>
-                    <span class="skill-tag">Plotly/Dash</span>
+            <div class="project-card">
+                <h3>Scatter Plot</h3>
+                <p>Scatter plot analysis showing relationships between variables.</p>
+                <div class="project-links">
+                    <a href="projects/web/visualizations/scatter_plot.html" class="project-link" target="_blank">View Visualization</a>
+                </div>
+            </div>
+            <div class="project-card">
+                <h3>Treemap</h3>
+                <p>Hierarchical data visualization using treemap representation.</p>
+                <div class="project-links">
+                    <a href="projects/web/visualizations/treemap.html" class="project-link" target="_blank">View Visualization</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="section">
-        <h2>DATA SCIENCE PROJECTS</h2>
-
-        <div class="entry">
-            <div class="entry-header">
-                <div>
-                    <span class="job-title">Credit Card Fraud Detection System (XGBoost)</span>
-                </div>
-                <span class="date">See on GitHub</span>
-            </div>
-            <ul>
-                <li>Engineered a robust fraud detection pipeline using <strong>XGBoost</strong> and <strong>Random
-                        Forest</strong> classifiers on
-                    a highly imbalanced dataset (284k+ transactions).</li>
-                <li>Implemented <strong>SMOTE</strong> (Synthetic Minority Over-sampling Technique) and
-                    <strong>RobustScaler</strong> to handle
-                    class imbalance and outliers, improving model Recall to 91%.
-                </li>
-                <li>Evaluated performance using <strong>Precision-Recall Curves</strong>, <strong>F1-Score</strong>, and
-                    <strong>Confusion Matrices</strong> to
-                    accurately identify anomalies in large-scale datasets.
-                </li>
-            </ul>
+    <div id="projects" class="projects-section no-print">
+        <div class="projects-header">
+            <h2>Featured Projects</h2>
         </div>
-
-        <div class="entry">
-            <div class="entry-header">
-                <div>
-                    <span class="job-title">News Sentiment Analysis Pipeline (NLP)</span>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3>Credit Card Fraud Detection</h3>
+                <p>XGBoost and Random Forest classifiers on imbalanced dataset (284k+ transactions) with SMOTE and RobustScaler, achieving 91% Recall.</p>
+                <div class="project-links">
+                    <a href="https://github.com/James-Liebel" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub</a>
                 </div>
-                <span class="date">See on GitHub</span>
             </div>
-            <ul>
-                <li>Developed a Natural Language Processing (NLP) pipeline to extract insights and sentiment trends from
-                    unstructured text data.</li>
-                <li>Utilized <strong>VADER</strong> sentiment analysis and <strong>TF-IDF</strong> vectorization to
-                    process and classify thousands of
-                    news headlines efficiently.</li>
-                <li>Visualized sentiment velocity over time to demonstrate the capability of transforming qualitative
-                    text
-                    into structured time-series data.</li>
-            </ul>
-        </div>
-
-        <div class="entry">
-            <div class="entry-header">
-                <div>
-                    <span class="job-title">SpaceX Falcon 9 Landing Prediction</span>
+            <div class="project-card">
+                <h3>News Sentiment Analysis</h3>
+                <p>NLP pipeline using VADER sentiment analysis and TF-IDF vectorization to process and classify thousands of news headlines.</p>
+                <div class="project-links">
+                    <a href="https://github.com/James-Liebel" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub</a>
                 </div>
-                <span class="date">See on GitHub</span>
             </div>
-            <ul>
-                <li>Built a binary classification model (Logistic Regression, SVM, KNN) to predict the successful
-                    landing of Falcon 9 rocket stages.</li>
-                <li>Performed extensive <strong>Exploratory Data Analysis (EDA)</strong> to identify key correlations
-                    between payload
-                    mass, orbit type, and landing success rates.</li>
-                <li>Optimized model hyperparameters using <strong>GridSearchCV</strong>, achieving a test accuracy of
-                    90%.</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>EXPERIENCE & LEADERSHIP</h2>
-        <div class="entry">
-            <div class="entry-header">
-                <div>
-                    <span class="job-title">Machine Learning Portfolio Developer</span>
+            <div class="project-card">
+                <h3>SpaceX Landing Prediction</h3>
+                <p>Binary classification model (Logistic Regression, SVM, KNN) with GridSearchCV optimization, achieving 90% test accuracy.</p>
+                <div class="project-links">
+                    <a href="https://github.com/James-Liebel" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub</a>
                 </div>
-                <span class="date">2024 – Present</span>
             </div>
-            <ul>
-                <li>Curated a diverse portfolio of data science projects demonstrating proficiency in <strong>Supervised
-                        Learning</strong>, <strong>Unsupervised Learning</strong>, and <strong>Deep Learning</strong>.
-                </li>
-                <li>Documented all code with professional <strong>READMEs</strong> and clear Jupyter Notebook
-                    visualizations to
-                    showcase reproducibility and communication skills.</li>
-            </ul>
-        </div>
-
-        <div class="entry">
-            <div class="entry-header">
-                <div>
-                    <span class="job-title">Co-President, Machine Learning Club</span>
+            <div class="project-card">
+                <h3>Machine Learning Portfolio</h3>
+                <p>Comprehensive collection of ML models including regressions, clustering, neural networks, and deep learning implementations.</p>
+                <div class="project-links">
+                    <a href="https://github.com/James-Liebel" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub</a>
                 </div>
-                <span class="date">2023 – Present</span>
             </div>
-            <ul>
-                <li>Lead weekly workshops on neural network architectures and the mathematics of AI for 25+ high school
-                    students.</li>
-                <li>Organized a school-wide hackathon focused on "AI for Social Good," mentoring teams on data
-                    acquisition and model deployment.</li>
-            </ul>
         </div>
     </div>
 
