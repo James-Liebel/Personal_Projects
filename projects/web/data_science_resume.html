@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>James Liebel - Data Science Resume</title>
+    <style>
+        @media print {
+            body {
+                margin: 0;
+                padding: 10px 30px;
+            }
+
+            .no-print {
+                display: none;
+            }
+
+            .buttons {
+                display: none;
+            }
+        }
+
+        body {
+            font-family: 'Calibri', 'Arial', sans-serif;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            background: white;
+            color: #333;
+            line-height: 1.3;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2c3e50;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            color: #2c3e50;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-info {
+            margin-top: 5px;
+            font-size: 11px;
+            color: #555;
+        }
+
+        .contact-info a {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        h2 {
+            color: #2c3e50;
+            font-size: 14px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 3px;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .section {
+            margin-bottom: 12px;
+        }
+
+        .entry {
+            margin-bottom: 10px;
+        }
+
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 3px;
+        }
+
+        .job-title {
+            font-weight: bold;
+            font-size: 12px;
+            color: #2c3e50;
+        }
+
+        .university {
+            font-weight: bold;
+            font-size: 12px;
+            color: #2c3e50;
+        }
+
+        .company {
+            font-style: italic;
+            font-size: 11px;
+            color: #555;
+        }
+
+        .date {
+            font-size: 11px;
+            color: #777;
+            font-style: italic;
+        }
+
+        .description {
+            font-size: 11px;
+            margin-top: 3px;
+            margin-left: 0px;
+        }
+
+        ul {
+            margin: 3px 0;
+            padding-left: 18px;
+        }
+
+        li {
+            font-size: 11px;
+            margin-bottom: 2px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            font-size: 11px;
+        }
+
+        .skill-category {
+            margin-bottom: 6px;
+        }
+
+        .skill-category strong {
+            display: block;
+            color: #2c3e50;
+            margin-bottom: 3px;
+            font-size: 11px;
+        }
+
+        .buttons {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        .summary {
+            font-size: 11px;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 4px;
+        }
+
+        .skill-tag {
+            background-color: #eaf2f8;
+            border: 1px solid #dce4ec;
+            border-radius: 3px;
+            padding: 3px 7px;
+            color: #2c3e50;
+            font-size: 10px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="buttons no-print">
+        <button onclick="window.print()">📄 Save as PDF</button>
+    </div>
+
+    <div class="header">
+        <h1>JAMES LIEBEL</h1>
+        <div class="contact-info">
+            10 Camargo Pines, Cincinnati, OH 45243 | (513) 965-1578 |
+            <a href="mailto:Jamesliebel40@gmail.com">Jamesliebel40@gmail.com</a> |
+            <a href="https://github.com/James-Liebel">github.com/James-Liebel</a> |
+            <a href="https://linkedin.com/in/james-liebel">linkedin.com/in/james-liebel</a>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>PROFESSIONAL SUMMARY</h2>
+        <p class="summary">
+            Incoming <strong>University of Chicago</strong> student (Class of 2030) majoring in **Data Science &
+            Statistics**. Aspiring Quantitative Researcher with a strong foundation in **algorithmic modeling**,
+            **machine learning pipelines**, and **financial data analysis**. Proven ability to conceptualize and execute
+            complex data science projects using Python, SQL, and Deep Learning frameworks. Seeking a Summer 2026
+            internship to apply rigorous statistical methods to solving real-world quantitative problems.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>EDUCATION</h2>
+        <div class="entry">
+            <div class="entry-header">
+                <div>
+                    <span class="university">The University of Chicago</span>, Chicago, IL
+                </div>
+                <span class="date">Expected Graduation: May 2030</span>
+            </div>
+            <div class="description">
+                <strong>Major:</strong> Data Science & Statistics<br>
+                <strong>Relevant Coursework (Anticipated):</strong> Linear Algebra, Multivariable Calculus, Discrete
+                Mathematics, Statistical Theory, CS 101.
+            </div>
+        </div>
+        <div class="entry">
+            <div class="description">
+                <strong>Certifications:</strong> IBM Data Science Professional Certificate, Google Cloud (GCP) Machine
+                Learning Engineer (In-Progress), Microsoft PL-300 (Power BI).
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>TECHNICAL SKILLS</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <strong>Languages & Scripting</strong>
+                <div class="skill-tags">
+                    <span class="skill-tag">Python (Advanced)</span>
+                    <span class="skill-tag">SQL</span>
+                    <span class="skill-tag">C++ (Basics)</span>
+                    <span class="skill-tag">R</span>
+                    <span class="skill-tag">JavaScript</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <strong>Machine Learning & AI</strong>
+                <div class="skill-tags">
+                    <span class="skill-tag">Scikit-Learn</span>
+                    <span class="skill-tag">XGBoost</span>
+                    <span class="skill-tag">TensorFlow/Keras</span>
+                    <span class="skill-tag">NLP (NLTK, VADER)</span>
+                    <span class="skill-tag">Logistic Regression</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <strong>Data Engineering & Cloud</strong>
+                <div class="skill-tags">
+                    <span class="skill-tag">Pandas/NumPy</span>
+                    <span class="skill-tag">ETL Pipelines</span>
+                    <span class="skill-tag">GCP BigQuery</span>
+                    <span class="skill-tag">Git Version Control</span>
+                    <span class="skill-tag">Data Cleaning</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <strong>Visualization</strong>
+                <div class="skill-tags">
+                    <span class="skill-tag">Matplotlib</span>
+                    <span class="skill-tag">Seaborn</span>
+                    <span class="skill-tag">Power BI</span>
+                    <span class="skill-tag">Tableau</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>DATA SCIENCE PROJECTS</h2>
+
+        <div class="entry">
+            <div class="entry-header">
+                <div>
+                    <span class="job-title">Credit Card Fraud Detection System (XGBoost)</span>
+                </div>
+                <span class="date">See on GitHub</span>
+            </div>
+            <ul>
+                <li>Engineered a robust fraud detection pipeline using **XGBoost** and **Random Forest** classifiers on
+                    a highly imbalanced dataset (284k+ transactions).</li>
+                <li>Implemented **SMOTE** (Synthetic Minority Over-sampling Technique) and **RobustScaler** to handle
+                    class imbalance and outliers, improving model Recall to 91%.</li>
+                <li>Evaluated performance using **Precision-Recall Curves**, **F1-Score**, and **Confusion Matrices** to
+                    minimize financial risk from false negatives.</li>
+            </ul>
+        </div>
+
+        <div class="entry">
+            <div class="entry-header">
+                <div>
+                    <span class="job-title">Financial News Sentiment Analysis (NLP)</span>
+                </div>
+                <span class="date">See on GitHub</span>
+            </div>
+            <ul>
+                <li>Developed a Natural Language Processing (NLP) pipeline to quantify market sentiment from
+                    unstructured financial news headlines.</li>
+                <li>Utilized **VADER** sentiment analysis and **TF-IDF** vectorization to score headlines as Bullish,
+                    Bearish, or Neutral.</li>
+                <li>Visualized sentiment velocity over time to correlate qualitative news data with quantitative market
+                    volatility signals.</li>
+            </ul>
+        </div>
+
+        <div class="entry">
+            <div class="entry-header">
+                <div>
+                    <span class="job-title">SpaceX Falcon 9 Landing Prediction</span>
+                </div>
+                <span class="date">See on GitHub</span>
+            </div>
+            <ul>
+                <li>Built a binary classification model (Logistic Regression, SVM, KNN) to predict the successful
+                    landing of Falcon 9 rocket stages.</li>
+                <li>Performed extensive **Exploratory Data Analysis (EDA)** to identify key correlations between payload
+                    mass, orbit type, and landing success rates.</li>
+                <li>Optimized model hyperparameters using **GridSearchCV**, achieving a test accuracy of 90%.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>EXPERIENCE & LEADERSHIP</h2>
+        <div class="entry">
+            <div class="entry-header">
+                <div>
+                    <span class="job-title">Machine Learning Portfolio Developer</span>
+                </div>
+                <span class="date">2024 – Present</span>
+            </div>
+            <ul>
+                <li>Curated a diverse portfolio of data science projects demonstrating proficiency in **Supervised
+                    Learning**, **Unsupervised Learning**, and **Deep Learning**.</li>
+                <li>Documented all code with professional **READMEs** and clear Jupyter Notebook visualizations to
+                    showcase reproducibility and communication skills.</li>
+            </ul>
+        </div>
+
+        <div class="entry">
+            <div class="entry-header">
+                <div>
+                    <span class="job-title">Co-President, Machine Learning Club</span>
+                </div>
+                <span class="date">2023 – Present</span>
+            </div>
+            <ul>
+                <li>Lead weekly workshops on neural network architectures and the mathematics of AI for 25+ high school
+                    students.</li>
+                <li>Organized a school-wide hackathon focused on "AI for Social Good," mentoring teams on data
+                    acquisition and model deployment.</li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+
+</html>
