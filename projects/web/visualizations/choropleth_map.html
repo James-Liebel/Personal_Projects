@@ -4,14 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>US Education Choropleth</title>
+  <title>US Education Choropleth | James Liebel</title>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #2c3e50;
-      --accent: #27ae60;
+      --primary: #0f172a;
+      --secondary: #64748b;
+      --accent: #10b981;
+      --card-bg: #ffffff;
     }
 
     body {
@@ -20,57 +22,76 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      background: #f4f7f6;
+      min-height: 100vh;
+      background: #f1f5f9;
+      color: var(--primary);
     }
 
     .container {
-      background: white;
-      padding: 30px;
-      border-radius: 28px;
-      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.07);
+      background: var(--card-bg);
+      padding: 40px;
+      border-radius: 32px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+      position: relative;
+      max-width: 1000px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
     }
 
     #title {
-      font-size: 26px;
+      font-size: 32px;
       font-weight: 600;
       color: var(--primary);
-      text-align: center;
       margin: 0;
+      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     #description {
-      font-size: 15px;
-      color: #7f8c8d;
-      text-align: center;
-      margin: 8px 0 20px 0;
+      font-size: 16px;
+      color: var(--secondary);
+      margin: 10px 0 0 0;
+    }
+
+    #chart-canvas {
+      position: relative;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
     }
 
     .county {
       stroke: #fff;
-      stroke-width: 0.2;
-      transition: stroke 0.2s, stroke-width 0.2s, opacity 0.2s;
-      cursor: pointer;
+      stroke-width: 0.15;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: crosshair;
     }
 
     .county:hover {
-      stroke: #333;
-      stroke-width: 1px;
-      opacity: 0.8;
+      stroke: #0f172a;
+      stroke-width: 1.5;
+      opacity: 0.9;
+      filter: saturate(1.5);
     }
 
     #tooltip {
       position: absolute;
-      padding: 10px 15px;
-      background: rgba(44, 62, 80, 0.95);
-      color: white;
-      border-radius: 10px;
+      padding: 14px 18px;
+      background: rgba(15, 23, 42, 0.95);
+      color: #fff;
+      border-radius: 14px;
       pointer-events: none;
       opacity: 0;
-      font-size: 12px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(4px);
+      font-size: 13px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(8px);
       z-index: 1000;
+      line-height: 1.5;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .state-borders {
@@ -78,32 +99,59 @@
       stroke: #fff;
       stroke-linejoin: round;
       pointer-events: none;
-      stroke-width: 1px;
+      stroke-width: 0.8px;
+      opacity: 0.8;
     }
 
     #legend text {
-      font-size: 10px;
-      fill: #7f8c8d;
+      font-size: 11px;
+      font-weight: 500;
+      fill: var(--secondary);
+    }
+
+    .legend-title {
+      font-size: 12px;
+      font-weight: 600;
+      fill: var(--primary) !important;
+    }
+
+    .loading-overlay {
+      position: absolute;
+      inset: 0;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      font-weight: 600;
+      color: var(--secondary);
+      border-radius: 32px;
+      transition: opacity 0.5s;
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <h1 id="title">United States Education Attainment</h1>
-    <p id="description">Percentage of adults age 25 and older with a bachelor's degree or higher (2010-2014)</p>
+  <div class="container" id="main-container">
+    <div class="loading-overlay" id="loader">Processing Geographic Data...</div>
+    <header>
+      <h1 id="title">US Higher Education Density</h1>
+      <p id="description">Socioeconomic analysis of degree attainment by US County (2010-2014)</p>
+    </header>
+
     <div id="tooltip"></div>
-    <div id="chart"></div>
+    <div id="chart-canvas"></div>
   </div>
 
   <script>
     const width = 960;
-    const height = 600;
+    const height = 640;
 
-    const svg = d3.select("#chart")
+    const svg = d3.select("#chart-canvas")
       .append("svg")
-      .attr("width", width)
-      .attr("height", height);
+      .attr("viewBox", `0 0 ${width} ${height}`)
+      .attr("width", "100%")
+      .attr("height", "auto");
 
     const tooltip = d3.select("#tooltip");
 
@@ -112,80 +160,96 @@
       "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/for_user_education.json"
     ];
 
-    Promise.all(files.map(url => d3.json(url))).then(values => {
-      const countyData = values[0];
-      const educationData = values[1];
+    Promise.all(files.map(url => d3.json(url))).then(([countyData, educationData]) => {
+      // Create an optimized lookup Map for O(1) retrieval
+      const eduLookup = new Map(educationData.map(d => [d.fips, d]));
 
+      // Color Scale - Using a more "Dense" multi-hue scale for better contrast
       const colorScale = d3.scaleThreshold()
         .domain([3, 12, 21, 30, 39, 48, 57, 66])
-        .range(d3.schemeGreens[9]);
+        .range(d3.schemeYlGnBu[9]);
 
+      const path = d3.geoPath();
+
+      // Draw Counties
       svg.append("g")
         .selectAll("path")
         .data(topojson.feature(countyData, countyData.objects.counties).features)
         .enter()
         .append("path")
         .attr("class", "county")
-        .attr("data-fips", d => d.id)
         .attr("fill", d => {
-          const result = educationData.filter(obj => obj.fips === d.id);
-          return result[0] ? colorScale(result[0].bachelorsOrHigher) : colorScale(0);
+          const edu = eduLookup.get(d.id);
+          return edu ? colorScale(edu.bachelorsOrHigher) : "#ccc";
         })
-        .attr("d", d3.geoPath())
+        .attr("d", path)
         .on("mouseover", (event, d) => {
-          const result = educationData.filter(obj => obj.fips === d.id)[0];
-          tooltip.transition().duration(100).style("opacity", 1);
+          const edu = eduLookup.get(d.id);
+          if (!edu) return;
+
+          tooltip.transition().duration(50).style("opacity", 1);
           tooltip.html(`
-                        <strong>${result.area_name}, ${result.state}</strong><br/>
-                        ${result.bachelorsOrHigher}%
-                    `)
-            .style("left", (event.pageX + 15) + "px")
-            .style("top", (event.pageY - 30) + "px");
+            <div style="margin-bottom: 4px; font-weight: 600; font-size: 14px; color: #10b981;">${edu.area_name}, ${edu.state}</div>
+            <div style="font-size: 20px; font-weight: 600;">${edu.bachelorsOrHigher}%</div>
+            <div style="color: #94a3b8; font-size: 11px; margin-top: 4px;">Bachelor's Degree or Higher</div>
+          `)
+            .style("left", (event.pageX + 20) + "px")
+            .style("top", (event.pageY - 60) + "px");
+        })
+        .on("mousemove", (event) => {
+          tooltip.style("left", (event.pageX + 20) + "px")
+            .style("top", (event.pageY - 60) + "px");
         })
         .on("mouseout", () => {
           tooltip.transition().duration(300).style("opacity", 0);
         });
 
+      // Draw State Borders
       svg.append("path")
         .datum(topojson.mesh(countyData, countyData.objects.states, (a, b) => a !== b))
         .attr("class", "state-borders")
-        .attr("d", d3.geoPath());
+        .attr("d", path);
 
-      // Legend
-      const x = d3.scaleLinear().domain([2.6, 75.1]).rangeRound([600, 860]);
-      const g = svg.append("g")
+      // Enhanced Legend
+      const xLegend = d3.scaleLinear().domain([3, 66]).rangeRound([600, 860]);
+      const legend = svg.append("g")
         .attr("id", "legend")
         .attr("transform", "translate(0, 40)");
 
-      g.selectAll("rect")
-        .data(colorScale.range().map(d => {
-          d = colorScale.invertExtent(d);
-          if (d[0] == null) d[0] = x.domain()[0];
-          if (d[1] == null) d[1] = x.domain()[1];
-          return d;
-        }))
+      const legendData = colorScale.range().map(d => {
+        d = colorScale.invertExtent(d);
+        if (d[0] == null) d[0] = xLegend.domain()[0];
+        if (d[1] == null) d[1] = xLegend.domain()[1];
+        return d;
+      });
+
+      legend.selectAll("rect")
+        .data(legendData)
         .enter().append("rect")
-        .attr("height", 8)
-        .attr("x", d => x(d[0]))
-        .attr("width", d => x(d[1]) - x(d[0]))
-        .attr("fill", d => colorScale(d[0]));
+        .attr("height", 10)
+        .attr("x", d => xLegend(d[0]))
+        .attr("width", d => xLegend(d[1]) - xLegend(d[0]))
+        .attr("fill", d => colorScale(d[0]))
+        .attr("rx", 2);
 
-      g.append("text")
-        .attr("class", "caption")
-        .attr("x", x.range()[0])
-        .attr("y", -6)
-        .attr("fill", "#000")
-        .attr("text-anchor", "start")
-        .attr("font-weight", "bold")
-        .text("Education % Scale");
+      legend.append("text")
+        .attr("class", "legend-title")
+        .attr("x", xLegend.range()[0])
+        .attr("y", -10)
+        .text("Higher Education attainment (%)");
 
-      g.call(d3.axisBottom(x)
-        .tickSize(13)
+      legend.call(d3.axisBottom(xLegend)
+        .tickSize(15)
         .tickFormat(x => Math.round(x) + "%")
         .tickValues(colorScale.domain()))
         .select(".domain")
         .remove();
 
+      // Hide Loader
+      d3.select("#loader").transition().duration(500).style("opacity", 0).remove();
+    }).catch(err => {
+      console.error(err);
+      d3.select("#loader").text("Critical Error Loading Map Data");
     });
   </script>
 </body>
