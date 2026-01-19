@@ -203,12 +203,12 @@
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            gap: 10px 25px;
             font-size: 11px;
         }
 
         .skill-category {
-            margin-bottom: 6px;
+            margin-bottom: 2px;
         }
 
         .skill-category strong {
@@ -216,6 +216,19 @@
             color: #2c3e50;
             margin-bottom: 3px;
             font-size: 11px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 2px;
+        }
+
+        .skill-item-row {
+            margin-bottom: 3px;
+            line-height: 1.3;
+        }
+
+        .skill-item-row b {
+            color: #444;
+            font-weight: 600;
         }
 
         .buttons {
@@ -248,23 +261,6 @@
             line-height: 1.4;
             margin-bottom: 8px;
             text-align: justify;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 4px;
-        }
-
-        .skill-tag {
-            background-color: #eaf2f8;
-            border: 1px solid #dce4ec;
-            border-radius: 3px;
-            padding: 3px 7px;
-            color: #2c3e50;
-            font-size: 10px;
-            font-weight: 600;
         }
 
         .projects-section {
@@ -615,48 +611,33 @@
             <h2>TECHNICAL SKILLS</h2>
             <div class="skills-grid">
                 <div class="skill-category">
-                    <strong>Programming and Data Foundations</strong>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Languages: Python (Advanced), SQL (BigQuery), C++ (Basics), R, Java,
-                            HTML</span>
-                        <span class="skill-tag">Data manipulation: Pandas, Numpy, Scipy</span>
-                        <span class="skill-tag">Software Engineering: Git/Version Control, Object-Oriented Programming
-                            (OOP), Unit Testing</span>
-                        <span class="skill-tag">Mathematics: Calculus, Probability & Statistics, Hypothesis
-                            Testing</span>
+                    <strong>Programming & Foundations</strong>
+                    <div class="skill-item-row"><b>Languages:</b> Python, SQL (BigQuery), C++, R, Java, HTML</div>
+                    <div class="skill-item-row"><b>Data:</b> Pandas, Numpy, Scipy. <b>Ops:</b> Git, OOP, Unit Testing
+                    </div>
+                    <div class="skill-item-row"><b>Math:</b> Calculus, Probability & Statistics, Hypothesis Testing
                     </div>
                 </div>
                 <div class="skill-category">
-                    <strong>Machine Learning & Advanced AI</strong>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Core ML: Scikit-Learn, XGBoost, LightGBM, Random Forests, Ensemble
-                            Methods,
-                            Clustering.</span>
-                        <span class="skill-tag">Deep Learning: TensorFlow/Keras, Neural Networks, deep learning, CNNs,
-                            KNNs</span>
-                        <span class="skill-tag">Generative AI & NLP: LLMs, NLTK, VADER, Word Embeddings, Vector
-                            Databases</span>
-                        <span class="skill-tag">Advanced Techniques: Hyperparameter Optimization (GridSearch),
-                            Dimensionality Reduction (PCA), Cross-Validation, Transfer Learning.</span>
+                    <strong>Machine Learning & AI</strong>
+                    <div class="skill-item-row"><b>Core ML:</b> Scikit-Learn, XGBoost, Random Forests, Ensemble Methods
                     </div>
+                    <div class="skill-item-row"><b>Deep Learning:</b> TensorFlow/Keras, CNNs, RNNs, Neural Networks
+                    </div>
+                    <div class="skill-item-row"><b>NLP & LLMs:</b> NLTK, VADER, Word Embeddings, Vector Databases</div>
                 </div>
                 <div class="skill-category">
                     <strong>Data Engineering & MLOps</strong>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Cloud & Big Data: GCP BigQuery</span>
-                        <span class="skill-tag">Pipelines & ETL: Feature Engineering, Automated ETL Pipelines, Data
-                            Wrangling</span>
-                        <span class="skill-tag">MLOps: CI/CD, Model Monitoring, Model Deployment</span>
+                    <div class="skill-item-row"><b>Cloud:</b> GCP BigQuery, Google Cloud Platform</div>
+                    <div class="skill-item-row"><b>Pipelines:</b> Feature Engineering, ETL Pipelines, Data Wrangling
                     </div>
+                    <div class="skill-item-row"><b>Workflow:</b> CI/CD, Model Monitoring, Deployment, MLOps</div>
                 </div>
                 <div class="skill-category">
-                    <strong>Analysis, Visualization & Strategy</strong>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Visualization Tools: Matplotlib, Seaborn, Plotly/Dash, Power BI</span>
-                        <span class="skill-tag">Data Analysis: A/B Testing, Experimental Design, Causal Inference</span>
-                        <span class="skill-tag">Data Storytelling, Stakeholder Management, Technical Documentation,
-                            Requirement Gathering</span>
-                    </div>
+                    <strong>Visualization & Strategy</strong>
+                    <div class="skill-item-row"><b>Tools:</b> Matplotlib, Seaborn, Plotly/Dash, Power BI</div>
+                    <div class="skill-item-row"><b>Analysis:</b> A/B Testing, Exp. Design, Causal Inference</div>
+                    <div class="skill-item-row"><b>Communication:</b> Technical Documentation, Storytelling</div>
                 </div>
             </div>
         </div>
@@ -834,39 +815,43 @@
             </div>
         </div>
     </div>
-    <!--
     <div id="visualizations" class="projects-section no-print">
         <div class="projects-header">
             <h2>Interactive Data Visualization Dashboard</h2>
-            <p style="text-align: center; color: #666; margin-top: 10px; font-size: 16px;">
-                Explore interactive D3.js visualizations showcasing advanced data visualization skills
+            <p style="text-align: center; color: #64748b; margin-top: 10px; font-size: 16px;">
+                Advanced D3.js implementations showcasing complex data structures, hierarchical layouts, and geographic
+                mapping.
             </p>
         </div>
 
         <div class="dashboard-container">
             <div class="dashboard-card full-width">
                 <div class="dashboard-header">
-                    <h3>United States GDP Over Time</h3>
+                    <h3>United States GDP Growth Dynamics</h3>
                     <div class="tech-badges">
                         <span class="tech-badge">D3.js</span>
                         <span class="tech-badge">Time Series</span>
-                        <span class="tech-badge">Data Analysis</span>
+                        <span class="tech-badge">SVG Transitions</span>
                     </div>
                 </div>
                 <div class="dashboard-description">
-                    <p>Interactive bar chart visualization tracking US GDP from 1947 to 2020, demonstrating proficiency in time-series data visualization, D3.js scale functions, and axis formatting.</p>
+                    <p>High-resolution time-series data rendering of US GDP from 1947–2020. Features custom SVG scales,
+                        smooth entrance animations, and data-driven quarterly tooltips with precise currency formatting.
+                    </p>
                 </div>
                 <div class="iframe-container">
-                    <iframe src="projects/web/visualizations/bar_chart.html" class="dashboard-iframe" title="Bar Chart Visualization"></iframe>
+                    <iframe src="projects/web/visualizations/bar_chart.html" class="dashboard-iframe"
+                        title="Bar Chart Visualization"></iframe>
                 </div>
                 <div class="dashboard-footer">
-                    <a href="projects/web/visualizations/bar_chart.html" class="project-link" target="_blank">Open Full Screen</a>
+                    <a href="projects/web/visualizations/bar_chart.html" class="project-link" target="_blank">Open Full
+                        Screen</a>
                 </div>
             </div>
 
             <div class="dashboard-card">
                 <div class="dashboard-header">
-                    <h3>Scatter Plot Analysis</h3>
+                    <h3>Doping in Professional Cycling</h3>
                     <div class="tech-badges">
                         <span class="tech-badge">D3.js</span>
                         <span class="tech-badge">Correlation</span>
@@ -874,13 +859,16 @@
                     </div>
                 </div>
                 <div class="dashboard-description">
-                    <p>Professional bicycle racing data analysis showing time vs. year relationships with interactive tooltips and custom axis formatting.</p>
+                    <p>A multi-dimensional scatter plot analyzing the top 35 fastest times up Alpe d'Huez. Includes
+                        categorical data mapping for doping allegations and interactive legend filtering.</p>
                 </div>
                 <div class="iframe-container">
-                    <iframe src="projects/web/visualizations/scatter_plot.html" class="dashboard-iframe" title="Scatter Plot Visualization"></iframe>
+                    <iframe src="projects/web/visualizations/scatter_plot.html" class="dashboard-iframe"
+                        title="Scatter Plot Visualization"></iframe>
                 </div>
                 <div class="dashboard-footer">
-                    <a href="projects/web/visualizations/scatter_plot.html" class="project-link" target="_blank">Open Full Screen</a>
+                    <a href="projects/web/visualizations/scatter_plot.html" class="project-link" target="_blank">Open
+                        Full Screen</a>
                 </div>
             </div>
 
@@ -889,58 +877,68 @@
                     <h3>Global Temperature Heatmap</h3>
                     <div class="tech-badges">
                         <span class="tech-badge">D3.js</span>
-                        <span class="tech-badge">Heatmap</span>
-                        <span class="tech-badge">Climate Data</span>
+                        <span class="tech-badge">Sequential Scale</span>
+                        <span class="tech-badge">Climate Analysis</span>
                     </div>
                 </div>
                 <div class="dashboard-description">
-                    <p>Monthly global land-surface temperature visualization with color-coded heatmap, demonstrating advanced D3.js techniques including sequential color scales and time-based data mapping.</p>
+                    <p>Complex 12-month sequential heatmap spanning 1753–2015. Demonstrates advanced D3.js diverging
+                        color scales and high-performance rendering for thousands of data points.</p>
                 </div>
                 <div class="iframe-container">
-                    <iframe src="projects/web/visualizations/heatmap.html" class="dashboard-iframe" title="Heatmap Visualization"></iframe>
+                    <iframe src="projects/web/visualizations/heatmap.html" class="dashboard-iframe"
+                        title="Heatmap Visualization"></iframe>
                 </div>
                 <div class="dashboard-footer">
-                    <a href="projects/web/visualizations/heatmap.html" class="project-link" target="_blank">Open Full Screen</a>
+                    <a href="projects/web/visualizations/heatmap.html" class="project-link" target="_blank">Open Full
+                        Screen</a>
                 </div>
             </div>
 
             <div class="dashboard-card full-width">
                 <div class="dashboard-header">
-                    <h3>US Education Choropleth Map</h3>
+                    <h3>US Higher Education Density</h3>
                     <div class="tech-badges">
                         <span class="tech-badge">D3.js</span>
                         <span class="tech-badge">TopoJSON</span>
-                        <span class="tech-badge">Geographic</span>
+                        <span class="tech-badge">Geospatial</span>
                     </div>
                 </div>
                 <div class="dashboard-description">
-                    <p>Interactive geographic visualization showing bachelor's degree attainment by county across the United States. Built with D3.js, TopoJSON, and quantized color scales for effective data communication.</p>
+                    <p>Geographic choropleth map rendering bachelor's degree attainment by US county. Uses quantized
+                        threshold scales, TopoJSON mesh geometries, and high-performance hover detection.</p>
                 </div>
-                <div class="iframe-container">
-                    <iframe src="projects/web/visualizations/choropleth_map.html" class="dashboard-iframe" title="Choropleth Map Visualization"></iframe>
+                <div class="iframe-container" style="padding-bottom: 55%;">
+                    <iframe src="projects/web/visualizations/choropleth_map.html" class="dashboard-iframe"
+                        title="Choropleth Map Visualization"></iframe>
                 </div>
                 <div class="dashboard-footer">
-                    <a href="projects/web/visualizations/choropleth_map.html" class="project-link" target="_blank">Open Full Screen</a>
+                    <a href="projects/web/visualizations/choropleth_map.html" class="project-link" target="_blank">Open
+                        Full Screen</a>
                 </div>
             </div>
 
             <div class="dashboard-card full-width">
                 <div class="dashboard-header">
-                    <h3>Interactive Treemap Dashboard</h3>
+                    <h3>Multi-Dataset Treemap Dashboard</h3>
                     <div class="tech-badges">
                         <span class="tech-badge">D3.js</span>
                         <span class="tech-badge">Hierarchical</span>
-                        <span class="tech-badge">Interactive</span>
+                        <span class="tech-badge">Dynamic Loading</span>
                     </div>
                 </div>
                 <div class="dashboard-description">
-                    <p>Multi-dataset treemap visualization with interactive controls allowing users to switch between Kickstarter funding, movie sales, and video game sales data. Demonstrates advanced D3.js hierarchy and treemap layout algorithms with dynamic data loading.</p>
+                    <p>Responsive tree-map layout with user-controlled dynamic data switching between Movie Sales, Video
+                        Games, and Kickstarter Pledges. Features hierarchical grouping and complex tiling algorithms.
+                    </p>
                 </div>
-                <div class="iframe-container">
-                    <iframe src="projects/web/visualizations/treemap.html" class="dashboard-iframe" title="Treemap Visualization"></iframe>
+                <div class="iframe-container" style="padding-bottom: 65%;">
+                    <iframe src="projects/web/visualizations/treemap.html" class="dashboard-iframe"
+                        title="Treemap Visualization"></iframe>
                 </div>
                 <div class="dashboard-footer">
-                    <a href="projects/web/visualizations/treemap.html" class="project-link" target="_blank">Open Full Screen</a>
+                    <a href="projects/web/visualizations/treemap.html" class="project-link" target="_blank">Open Full
+                        Screen</a>
                 </div>
             </div>
         </div>
@@ -975,7 +973,6 @@
             </div>
         </div>
     </div>
-    -->
 
 </body>
 

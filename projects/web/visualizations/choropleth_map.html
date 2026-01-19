@@ -1,46 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>Choropleth Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>US Education Choropleth</title>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    .county { stroke: #fff; stroke-width: 0.5; }
+    :root {
+      --primary: #2c3e50;
+      --accent: #27ae60;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f4f7f6;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 28px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.07);
+    }
+
+    #title {
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--primary);
+      text-align: center;
+      margin: 0;
+    }
+
+    #description {
+      font-size: 15px;
+      color: #7f8c8d;
+      text-align: center;
+      margin: 8px 0 20px 0;
+    }
+
+    .county {
+      stroke: #fff;
+      stroke-width: 0.2;
+      transition: stroke 0.2s, stroke-width 0.2s, opacity 0.2s;
+      cursor: pointer;
+    }
+
+    .county:hover {
+      stroke: #333;
+      stroke-width: 1px;
+      opacity: 0.8;
+    }
+
     #tooltip {
       position: absolute;
-      background-color: white;
-      border: 1px solid #ccc;
-      padding: 5px;
-      font-size: 12px;
+      padding: 10px 15px;
+      background: rgba(44, 62, 80, 0.95);
+      color: white;
+      border-radius: 10px;
       pointer-events: none;
       opacity: 0;
+      font-size: 12px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+    }
+
+    .state-borders {
+      fill: none;
+      stroke: #fff;
+      stroke-linejoin: round;
+      pointer-events: none;
+      stroke-width: 1px;
+    }
+
+    #legend text {
+      font-size: 10px;
+      fill: #7f8c8d;
     }
   </style>
 </head>
+
 <body>
-  <div id="tooltip"></div>
-  <svg width="1000" height="600"></svg>
+  <div class="container">
+    <h1 id="title">United States Education Attainment</h1>
+    <p id="description">Percentage of adults age 25 and older with a bachelor's degree or higher (2010-2014)</p>
+    <div id="tooltip"></div>
+    <div id="chart"></div>
+  </div>
+
   <script>
-    const width = 1000, height = 600, svg = d3.select("svg"), tooltip = d3.select("#tooltip");
-    const countyUrl = 'https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/counties.json';
-    const educationUrl = 'https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/for_user_education.json';
+    const width = 960;
+    const height = 600;
 
-    Promise.all([fetch(countyUrl).then(r => r.json()), fetch(educationUrl).then(r => r.json())])
-      .then(([countyData, educationData]) => {
-        const counties = topojson.feature(countyData, countyData.objects.counties);
-        const colorScale = d3.scaleQuantize()
-          .domain([0, d3.max(educationData, d => d.bachelorsOrHigher)])
-          .range(d3.schemeBlues[9]);
+    const svg = d3.select("#chart")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height);
 
-        svg.selectAll(".county").data(counties.features).enter().append("path")
-          .attr("class", "county")
-          .attr("d", d3.geoPath())
-          .attr("fill", d => {
-            const match = educationData.find(edu => edu.fips === d.id);
-            return match ? colorScale(match.bachelorsOrHigher) : "#ccc";
-          });
-      });
+    const tooltip = d3.select("#tooltip");
+
+    const files = [
+      "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/counties.json",
+      "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/for_user_education.json"
+    ];
+
+    Promise.all(files.map(url => d3.json(url))).then(values => {
+      const countyData = values[0];
+      const educationData = values[1];
+
+      const colorScale = d3.scaleThreshold()
+        .domain([3, 12, 21, 30, 39, 48, 57, 66])
+        .range(d3.schemeGreens[9]);
+
+      svg.append("g")
+        .selectAll("path")
+        .data(topojson.feature(countyData, countyData.objects.counties).features)
+        .enter()
+        .append("path")
+        .attr("class", "county")
+        .attr("data-fips", d => d.id)
+        .attr("fill", d => {
+          const result = educationData.filter(obj => obj.fips === d.id);
+          return result[0] ? colorScale(result[0].bachelorsOrHigher) : colorScale(0);
+        })
+        .attr("d", d3.geoPath())
+        .on("mouseover", (event, d) => {
+          const result = educationData.filter(obj => obj.fips === d.id)[0];
+          tooltip.transition().duration(100).style("opacity", 1);
+          tooltip.html(`
+                        <strong>${result.area_name}, ${result.state}</strong><br/>
+                        ${result.bachelorsOrHigher}%
+                    `)
+            .style("left", (event.pageX + 15) + "px")
+            .style("top", (event.pageY - 30) + "px");
+        })
+        .on("mouseout", () => {
+          tooltip.transition().duration(300).style("opacity", 0);
+        });
+
+      svg.append("path")
+        .datum(topojson.mesh(countyData, countyData.objects.states, (a, b) => a !== b))
+        .attr("class", "state-borders")
+        .attr("d", d3.geoPath());
+
+      // Legend
+      const x = d3.scaleLinear().domain([2.6, 75.1]).rangeRound([600, 860]);
+      const g = svg.append("g")
+        .attr("id", "legend")
+        .attr("transform", "translate(0, 40)");
+
+      g.selectAll("rect")
+        .data(colorScale.range().map(d => {
+          d = colorScale.invertExtent(d);
+          if (d[0] == null) d[0] = x.domain()[0];
+          if (d[1] == null) d[1] = x.domain()[1];
+          return d;
+        }))
+        .enter().append("rect")
+        .attr("height", 8)
+        .attr("x", d => x(d[0]))
+        .attr("width", d => x(d[1]) - x(d[0]))
+        .attr("fill", d => colorScale(d[0]));
+
+      g.append("text")
+        .attr("class", "caption")
+        .attr("x", x.range()[0])
+        .attr("y", -6)
+        .attr("fill", "#000")
+        .attr("text-anchor", "start")
+        .attr("font-weight", "bold")
+        .text("Education % Scale");
+
+      g.call(d3.axisBottom(x)
+        .tickSize(13)
+        .tickFormat(x => Math.round(x) + "%")
+        .tickValues(colorScale.domain()))
+        .select(".domain")
+        .remove();
+
+    });
   </script>
 </body>
+
 </html>
