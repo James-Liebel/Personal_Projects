@@ -526,9 +526,9 @@
         const greenRadial = defs.append("radialGradient")
           .attr("id", "greenRadial")
           .attr("cx", "50%").attr("cy", "50%").attr("r", "50%");
-        greenRadial.append("stop").attr("offset", "0%").attr("stop-color", "#22c55e").attr("stop-opacity", 1);
-        greenRadial.append("stop").attr("offset", "50%").attr("stop-color", "#22c55e").attr("stop-opacity", 0.6);
-        greenRadial.append("stop").attr("offset", "100%").attr("stop-color", "#22c55e").attr("stop-opacity", 0);
+        greenRadial.append("stop").attr("offset", "0%").attr("stop-color", "#86efac").attr("stop-opacity", 1); // Lighter Green
+        greenRadial.append("stop").attr("offset", "40%").attr("stop-color", "#22c55e").attr("stop-opacity", 0.7);
+        greenRadial.append("stop").attr("offset", "100%").attr("stop-color", "#ef4444").attr("stop-opacity", 0); // Fades to Red (via transparency)
 
         // Draw Neighborhoods (Outlines Only)
         g.selectAll(".neighborhood")
@@ -614,20 +614,20 @@
 
     // Spread bias: Grocery stores get larger green circles than restaurants
     const spreadBias = {
-      "Grocery Store": 180,
-      "Farmers Market/Health": 140,
-      "Supermarket": 180,
-      "Specialty Food": 100,
-      "Convenience/Market": 70,
-      "Pharmacy": 70,
-      "Dollar Store": 60,
-      "Gas Station": 50,
-      "Restaurant": 40,
-      "Fast Food": 40,
-      "Coffee Shop": 40,
-      "Dessert": 40
+      "Grocery Store": 80,
+      "Farmers Market/Health": 60,
+      "Supermarket": 80,
+      "Specialty Food": 45,
+      "Convenience/Market": 35,
+      "Pharmacy": 35,
+      "Dollar Store": 30,
+      "Gas Station": 25,
+      "Restaurant": 20,
+      "Fast Food": 20,
+      "Coffee Shop": 20,
+      "Dessert": 20
     };
-    const defaultSpread = 40;
+    const defaultSpread = 20;
 
     function renderHeatmap(markers) {
       // Select or create heat-layer group
@@ -658,7 +658,7 @@
           .attr("cy", p[1])
           .attr("r", radius)
           .attr("fill", "url(#greenRadial)")
-          .attr("opacity", 0.5)
+          .attr("opacity", 0.8) // Increased opacity for better color pop
           .attr("pointer-events", "none");
       });
     }
