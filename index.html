@@ -1007,22 +1007,53 @@ footer a { color: var(--text); text-decoration: none; border-bottom: 1px solid r
       resumePage.style.transformOrigin = '';
     }
 
+    let isPrintingResume = false;
+    let printRestoreTimer = null;
+
+    function restoreResumeView() {
+      if (!isPrintingResume) {
+        return;
+      }
+
+      if (printRestoreTimer) {
+        clearTimeout(printRestoreTimer);
+        printRestoreTimer = null;
+      }
+
+      document.querySelectorAll('body > *').forEach((el) => {
+        el.style.display = '';
+      });
+      document.getElementById('resume').style.display = 'none';
+      clearResumeScale();
+      document.body.classList.remove('pdf-mode');
+      isPrintingResume = false;
+    }
+
     function printResume() {
+      if (isPrintingResume) {
+        return;
+      }
+      isPrintingResume = true;
+
       // 1. Hide all sections except #resume
       document.body.classList.add('pdf-mode');
-      document.querySelectorAll('body > *:not(#resume)').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('body > *:not(#resume)').forEach((el) => {
+        el.style.display = 'none';
+      });
       document.getElementById('resume').style.display = 'block';
       fitResumeToOnePage();
 
       // 2. Print
-      window.addEventListener('afterprint', () => {
-        // 3. Restore after dialog closes
-        document.querySelectorAll('body > *').forEach(el => el.style.display = '');
-        document.getElementById('resume').style.display = 'none';
-        clearResumeScale();
-        document.body.classList.remove('pdf-mode');
-      }, { once: true });
-      window.print();
+      window.addEventListener('afterprint', restoreResumeView, { once: true });
+      window.addEventListener('focus', restoreResumeView, { once: true });
+      printRestoreTimer = setTimeout(restoreResumeView, 4000);
+
+      // Ensure layout is applied before opening print dialog.
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          window.print();
+        });
+      });
     }
 
     document.getElementById('pdfBtn').addEventListener('click', printResume);
