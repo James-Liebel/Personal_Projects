@@ -435,6 +435,91 @@ section {
 
 #resume { display: none; }
 
+body.pdf-mode {
+  background: var(--bg);
+  color: var(--text);
+}
+
+body.pdf-mode #resume {
+  display: block;
+  width: min(960px, calc(100vw - 24px));
+  margin: calc(var(--nav-h) + 12px) auto 16px;
+}
+
+body.pdf-mode #resume .resume-page {
+  background: rgba(15,15,20,0.9);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  line-height: 1.35;
+}
+
+body.pdf-mode #resume .resume-head h1 {
+  margin: 0 0 6px;
+  font-family: var(--font-hero);
+  font-size: 44px;
+  line-height: 0.85;
+  color: #fff;
+}
+
+body.pdf-mode #resume .resume-contact {
+  margin: 0 0 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+body.pdf-mode #resume .resume-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+body.pdf-mode #resume .resume-block {
+  border-top: 1px solid var(--border);
+  padding-top: 5px;
+  margin-bottom: 6px;
+}
+
+body.pdf-mode #resume h2 {
+  margin: 0 0 4px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+body.pdf-mode #resume h3 {
+  margin: 0 0 2px;
+  font-family: var(--font-hero);
+  font-size: 20px;
+  line-height: 0.95;
+  color: var(--text);
+}
+
+body.pdf-mode #resume p,
+body.pdf-mode #resume li,
+body.pdf-mode #resume .resume-mini {
+  margin: 0 0 2px;
+  font-size: 12px;
+  color: var(--text);
+}
+
+body.pdf-mode #resume ul {
+  margin: 0;
+  padding-left: 14px;
+}
+
+body.pdf-mode #resume .resume-pills span {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1px 5px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text);
+}
+
 footer {
   width: min(var(--max-w), calc(100vw - 30px));
   margin: 0 auto 22px;
@@ -475,19 +560,29 @@ footer a { color: var(--text); text-decoration: none; border-bottom: 1px solid r
 @media print {
   @page { size: letter portrait; margin: 0.45in; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  body { background: white; color: black; font-family: 'Instrument Sans', sans-serif; font-size: 9pt; }
+  body { background: white; color: black; font-family: 'Instrument Sans', sans-serif; font-size: 8.4pt; }
   a { color: #000; text-decoration: none; }
 
-  #resume .resume-page { width: 100%; margin: 0; padding: 0; line-height: 1.4; page-break-inside: avoid; }
-  #resume .resume-head h1 { font-family: var(--font-hero); font-size: 24pt; margin: 0 0 4pt; line-height: 0.9; color: #000; }
-  #resume .resume-contact { font-family: var(--font-mono); font-size: 8pt; color: #000; margin-bottom: 6pt; }
-  #resume .resume-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10pt; }
-  #resume .resume-block { border-top: 1pt solid #111; padding-top: 4pt; margin-bottom: 5pt; }
-  #resume h2 { margin: 0 0 3pt; font-family: var(--font-mono); font-size: 8pt; letter-spacing: 0.07em; text-transform: uppercase; color: #111; }
-  #resume h3 { margin: 0 0 1pt; font-family: var(--font-hero); font-size: 11pt; line-height: 0.95; color: #000; }
-  #resume p, #resume li, #resume .resume-mini { margin: 0 0 1.6pt; font-family: var(--font-body); font-size: 8.6pt; color: #111; }
-  #resume ul { margin: 0; padding-left: 13pt; }
-  #resume .resume-pills span { border: 0.7pt solid #444; border-radius: 8pt; padding: 1pt 5pt; font-family: var(--font-mono); font-size: 7pt; color: #111; }
+  #resume { width: 100%; margin: 0; page-break-after: avoid; }
+  #resume .resume-page {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    line-height: 1.32;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    max-height: calc(11in - 0.9in);
+    overflow: hidden;
+  }
+  #resume .resume-head h1 { font-family: var(--font-hero); font-size: 22pt; margin: 0 0 3pt; line-height: 0.9; color: #000; }
+  #resume .resume-contact { font-family: var(--font-mono); font-size: 7.6pt; color: #000; margin-bottom: 5pt; }
+  #resume .resume-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8pt; }
+  #resume .resume-block { border-top: 1pt solid #111; padding-top: 3pt; margin-bottom: 4pt; }
+  #resume h2 { margin: 0 0 2pt; font-family: var(--font-mono); font-size: 7.4pt; letter-spacing: 0.07em; text-transform: uppercase; color: #111; }
+  #resume h3 { margin: 0 0 1pt; font-family: var(--font-hero); font-size: 9.8pt; line-height: 0.95; color: #000; }
+  #resume p, #resume li, #resume .resume-mini { margin: 0 0 1.2pt; font-family: var(--font-body); font-size: 7.9pt; color: #111; }
+  #resume ul { margin: 0; padding-left: 11pt; }
+  #resume .resume-pills span { border: 0.7pt solid #444; border-radius: 8pt; padding: 0.8pt 4pt; font-family: var(--font-mono); font-size: 6.5pt; color: #111; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -819,17 +914,55 @@ footer a { color: var(--text); text-decoration: none; border-bottom: 1px solid r
       });
     });
 
+    function fitResumeToOnePage() {
+      const resumePage = document.querySelector('#resume .resume-page');
+      if (!resumePage) {
+        return;
+      }
+
+      resumePage.style.transform = '';
+      resumePage.style.transformOrigin = '';
+      resumePage.style.width = '';
+
+      const printableWidthPx = (8.5 - 0.9) * 96;
+      const printableHeightPx = (11 - 0.9) * 96;
+      const contentWidth = resumePage.scrollWidth;
+      const contentHeight = resumePage.scrollHeight;
+      const scale = Math.min(1, printableWidthPx / contentWidth, printableHeightPx / contentHeight);
+
+      if (scale < 1) {
+        resumePage.style.transformOrigin = 'top left';
+        resumePage.style.transform = `scale(${scale})`;
+        resumePage.style.width = `${100 / scale}%`;
+      }
+    }
+
+    function clearResumeScale() {
+      const resumePage = document.querySelector('#resume .resume-page');
+      if (!resumePage) {
+        return;
+      }
+      resumePage.style.transform = '';
+      resumePage.style.transformOrigin = '';
+      resumePage.style.width = '';
+    }
+
     function printResume() {
       // 1. Hide all sections except #resume
+      document.body.classList.add('pdf-mode');
       document.querySelectorAll('body > *:not(#resume)').forEach(el => el.style.display = 'none');
       document.getElementById('resume').style.display = 'block';
+      fitResumeToOnePage();
+
       // 2. Print
-      window.print();
-      // 3. Restore after dialog closes
       window.addEventListener('afterprint', () => {
+        // 3. Restore after dialog closes
         document.querySelectorAll('body > *').forEach(el => el.style.display = '');
         document.getElementById('resume').style.display = 'none';
+        clearResumeScale();
+        document.body.classList.remove('pdf-mode');
       }, { once: true });
+      window.print();
     }
 
     document.getElementById('pdfBtn').addEventListener('click', printResume);
