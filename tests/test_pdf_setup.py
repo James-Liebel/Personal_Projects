@@ -18,25 +18,49 @@ def assert_regex(text: str, pattern: str, message: str) -> None:
 
 def run() -> None:
     html = INDEX_PATH.read_text(encoding="utf-8")
+    print_block_match = re.search(r"@media print\s*\{(.*)\}\s*@media \(prefers-reduced-motion: reduce\)", html, flags=re.DOTALL)
+    if not print_block_match:
+        raise AssertionError("Missing @media print CSS block.")
+    print_block = print_block_match.group(1)
 
     assert_contains(html, 'id="pdfBtn"', "Missing PDF button id='pdfBtn'.")
     assert_contains(html, 'id="resume"', "Missing resume section id='resume'.")
     assert_contains(html, "@media print", "Missing @media print CSS block.")
-    assert_contains(
-        html,
-        "@page { size: letter portrait; margin: 0.45in; }",
-        "Print page size/margins are not configured for one-page letter output.",
+    assert_regex(
+        print_block,
+        r"@page\s*\{\s*size:\s*letter;\s*margin:\s*1\.5cm;\s*\}",
+        "Print page size/margins are not configured to letter + 1.5cm.",
     )
-    assert_contains(
-        html,
-        "max-height: calc(11in - 0.9in);",
-        "Missing one-page max-height constraint for printed resume.",
+    assert_regex(
+        print_block,
+        r"font-size:\s*11pt;",
+        "Print body font-size should be print-safe (~10-12pt).",
     )
-    assert_contains(
-        html,
-        "overflow: hidden;",
-        "Printed resume does not enforce overflow clipping.",
+    assert_regex(
+        print_block,
+        r"\.resume-name\s*\{[^}]*font-size:\s*16pt;",
+        "Print heading size should be in a print-safe heading range.",
     )
+    assert_regex(
+        print_block,
+        r"page-break-inside:\s*avoid",
+        "Print styles should protect major blocks from breaking across pages.",
+    )
+    assert_regex(
+        print_block,
+        r"a\[href\^=\"http\"\]::after",
+        "Print styles should include inline href rendering for external links.",
+    )
+    assert_regex(
+        print_block,
+        r"overflow:\s*visible\s*!important",
+        "Print styles should force visible overflow on key content containers.",
+    )
+    for decl in re.findall(r"max-height:\s*([^;]+);", print_block):
+        if not decl.strip().startswith("none"):
+            raise AssertionError("Print styles should not use max-height clamps.")
+    if "overflow: hidden" in print_block:
+        raise AssertionError("Print styles should not use overflow:hidden clamps.")
 
     assert_regex(
         html,
