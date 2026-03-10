@@ -435,118 +435,6 @@ section {
 
 #resume { display: none; }
 
-body.pdf-mode {
-  background: #eceff3;
-  color: #111;
-}
-
-body.pdf-mode #resume {
-  display: block;
-  width: min(7.6in, calc(100vw - 20px));
-  margin: 12px auto;
-}
-
-body.pdf-mode #resume .resume-page {
-  background: #fff;
-  color: #000;
-  border: 1px solid #d4d7dc;
-  border-radius: 0;
-  padding: 0.45in;
-  line-height: 1.34;
-}
-
-body.pdf-mode #resume .resume-name {
-  margin: 0 0 6px;
-  font-family: var(--font-body);
-  font-size: 19pt;
-  font-weight: 600;
-  letter-spacing: 0;
-  color: #000;
-}
-
-body.pdf-mode #resume .resume-contact {
-  margin: 0 0 9px;
-  font-family: var(--font-mono);
-  font-size: 8pt;
-  color: #111;
-}
-
-body.pdf-mode #resume .resume-section {
-  margin-bottom: 8px;
-}
-
-body.pdf-mode #resume .resume-section-title {
-  margin: 0 0 4px;
-  border-bottom: 1px solid #222;
-  padding-bottom: 2px;
-  font-family: var(--font-mono);
-  font-size: 8pt;
-  letter-spacing: 0.08em;
-  color: #111;
-  text-transform: uppercase;
-}
-
-body.pdf-mode #resume .resume-summary,
-body.pdf-mode #resume .resume-text,
-body.pdf-mode #resume li {
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: 8.3pt;
-  color: #111;
-}
-
-body.pdf-mode #resume .resume-item {
-  margin-bottom: 6px;
-}
-
-body.pdf-mode #resume .resume-item-head {
-  margin: 0 0 1px;
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  align-items: baseline;
-}
-
-body.pdf-mode #resume .resume-role {
-  font-family: var(--font-body);
-  font-size: 8.5pt;
-  font-weight: 600;
-  color: #000;
-}
-
-body.pdf-mode #resume .resume-date {
-  font-family: var(--font-mono);
-  font-size: 7.6pt;
-  color: #111;
-  white-space: nowrap;
-}
-
-body.pdf-mode #resume .resume-list {
-  margin: 2px 0 0 14px;
-  padding: 0;
-}
-
-body.pdf-mode #resume .resume-skills {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3px 12px;
-}
-
-body.pdf-mode #resume .skill-group h3 {
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: 8pt;
-  font-weight: 600;
-  color: #000;
-}
-
-body.pdf-mode #resume .skill-group p {
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: 8pt;
-  color: #111;
-}
-
 footer {
   width: min(var(--max-w), calc(100vw - 30px));
   margin: 0 auto 22px;
@@ -639,12 +527,21 @@ footer a { color: var(--text); text-decoration: none; border-bottom: 1px solid r
   }
 
   #resume {
-    display: block !important;
+    display: none !important;
     width: 100% !important;
     margin: 0 !important;
   }
 
-  #resume .resume-page {
+  body.print-mode main,
+  body.print-mode footer {
+    display: none !important;
+  }
+
+  body.print-mode #resume {
+    display: block !important;
+  }
+
+  body.print-mode #resume .resume-page {
     width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -656,7 +553,7 @@ footer a { color: var(--text); text-decoration: none; border-bottom: 1px solid r
     break-inside: auto;
   }
 
-  #resume .resume-name {
+  body.print-mode #resume .resume-name {
     margin: 0 0 8pt;
     font-family: var(--font-body);
     font-size: 16pt;
@@ -664,20 +561,20 @@ footer a { color: var(--text); text-decoration: none; border-bottom: 1px solid r
     color: #000;
   }
 
-  #resume .resume-contact {
+  body.print-mode #resume .resume-contact {
     margin: 0 0 10pt;
     font-family: var(--font-mono);
     font-size: 10pt;
     color: #111;
   }
 
-  #resume .resume-section {
+  body.print-mode #resume .resume-section {
     margin-bottom: 10pt;
     page-break-inside: avoid;
     break-inside: avoid-page;
   }
 
-  #resume .resume-section-title {
+  body.print-mode #resume .resume-section-title {
     margin: 0 0 5pt;
     border-bottom: 1pt solid #111;
     padding-bottom: 2pt;
@@ -688,27 +585,27 @@ footer a { color: var(--text); text-decoration: none; border-bottom: 1px solid r
     color: #111;
   }
 
-  #resume .resume-summary,
-  #resume .resume-text,
-  #resume li {
+  body.print-mode #resume .resume-summary,
+  body.print-mode #resume .resume-text,
+  body.print-mode #resume li {
     margin: 0;
     font-family: var(--font-body);
     font-size: 10.5pt;
     color: #111;
   }
 
-  #resume .resume-item {
+  body.print-mode #resume .resume-item {
     margin-bottom: 7pt;
     page-break-inside: avoid;
     break-inside: avoid-page;
   }
 
-  #resume .resume-item-head {
+  body.print-mode #resume .resume-item-head {
     margin: 0 0 2pt;
     display: block;
   }
 
-  #resume .resume-role {
+  body.print-mode #resume .resume-role {
     display: block;
     font-family: var(--font-body);
     font-size: 11pt;
@@ -716,7 +613,7 @@ footer a { color: var(--text); text-decoration: none; border-bottom: 1px solid r
     color: #000;
   }
 
-  #resume .resume-date {
+  body.print-mode #resume .resume-date {
     display: block;
     margin-top: 1pt;
     font-family: var(--font-mono);
@@ -725,22 +622,22 @@ footer a { color: var(--text); text-decoration: none; border-bottom: 1px solid r
     white-space: normal;
   }
 
-  #resume .resume-list {
+  body.print-mode #resume .resume-list {
     margin: 2pt 0 0 14pt;
     padding: 0;
   }
 
-  #resume .resume-skills {
+  body.print-mode #resume .resume-skills {
     display: block;
   }
 
-  #resume .skill-group {
+  body.print-mode #resume .skill-group {
     margin-bottom: 5pt;
     page-break-inside: avoid;
     break-inside: avoid-page;
   }
 
-  #resume .skill-group h3 {
+  body.print-mode #resume .skill-group h3 {
     margin: 0;
     font-family: var(--font-body);
     font-size: 11pt;
@@ -748,7 +645,7 @@ footer a { color: var(--text); text-decoration: none; border-bottom: 1px solid r
     color: #000;
   }
 
-  #resume .skill-group p {
+  body.print-mode #resume .skill-group p {
     margin: 0;
     font-family: var(--font-body);
     font-size: 10.5pt;
@@ -1132,15 +1029,30 @@ footer a { color: var(--text); text-decoration: none; border-bottom: 1px solid r
     });
 
     function fitResumeToOnePage() {
+      const resume = document.getElementById('resume');
       const resumePage = document.querySelector('#resume .resume-page');
-      if (!resumePage) {
+      if (!resume || !resumePage) {
         return;
       }
+
+      const prevDisplay = resume.style.display;
+      const prevPosition = resume.style.position;
+      const prevVisibility = resume.style.visibility;
+      const prevLeft = resume.style.left;
+      const prevTop = resume.style.top;
+      const prevWidth = resume.style.width;
+
+      resume.style.display = 'block';
+      resume.style.position = 'absolute';
+      resume.style.visibility = 'hidden';
+      resume.style.left = '-10000px';
+      resume.style.top = '0';
+      resume.style.width = '7.6in';
 
       resumePage.style.transform = '';
       resumePage.style.transformOrigin = '';
 
-      const printableHeightPx = (11 - 0.9) * 96;
+      const printableHeightPx = (11 - ((1.5 / 2.54) * 2)) * 96;
       const contentHeight = resumePage.scrollHeight;
       const scale = Math.min(1, printableHeightPx / contentHeight);
 
@@ -1148,6 +1060,13 @@ footer a { color: var(--text); text-decoration: none; border-bottom: 1px solid r
         resumePage.style.transformOrigin = 'top center';
         resumePage.style.transform = `scale(${scale})`;
       }
+
+      resume.style.display = prevDisplay;
+      resume.style.position = prevPosition;
+      resume.style.visibility = prevVisibility;
+      resume.style.left = prevLeft;
+      resume.style.top = prevTop;
+      resume.style.width = prevWidth;
     }
 
     function clearResumeScale() {
@@ -1172,12 +1091,8 @@ footer a { color: var(--text); text-decoration: none; border-bottom: 1px solid r
         printRestoreTimer = null;
       }
 
-      document.querySelectorAll('body > *').forEach((el) => {
-        el.style.display = '';
-      });
-      document.getElementById('resume').style.display = 'none';
       clearResumeScale();
-      document.body.classList.remove('pdf-mode');
+      document.body.classList.remove('print-mode');
       isPrintingResume = false;
     }
 
@@ -1187,12 +1102,8 @@ footer a { color: var(--text); text-decoration: none; border-bottom: 1px solid r
       }
       isPrintingResume = true;
 
-      // 1. Hide all sections except #resume
-      document.body.classList.add('pdf-mode');
-      document.querySelectorAll('body > *:not(#resume)').forEach((el) => {
-        el.style.display = 'none';
-      });
-      document.getElementById('resume').style.display = 'block';
+      // 1. Prepare print-only mode without mutating live screen layout.
+      document.body.classList.add('print-mode');
       fitResumeToOnePage();
 
       // 2. Print

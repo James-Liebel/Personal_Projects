@@ -53,6 +53,16 @@ def run() -> None:
     )
     assert_regex(
         print_block,
+        r"body\.print-mode\s+#resume\s*\{\s*display:\s*block\s*!important;",
+        "Print styles should show resume only in print-mode.",
+    )
+    assert_regex(
+        print_block,
+        r"body\.print-mode\s+main,\s*body\.print-mode\s+footer\s*\{\s*display:\s*none\s*!important;",
+        "Print styles should hide portfolio sections in print-mode.",
+    )
+    assert_regex(
+        print_block,
         r"overflow:\s*visible\s*!important",
         "Print styles should force visible overflow on key content containers.",
     )
@@ -64,9 +74,11 @@ def run() -> None:
 
     assert_regex(
         html,
-        r"function\s+printResume\s*\(\)\s*\{.*?document\.querySelectorAll\('body > \*:not\(#resume\)'\).*?window\.print\(\);",
-        "printResume() must hide non-resume content and call window.print().",
+        r"function\s+printResume\s*\(\)\s*\{.*?classList\.add\('print-mode'\).*?window\.print\(\);",
+        "printResume() must enable print-mode and call window.print().",
     )
+    if "body > *:not(#resume)" in html:
+        raise AssertionError("printResume() should not hide live screen DOM via body > *:not(#resume).")
     assert_regex(
         html,
         r"window\.addEventListener\('afterprint',\s*restoreResumeView,\s*\{\s*once:\s*true\s*\}\)",
