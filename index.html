@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,35 +8,1550 @@
   <title>James Liebel | Resume + Portfolio</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
-    :root{--bg:#fff8ef;--bg2:#fff2dd;--text:#24170d;--muted:#6d5a4b;--line:rgba(113,69,33,.12);--orange:#f6852f;--sky:#4cb5ff;--mint:#63d7ab;--shadow:0 24px 60px rgba(120,73,27,.14);--shadow2:0 14px 32px rgba(120,73,27,.09);--radius:28px;--radius2:20px;--ease:cubic-bezier(.22,1,.36,1);--px:50%;--py:50%}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;overflow-x:hidden;color:var(--text);font-family:"Sora",sans-serif;background:radial-gradient(circle at 12% 10%,rgba(246,133,47,.24),transparent 26%),radial-gradient(circle at 86% 15%,rgba(76,181,255,.2),transparent 26%),radial-gradient(circle at 75% 84%,rgba(99,215,171,.15),transparent 24%),linear-gradient(180deg,#fffaf4 0%,var(--bg2) 42%,var(--bg) 100%)}body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:radial-gradient(420px 420px at var(--px) var(--py),rgba(255,201,102,.22),transparent 70%)}body::after{content:"";position:fixed;inset:0;z-index:-3;pointer-events:none;opacity:.3;background-image:linear-gradient(rgba(129,90,56,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(129,90,56,.05) 1px,transparent 1px);background-size:28px 28px;mask-image:radial-gradient(circle at center,black 55%,transparent 95%)}a{color:inherit}button{font:inherit}
-    .ambient{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}.blob{position:absolute;border-radius:999px;filter:blur(18px);opacity:.58;animation:drift 18s var(--ease) infinite alternate}.blob.a{top:-90px;left:-100px;width:320px;height:320px;background:radial-gradient(circle,rgba(246,133,47,.36),transparent 68%)}.blob.b{top:15%;right:-80px;width:280px;height:280px;background:radial-gradient(circle,rgba(76,181,255,.3),transparent 68%);animation-delay:-6s}.blob.c{bottom:-110px;left:44%;width:360px;height:360px;background:radial-gradient(circle,rgba(99,215,171,.24),transparent 68%);animation-delay:-10s}@keyframes drift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(22px,-26px,0) scale(1.08)}}
-    .top-progress{position:fixed;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,var(--orange),var(--sky),var(--mint));transform-origin:0 50%;transform:scaleX(0);z-index:1000}
-    .site-nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);width:min(calc(100vw - 26px),1220px);display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 18px;border:1px solid var(--line);border-radius:999px;background:rgba(255,247,237,.8);backdrop-filter:blur(18px);box-shadow:0 16px 40px rgba(126,76,28,.08);z-index:900}.brand{display:flex;align-items:center;gap:12px}.brand-badge{width:40px;height:40px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,rgba(246,133,47,.18),rgba(76,181,255,.16));border:1px solid var(--line);font:700 12px "Space Mono",monospace;color:#d66b18}.brand-copy strong{display:block;font-size:14px}.brand-copy span{display:block;font:11px "Space Mono",monospace;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-    .nav-links{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center}.nav-link{padding:10px 12px;border-radius:999px;color:var(--muted);text-decoration:none;font-size:12px;font-weight:600;transition:.3s var(--ease)}.nav-link:hover,.nav-link.active{background:rgba(255,255,255,.62);color:var(--text);transform:translateY(-1px)}.nav-actions{display:flex;gap:10px;flex-shrink:0}.btn,.btn-soft{border:0;border-radius:999px;padding:11px 16px;text-decoration:none;cursor:pointer;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}.btn{color:#fff9f0;background:linear-gradient(135deg,var(--orange),#ff9d3d 56%,#f05a28);box-shadow:0 14px 24px rgba(240,90,40,.2)}.btn-soft{color:var(--text);background:rgba(255,255,255,.58);box-shadow:inset 0 0 0 1px var(--line)}.btn:hover,.btn-soft:hover{transform:translateY(-2px)}
-    main{width:min(calc(100vw - 26px),1220px);margin:0 auto;padding:118px 0 44px}section{margin-bottom:22px}.panel,.card{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,rgba(255,255,255,.62),rgba(255,248,239,.82));box-shadow:var(--shadow);isolation:isolate}.panel::before,.card::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(220px 220px at var(--cx,50%) var(--cy,50%),rgba(255,255,255,.42),transparent 70%);opacity:0;transition:opacity .3s ease;z-index:-1}.panel:hover::before,.card:hover::before{opacity:1}
-    .hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(340px,.9fr);gap:22px;padding:28px;min-height:calc(100vh - 150px)}.hero-copy{display:flex;flex-direction:column;justify-content:center;gap:18px}.eyebrow,.kicker{margin:0;font:11px "Space Mono",monospace;color:#d66b18;letter-spacing:.1em;text-transform:uppercase}.hero h1{margin:0;max-width:11ch;font-size:clamp(3rem,7vw,6rem);line-height:.93;letter-spacing:-.06em}.hero-gradient{display:inline-block;background:linear-gradient(135deg,#1b1209 0%,#8c470f 28%,#f6852f 56%,#4cb5ff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.summary{margin:0;max-width:60ch;color:var(--muted);font-size:15px;line-height:1.75}.hero-actions,.pill-row,.tag-row{display:flex;flex-wrap:wrap;gap:10px}.pill,.tag{display:inline-flex;align-items:center;min-height:36px;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.58);font:11px "Space Mono",monospace}
-    .intro-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.intro-card{padding:14px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.54);box-shadow:var(--shadow2)}.intro-card strong{display:block;margin-bottom:8px;font-size:12px;letter-spacing:.04em;text-transform:uppercase}.intro-card span{display:block;color:var(--muted);font-size:13px;line-height:1.55}
-    .hero-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.metric{padding:14px;border-radius:var(--radius2);background:rgba(255,255,255,.5);border:1px solid var(--line);box-shadow:var(--shadow2)}.metric small,.mini small,.pmetric small{display:block;margin-bottom:8px;color:var(--muted);font:10px "Space Mono",monospace;text-transform:uppercase;letter-spacing:.08em}.metric strong{display:block;font-size:clamp(1.2rem,2vw,2rem);letter-spacing:-.04em;line-height:1.08}.metric span{display:block;margin-top:6px;color:var(--muted);font-size:12px;line-height:1.5}
-    .console{display:grid;grid-template-rows:auto 1fr;gap:14px}.console-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px 20px 0}.console-head h2{margin:0;font-size:17px}.console-head p{margin:4px 0 0;color:var(--muted);font-size:13px;line-height:1.6}.switch{display:flex;flex-wrap:wrap;gap:8px}.switch button,.rail button,.resume-tabs button,.project-rail button{border:0;cursor:pointer;border-radius:999px;background:rgba(255,255,255,.56);box-shadow:inset 0 0 0 1px var(--line);color:var(--muted);transition:.3s var(--ease)}.switch button{padding:10px 14px}.switch button.active,.rail button.active,.resume-tabs button.active,.project-rail button.active{background:linear-gradient(135deg,rgba(246,133,47,.22),rgba(76,181,255,.18));color:var(--text);transform:translateY(-1px)}
-    .console-body{display:grid;grid-template-columns:220px 1fr;gap:14px;padding:0 18px 18px}.ring-card,.stack,.journey-panels,.project-display,.resume-display{border-radius:24px;border:1px solid var(--line);background:rgba(255,255,255,.56);box-shadow:var(--shadow2)}.ring-card{padding:18px;display:grid;place-items:center;gap:14px;min-height:258px;background:linear-gradient(180deg,rgba(255,255,255,.85),rgba(255,243,226,.78));overflow:hidden}.ring{position:relative;width:172px;height:172px;display:grid;place-items:center}.ring::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from -90deg,var(--orange),var(--sky),var(--mint),var(--orange));animation:spinHalo 14s linear infinite}.ring::after{content:"";position:absolute;inset:12px;border-radius:50%;background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,247,237,.88));box-shadow:inset 0 0 0 1px rgba(143,93,51,.08)}.ring-core{position:relative;z-index:1;text-align:center;padding:0 14px}.ring-core strong{display:block;font-size:1.55rem;line-height:1.05;letter-spacing:-.05em}.ring-core span{display:block;margin-top:6px;color:var(--muted);font:11px "Space Mono",monospace;text-transform:uppercase;letter-spacing:.08em}.ring-card p{margin:0;text-align:center;color:var(--muted);font-size:12px;line-height:1.6;max-width:22ch}
-    .stack{padding:18px;display:grid;gap:14px;background:linear-gradient(180deg,rgba(255,255,255,.76),rgba(242,249,255,.62))}.stack-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}.stack-top h3{margin:0;font-size:1.55rem;letter-spacing:-.05em;max-width:18ch}.stack p{margin:0;color:var(--muted);font-size:14px;line-height:1.7}.signal-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.mini,.pmetric{padding:14px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,247,237,.72));border:1px solid var(--line);transition:transform .35s var(--ease),box-shadow .35s var(--ease)}.mini:hover,.pmetric:hover{transform:translateY(-4px);box-shadow:0 16px 26px rgba(126,76,28,.12)}.mini strong,.pmetric strong{display:block;font-size:clamp(1rem,1.4vw,1.35rem);letter-spacing:-.04em;line-height:1.15}.mini span,.pmetric span{display:block;margin-top:6px;color:var(--muted);font-size:12px;line-height:1.5}
-    @keyframes spinHalo{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-    .section-shell{padding:22px}.head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:18px}.head h2{margin:6px 0 0;font-size:clamp(1.9rem,3vw,3rem);line-height:1;letter-spacing:-.05em}.head p:last-child{margin:0;max-width:54ch;color:var(--muted);font-size:14px;line-height:1.7}
-    .cap-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.cap{padding:18px;border-radius:24px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.78),rgba(255,248,239,.68));box-shadow:var(--shadow2);transition:.35s var(--ease)}.cap:hover{transform:translateY(-5px);box-shadow:0 20px 36px rgba(126,76,28,.12)}.cap-icon{width:42px;height:42px;display:grid;place-items:center;margin-bottom:14px;border-radius:14px;background:linear-gradient(135deg,rgba(246,133,47,.16),rgba(76,181,255,.14));font:12px "Space Mono",monospace;color:#d66b18}.cap h3{margin:0 0 10px;font-size:1.08rem;letter-spacing:-.03em}.cap p{margin:0 0 14px;color:var(--muted);font-size:13px;line-height:1.65}
-    .journey{display:grid;grid-template-columns:280px 1fr;gap:16px}.rail{display:grid;gap:10px;align-content:start}.rail button,.resume-tabs button{padding:14px 16px;text-align:left;border-radius:20px}.rail strong,.resume-tabs strong{display:block;font-size:14px;color:var(--text);margin-bottom:5px}.rail span,.resume-tabs span{display:block;color:var(--muted);font-size:12px;line-height:1.55}.journey-panels,.resume-display{position:relative;min-height:380px}.jpanel,.rpanel{position:absolute;inset:20px;opacity:0;pointer-events:none;transform:translateY(12px);transition:.35s var(--ease);overflow:auto}.jpanel.active,.rpanel.active{opacity:1;pointer-events:auto;transform:none}.jpanel h3,.rpanel h3{margin:0 0 12px;font-size:1.65rem;letter-spacing:-.04em}.jpanel p,.rpanel p{margin:0 0 14px;color:var(--muted);font-size:14px;line-height:1.75}.split,.rgrid,.pdetails{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}.timeline,.rcard,.detail{padding:16px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.58)}.timeline + .timeline{margin-top:12px}.timeline h4,.rcard h4,.detail h4{margin:0 0 8px;font-size:1rem;letter-spacing:-.03em}.meta{margin:0 0 10px;color:#d66b18;font:11px "Space Mono",monospace;text-transform:uppercase;letter-spacing:.08em}.timeline ul,.rpanel ul,.detail ul{margin:0;padding-left:18px;color:var(--muted);font-size:14px;line-height:1.65}.mini-stack{display:grid;gap:10px}
-    .projects{display:grid;grid-template-columns:360px 1fr;gap:16px}.project-rail{display:grid;gap:10px;align-content:start}.project-rail button{width:100%;padding:16px;text-align:left;border-radius:20px}.project-rail small{display:block;margin-bottom:8px;color:#d66b18;font:11px "Space Mono",monospace;text-transform:uppercase;letter-spacing:.08em}.project-rail strong{display:block;margin-bottom:7px;font-size:1rem;letter-spacing:-.03em;color:var(--text)}.project-rail span{display:block;color:var(--muted);font-size:13px;line-height:1.55}.project-rail button.active{transform:translateX(6px)}.project-display{padding:22px}.project-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}.project-top h3{margin:0;font-size:clamp(1.75rem,3vw,2.65rem);line-height:1;letter-spacing:-.05em}.project-copy{margin:0 0 16px;color:var(--muted);font-size:14px;line-height:1.75}.pmetrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}
-    .viz-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.viz{position:relative;min-height:380px;padding:16px 16px 72px;border-radius:24px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(255,248,239,.72));box-shadow:var(--shadow2)}.viz.span2{grid-column:span 2}.viz h3{margin:0 0 10px;font-size:1.3rem;letter-spacing:-.04em}.viz iframe{width:100%;height:250px;border:0;border-radius:18px;background:#fff;box-shadow:inset 0 0 0 1px var(--line)}.viz a{position:absolute;left:16px;right:16px;bottom:16px;text-align:center;text-decoration:none;border-radius:999px;padding:12px 14px;color:#fffaf1;background:linear-gradient(135deg,var(--orange),#ff9d3d 56%,#f05a28);box-shadow:0 14px 24px rgba(240,90,40,.18)}
-    .resume-shell{display:grid;grid-template-columns:260px 1fr;gap:16px}.resume-tabs{display:grid;gap:10px;align-content:start}.resume-display{padding:20px}.rgrid{grid-template-columns:1fr 1fr}.resume-pills{display:flex;flex-wrap:wrap;gap:8px}
-    footer{padding:18px 20px 28px;text-align:center;color:var(--muted);font:11px "Space Mono",monospace;letter-spacing:.04em;text-transform:uppercase}.reveal{opacity:0;transform:translateY(32px) scale(.985);filter:blur(8px);transition:opacity .85s var(--ease),transform .85s var(--ease),filter .85s var(--ease)}.reveal.visible{opacity:1;transform:none;filter:none}.reveal-item{opacity:0;filter:blur(8px);transition:opacity .85s var(--ease),transform .85s var(--ease),filter .85s var(--ease)}.reveal-item[data-enter="up"]{transform:translateY(36px) scale(.985)}.reveal-item[data-enter="left"]{transform:translateX(-44px) scale(.985)}.reveal-item[data-enter="right"]{transform:translateX(44px) scale(.985)}.reveal-item.visible{opacity:1;transform:none;filter:none}#resume{display:none}
-    @media (max-width:1120px){.hero,.console-body,.journey,.projects,.resume-shell,.split,.rgrid,.pdetails{grid-template-columns:1fr}.cap-grid,.signal-grid,.pmetrics,.viz-grid,.intro-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.viz.span2{grid-column:span 2}}
-    @media (max-width:760px){.site-nav{position:static;transform:none;width:calc(100vw - 18px);margin:10px auto 0;padding:12px;border-radius:24px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center}.site-nav,.hero,.section-shell{padding-left:14px;padding-right:14px}main{width:calc(100vw - 18px);padding-top:16px}.nav-links{grid-column:1 / -1;overflow-x:auto;flex-wrap:nowrap;justify-content:flex-start;padding-bottom:4px;scrollbar-width:none}.nav-links::-webkit-scrollbar{display:none}.nav-link{padding:9px 11px;white-space:nowrap}.nav-actions{gap:8px}.btn,.btn-soft{padding:9px 12px}.hero{min-height:auto;padding-top:18px;padding-bottom:18px;gap:14px}.hero h1{max-width:none}.pill-row{gap:8px}.hero-stats,.cap-grid,.signal-grid,.pmetrics,.viz-grid,.pdetails,.rgrid,.intro-grid{grid-template-columns:1fr}.hero-stats .metric:last-child{display:none}.console-head{flex-direction:column;padding:14px 14px 0}.switch{overflow-x:auto;flex-wrap:nowrap;padding-bottom:2px}.switch button{white-space:nowrap;padding:8px 11px}.viz.span2{grid-column:span 1}.viz-grid .viz:nth-child(n+4){display:none}.journey-panels,.resume-display{min-height:auto}.jpanel,.rpanel{position:relative;inset:auto}.jpanel:not(.active),.rpanel:not(.active){display:none}}
-    @media print{@page{size:letter;margin:1.5cm}*{-webkit-print-color-adjust:exact;print-color-adjust:exact;box-shadow:none!important;text-shadow:none!important}html,body{background:#fff!important;color:#111!important;overflow:visible!important}.ambient,.top-progress,.site-nav,main,footer{display:none!important}#resume{display:block!important}#resume .resume-page,#resume .resume-section,#resume .resume-item,#resume .resume-list,#resume .resume-skills{overflow:visible!important;max-height:none!important}#resume .resume-name{margin:0 0 6pt;font-size:16pt;font-weight:700}#resume .resume-contact{margin:0 0 8pt;font-size:8.8pt;line-height:1.2}#resume .resume-section{margin-bottom:6pt;page-break-inside:avoid;break-inside:avoid-page}#resume .resume-section-title{margin:0 0 3pt;padding-bottom:2pt;border-bottom:1pt solid #111;font:9.6pt "Space Mono",monospace;letter-spacing:.04em}#resume .resume-summary,#resume .resume-text,#resume li,#resume .skill-group p{margin:0;font-size:8.4pt;line-height:1.22}#resume .resume-item{margin-bottom:4pt}#resume .resume-role{font-weight:700;font-size:9pt}#resume .resume-date{font-size:8.2pt}#resume .resume-list{margin:1pt 0 0 12pt;padding:0}a{color:#111!important;text-decoration:none}a[href^="http"]::after,a[href^="mailto:"]::after{content:" (" attr(href) ")";font-size:8pt;color:#333;word-break:break-all}}
-    @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+    :root {
+      --bg: #fff8ef;
+      --bg2: #fff2dd;
+      --text: #24170d;
+      --muted: #6d5a4b;
+      --line: rgba(113, 69, 33, .12);
+      --orange: #f6852f;
+      --sky: #4cb5ff;
+      --mint: #63d7ab;
+      --shadow: 0 24px 60px rgba(120, 73, 27, .14);
+      --shadow2: 0 14px 32px rgba(120, 73, 27, .09);
+      --radius: 28px;
+      --radius2: 20px;
+      --ease: cubic-bezier(.22, 1, .36, 1);
+      --px: 50%;
+      --py: 50%
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--text);
+      font-family: "Sora", sans-serif;
+      background: radial-gradient(circle at 12% 10%, rgba(246, 133, 47, .24), transparent 26%), radial-gradient(circle at 86% 15%, rgba(76, 181, 255, .2), transparent 26%), radial-gradient(circle at 75% 84%, rgba(99, 215, 171, .15), transparent 24%), linear-gradient(180deg, #fffaf4 0%, var(--bg2) 42%, var(--bg) 100%)
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      background: radial-gradient(420px 420px at var(--px) var(--py), rgba(255, 201, 102, .22), transparent 70%)
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      pointer-events: none;
+      opacity: .3;
+      background-image: linear-gradient(rgba(129, 90, 56, .05) 1px, transparent 1px), linear-gradient(90deg, rgba(129, 90, 56, .05) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(circle at center, black 55%, transparent 95%)
+    }
+
+    a {
+      color: inherit
+    }
+
+    button {
+      font: inherit
+    }
+
+    .ambient {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(18px);
+      opacity: .58;
+      animation: drift 18s var(--ease) infinite alternate
+    }
+
+    .blob.a {
+      top: -90px;
+      left: -100px;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(246, 133, 47, .36), transparent 68%)
+    }
+
+    .blob.b {
+      top: 15%;
+      right: -80px;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(76, 181, 255, .3), transparent 68%);
+      animation-delay: -6s
+    }
+
+    .blob.c {
+      bottom: -110px;
+      left: 44%;
+      width: 360px;
+      height: 360px;
+      background: radial-gradient(circle, rgba(99, 215, 171, .24), transparent 68%);
+      animation-delay: -10s
+    }
+
+    @keyframes drift {
+      from {
+        transform: translate3d(0, 0, 0) scale(1)
+      }
+
+      to {
+        transform: translate3d(22px, -26px, 0) scale(1.08)
+      }
+    }
+
+    .top-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--orange), var(--sky), var(--mint));
+      transform-origin: 0 50%;
+      transform: scaleX(0);
+      z-index: 1000
+    }
+
+    .site-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(calc(100vw - 26px), 1220px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 18px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 247, 237, .8);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 16px 40px rgba(126, 76, 28, .08);
+      z-index: 900
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .brand-badge {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(246, 133, 47, .18), rgba(76, 181, 255, .16));
+      border: 1px solid var(--line);
+      font: 700 12px "Space Mono", monospace;
+      color: #d66b18
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-size: 14px
+    }
+
+    .brand-copy span {
+      display: block;
+      font: 11px "Space Mono", monospace;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center
+    }
+
+    .nav-link {
+      padding: 10px 12px;
+      border-radius: 999px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      transition: .3s var(--ease)
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background: rgba(255, 255, 255, .62);
+      color: var(--text);
+      transform: translateY(-1px)
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+      flex-shrink: 0
+    }
+
+    .btn,
+    .btn-soft {
+      border: 0;
+      border-radius: 999px;
+      padding: 11px 16px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .3s var(--ease), box-shadow .3s var(--ease)
+    }
+
+    .btn {
+      color: #fff9f0;
+      background: linear-gradient(135deg, var(--orange), #ff9d3d 56%, #f05a28);
+      box-shadow: 0 10px 20px rgba(240, 90, 40, .2)
+    }
+
+    .btn-soft {
+      color: var(--text);
+      background: rgba(255, 255, 255, .58);
+      box-shadow: inset 0 0 0 1px var(--line)
+    }
+
+    .btn:hover,
+    .btn-soft:hover {
+      transform: translateY(-2px)
+    }
+
+    main {
+      width: min(calc(100vw - 26px), 1220px);
+      margin: 0 auto;
+      padding: 118px 0 44px
+    }
+
+    section {
+      margin-bottom: 22px
+    }
+
+    .panel,
+    .card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255, 255, 255, .62), rgba(255, 248, 239, .82));
+      box-shadow: var(--shadow);
+      isolation: isolate
+    }
+
+    .panel::before,
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(220px 220px at var(--cx, 50%) var(--cy, 50%), rgba(255, 255, 255, .42), transparent 70%);
+      opacity: 0;
+      transition: opacity .3s ease;
+      z-index: -1
+    }
+
+    .panel:hover::before,
+    .card:hover::before {
+      opacity: 1
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(340px, .9fr);
+      gap: 22px;
+      padding: 28px;
+      min-height: calc(100vh - 150px)
+    }
+
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px
+    }
+
+    .eyebrow,
+    .kicker {
+      margin: 0;
+      font: 11px "Space Mono", monospace;
+      color: #d66b18;
+      letter-spacing: .1em;
+      text-transform: uppercase
+    }
+
+    .hero h1 {
+      margin: 0;
+      max-width: 11ch;
+      font-size: clamp(3rem, 7vw, 6rem);
+      line-height: .93;
+      letter-spacing: -.06em
+    }
+
+    .hero-gradient {
+      display: inline-block;
+      background: linear-gradient(135deg, #1b1209 0%, #8c470f 28%, #f6852f 56%, #4cb5ff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent
+    }
+
+    .summary {
+      margin: 0;
+      max-width: 60ch;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.75
+    }
+
+    .hero-actions,
+    .pill-row,
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px
+    }
+
+    .pill,
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .58);
+      font: 11px "Space Mono", monospace
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px
+    }
+
+    .intro-card {
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .54);
+      box-shadow: var(--shadow2)
+    }
+
+    .intro-card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 12px;
+      letter-spacing: .04em;
+      text-transform: uppercase
+    }
+
+    .intro-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px
+    }
+
+    .metric {
+      padding: 14px;
+      border-radius: var(--radius2);
+      background: rgba(255, 255, 255, .5);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow2)
+    }
+
+    .metric small,
+    .mini small,
+    .pmetric small {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font: 10px "Space Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: .08em
+    }
+
+    .metric strong {
+      display: block;
+      font-size: clamp(1.2rem, 2vw, 2rem);
+      letter-spacing: -.04em;
+      line-height: 1.08
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5
+    }
+
+    .console {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 14px
+    }
+
+    .console-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 20px 0
+    }
+
+    .console-head h2 {
+      margin: 0;
+      font-size: 17px
+    }
+
+    .console-head p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6
+    }
+
+    .switch {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px
+    }
+
+    .switch button,
+    .rail button,
+    .resume-tabs button,
+    .project-rail button {
+      border: 0;
+      cursor: pointer;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .56);
+      box-shadow: inset 0 0 0 1px var(--line);
+      color: var(--muted);
+      transition: .3s var(--ease)
+    }
+
+    .switch button {
+      padding: 10px 14px
+    }
+
+    .switch button.active,
+    .rail button.active,
+    .resume-tabs button.active,
+    .project-rail button.active {
+      background: linear-gradient(135deg, rgba(246, 133, 47, .22), rgba(76, 181, 255, .18));
+      color: var(--text);
+      transform: translateY(-1px)
+    }
+
+    .console-body {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 14px;
+      padding: 0 18px 18px
+    }
+
+    .hero {
+      grid-template-columns: minmax(0, 1.18fr) minmax(300px, .82fr);
+      gap: 18px;
+      align-items: start;
+      min-height: auto;
+      padding: 24px
+    }
+
+    .hero-copy {
+      justify-content: flex-start;
+      gap: 14px
+    }
+
+    .hero h1 {
+      max-width: 12ch;
+      font-size: clamp(3rem, 5.5vw, 5.2rem);
+      line-height: .95
+    }
+
+    .summary {
+      max-width: 62ch;
+      font-size: 16px;
+      line-height: 1.72
+    }
+
+    .hero-guide {
+      padding: 16px 18px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .62);
+      box-shadow: var(--shadow2)
+    }
+
+    .guide-title {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase
+    }
+
+    .guide-steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px
+    }
+
+    .guide-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 10px;
+      align-items: start
+    }
+
+    .guide-step span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(246, 133, 47, .16), rgba(76, 181, 255, .22));
+      border: 1px solid rgba(140, 71, 15, .14);
+      font-family: "Space Mono", monospace;
+      font-size: 13px;
+      color: var(--text)
+    }
+
+    .guide-step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55
+    }
+
+    .intro-grid,
+    .hero-stats {
+      display: none
+    }
+
+    .console-head {
+      align-items: flex-start
+    }
+
+    .console-head h2 {
+      margin: 0;
+      font-size: 1.45rem
+    }
+
+    .console-head p {
+      margin: 8px 0 0;
+      max-width: 38ch;
+      font-size: 14px;
+      line-height: 1.6
+    }
+
+    .console-body {
+      grid-template-columns: 150px 1fr;
+      gap: 12px;
+      padding: 16px
+    }
+
+    .ring {
+      width: 124px;
+      height: 124px;
+      margin-inline: auto
+    }
+
+    .ring-core strong {
+      font-size: 1.9rem
+    }
+
+    .ring-core span {
+      font-size: 11px
+    }
+
+    .ring-card p {
+      margin: 12px 0 0;
+      font-size: 13px;
+      line-height: 1.55
+    }
+
+    .stack {
+      gap: 12px
+    }
+
+    .stack-top {
+      align-items: flex-start;
+      gap: 10px
+    }
+
+    .stack-top h3 {
+      margin: 0;
+      font-size: 2rem;
+      line-height: 1.02
+    }
+
+    #signalBody {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.65
+    }
+
+    .signal-grid {
+      grid-template-columns: 1fr;
+      gap: 10px
+    }
+
+    .mini strong {
+      font-size: 1.1rem
+    }
+
+    .ring-card,
+    .stack,
+    .journey-panels,
+    .project-display,
+    .resume-display {
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .56);
+      box-shadow: var(--shadow2)
+    }
+
+    .ring-card {
+      padding: 18px;
+      display: grid;
+      place-items: center;
+      gap: 14px;
+      min-height: 258px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .85), rgba(255, 243, 226, .78));
+      overflow: hidden
+    }
+
+    .ring {
+      position: relative;
+      width: 172px;
+      height: 172px;
+      display: grid;
+      place-items: center
+    }
+
+    .ring::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: conic-gradient(from -90deg, var(--orange), var(--sky), var(--mint), var(--orange));
+      animation: spinHalo 14s linear infinite
+    }
+
+    .ring::after {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .96), rgba(255, 247, 237, .88));
+      box-shadow: inset 0 0 0 1px rgba(143, 93, 51, .08)
+    }
+
+    .ring-core {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 0 14px
+    }
+
+    .ring-core strong {
+      display: block;
+      font-size: 1.55rem;
+      line-height: 1.05;
+      letter-spacing: -.05em
+    }
+
+    .ring-core span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font: 11px "Space Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: .08em
+    }
+
+    .ring-card p {
+      margin: 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+      max-width: 22ch
+    }
+
+    .stack {
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .76), rgba(242, 249, 255, .62))
+    }
+
+    .stack-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap
+    }
+
+    .stack-top h3 {
+      margin: 0;
+      font-size: 1.55rem;
+      letter-spacing: -.05em;
+      max-width: 18ch
+    }
+
+    .stack p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7
+    }
+
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px
+    }
+
+    .mini,
+    .pmetric {
+      padding: 14px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .92), rgba(255, 247, 237, .72));
+      border: 1px solid var(--line);
+      transition: transform .35s var(--ease), box-shadow .35s var(--ease)
+    }
+
+    .mini:hover,
+    .pmetric:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 26px rgba(126, 76, 28, .12)
+    }
+
+    .mini strong,
+    .pmetric strong {
+      display: block;
+      font-size: clamp(1rem, 1.4vw, 1.35rem);
+      letter-spacing: -.04em;
+      line-height: 1.15
+    }
+
+    .mini span,
+    .pmetric span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5
+    }
+
+    @keyframes spinHalo {
+      from {
+        transform: rotate(0deg)
+      }
+
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .section-shell {
+      padding: 22px
+    }
+
+    .head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px
+    }
+
+    .head h2 {
+      margin: 6px 0 0;
+      font-size: clamp(1.9rem, 3vw, 3rem);
+      line-height: 1;
+      letter-spacing: -.05em
+    }
+
+    .head p:last-child {
+      margin: 0;
+      max-width: 54ch;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7
+    }
+
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px
+    }
+
+    .cap {
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255, 255, 255, .78), rgba(255, 248, 239, .68));
+      box-shadow: var(--shadow2);
+      transition: .35s var(--ease)
+    }
+
+    .cap:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 36px rgba(126, 76, 28, .12)
+    }
+
+    .cap-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 14px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(246, 133, 47, .16), rgba(76, 181, 255, .14));
+      font: 12px "Space Mono", monospace;
+      color: #d66b18
+    }
+
+    .cap h3 {
+      margin: 0 0 10px;
+      font-size: 1.08rem;
+      letter-spacing: -.03em
+    }
+
+    .cap p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65
+    }
+
+    .journey {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 16px
+    }
+
+    .rail {
+      display: grid;
+      gap: 10px;
+      align-content: start
+    }
+
+    .rail button,
+    .resume-tabs button {
+      padding: 14px 16px;
+      text-align: left;
+      border-radius: 20px
+    }
+
+    .rail strong,
+    .resume-tabs strong {
+      display: block;
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 5px
+    }
+
+    .rail span,
+    .resume-tabs span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55
+    }
+
+    .journey-panels,
+    .resume-display {
+      position: relative;
+      min-height: 380px
+    }
+
+    .jpanel,
+    .rpanel {
+      position: absolute;
+      inset: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+      transition: .35s var(--ease);
+      overflow: auto
+    }
+
+    .jpanel.active,
+    .rpanel.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: none
+    }
+
+    .jpanel h3,
+    .rpanel h3 {
+      margin: 0 0 12px;
+      font-size: 1.65rem;
+      letter-spacing: -.04em
+    }
+
+    .jpanel p,
+    .rpanel p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75
+    }
+
+    .split,
+    .rgrid,
+    .pdetails {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 14px
+    }
+
+    .timeline,
+    .rcard,
+    .detail {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .58)
+    }
+
+    .timeline+.timeline {
+      margin-top: 12px
+    }
+
+    .timeline h4,
+    .rcard h4,
+    .detail h4 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+      letter-spacing: -.03em
+    }
+
+    .meta {
+      margin: 0 0 10px;
+      color: #d66b18;
+      font: 11px "Space Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: .08em
+    }
+
+    .timeline ul,
+    .rpanel ul,
+    .detail ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65
+    }
+
+    .mini-stack {
+      display: grid;
+      gap: 10px
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 16px
+    }
+
+    .project-rail {
+      display: grid;
+      gap: 10px;
+      align-content: start
+    }
+
+    .project-rail button {
+      width: 100%;
+      padding: 16px;
+      text-align: left;
+      border-radius: 20px
+    }
+
+    .project-rail small {
+      display: block;
+      margin-bottom: 8px;
+      color: #d66b18;
+      font: 11px "Space Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: .08em
+    }
+
+    .project-rail strong {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 1rem;
+      letter-spacing: -.03em;
+      color: var(--text)
+    }
+
+    .project-rail span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55
+    }
+
+    .project-rail button.active {
+      transform: translateX(6px)
+    }
+
+    .project-display {
+      padding: 22px
+    }
+
+    .project-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px
+    }
+
+    .project-top h3 {
+      margin: 0;
+      font-size: clamp(1.75rem, 3vw, 2.65rem);
+      line-height: 1;
+      letter-spacing: -.05em
+    }
+
+    .project-copy {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75
+    }
+
+    .pmetrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 16px
+    }
+
+    .viz-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px
+    }
+
+    .viz {
+      position: relative;
+      min-height: 380px;
+      padding: 16px 16px 72px;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255, 255, 255, .82), rgba(255, 248, 239, .72));
+      box-shadow: var(--shadow2)
+    }
+
+    .viz.span2 {
+      grid-column: span 2
+    }
+
+    .viz h3 {
+      margin: 0 0 10px;
+      font-size: 1.3rem;
+      letter-spacing: -.04em
+    }
+
+    .viz iframe {
+      width: 100%;
+      height: 280px;
+      border: 0;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: inset 0 0 0 1px var(--line);
+      overflow: hidden;
+    }
+
+    .viz a {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 12px 14px;
+      color: #fffaf1;
+      background: linear-gradient(135deg, var(--orange), #ff9d3d 56%, #f05a28);
+      box-shadow: 0 14px 24px rgba(240, 90, 40, .18)
+    }
+
+    .resume-shell {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 16px
+    }
+
+    .resume-tabs {
+      display: grid;
+      gap: 10px;
+      align-content: start
+    }
+
+    .resume-display {
+      padding: 20px
+    }
+
+    .rgrid {
+      grid-template-columns: 1fr 1fr
+    }
+
+    .resume-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px
+    }
+
+    footer {
+      padding: 18px 20px 28px;
+      text-align: center;
+      color: var(--muted);
+      font: 11px "Space Mono", monospace;
+      letter-spacing: .04em;
+      text-transform: uppercase
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px) scale(.985);
+      filter: blur(8px);
+      transition: opacity .85s var(--ease), transform .85s var(--ease), filter .85s var(--ease)
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+      filter: none
+    }
+
+    .reveal-item {
+      opacity: 0;
+      filter: blur(8px);
+      transition: opacity .85s var(--ease), transform .85s var(--ease), filter .85s var(--ease)
+    }
+
+    .reveal-item[data-enter="up"] {
+      transform: translateY(36px) scale(.985)
+    }
+
+    .reveal-item[data-enter="left"] {
+      transform: translateX(-44px) scale(.985)
+    }
+
+    .reveal-item[data-enter="right"] {
+      transform: translateX(44px) scale(.985)
+    }
+
+    .reveal-item.visible {
+      opacity: 1;
+      transform: none;
+      filter: none
+    }
+
+    #resume {
+      display: none
+    }
+
+    @media (max-width:1120px) {
+
+      .hero,
+      .console-body,
+      .journey,
+      .projects,
+      .resume-shell,
+      .split,
+      .rgrid,
+      .pdetails {
+        grid-template-columns: 1fr
+      }
+
+      .cap-grid,
+      .signal-grid,
+      .pmetrics,
+      .viz-grid,
+      .intro-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+      }
+
+      .viz.span2 {
+        grid-column: span 2
+      }
+    }
+
+    @media (max-width:760px) {
+      .site-nav {
+        position: static;
+        transform: none;
+        width: calc(100vw - 18px);
+        margin: 10px auto 0;
+        padding: 12px;
+        border-radius: 24px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center
+      }
+
+      .site-nav,
+      .hero,
+      .section-shell {
+        padding-left: 14px;
+        padding-right: 14px
+      }
+
+      main {
+        width: calc(100vw - 18px);
+        padding-top: 16px
+      }
+
+      .nav-links {
+        grid-column: 1 / -1;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        padding-bottom: 4px;
+        scrollbar-width: none
+      }
+
+      .nav-links::-webkit-scrollbar {
+        display: none
+      }
+
+      .nav-links::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 30px;
+        background: linear-gradient(to right, transparent, rgba(255, 247, 237, 0.8));
+        pointer-events: none;
+        z-index: 10;
+        border-radius: 999px;
+      }
+
+      .nav-link {
+        padding: 8px 12px;
+        white-space: nowrap;
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      .nav-actions {
+        gap: 8px
+      }
+
+      .btn,
+      .btn-soft {
+        padding: 9px 12px
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 18px;
+        padding-bottom: 18px;
+        gap: 14px
+      }
+
+      .hero h1 {
+        max-width: none
+      }
+
+      .pill-row {
+        gap: 8px
+      }
+
+      .hero-stats,
+      .cap-grid,
+      .signal-grid,
+      .pmetrics,
+      .viz-grid,
+      .pdetails,
+      .rgrid,
+      .intro-grid {
+        grid-template-columns: 1fr
+      }
+
+      .hero-stats .metric:last-child {
+        display: none
+      }
+
+      .console-head {
+        flex-direction: column;
+        padding: 14px 14px 0
+      }
+
+      .switch {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 2px
+      }
+
+      .switch button {
+        white-space: nowrap;
+        padding: 8px 11px
+      }
+
+      .viz.span2 {
+        grid-column: span 1
+      }
+
+      .viz-grid .viz:nth-child(n+4) {
+        display: none
+      }
+
+      .journey-panels,
+      .resume-display {
+        min-height: auto
+      }
+
+      .viz iframe {
+        height: 480px;
+        padding: 4px;
+        box-sizing: border-box;
+      }
+
+      .jpanel,
+      .rpanel {
+        position: relative;
+        inset: auto
+      }
+
+      .jpanel:not(.active),
+      .rpanel:not(.active) {
+        display: none
+      }
+    }
+
+    @media print {
+      @page {
+        size: letter;
+        margin: 1.5cm
+      }
+
+      * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        box-shadow: none !important;
+        text-shadow: none !important
+      }
+
+      html,
+      body {
+        background: #fff !important;
+        color: #111 !important;
+        overflow: visible !important
+      }
+
+      .ambient,
+      .top-progress,
+      .site-nav,
+      main,
+      footer {
+        display: none !important
+      }
+
+      #resume {
+        display: block !important
+      }
+
+      #resume .resume-page,
+      #resume .resume-section,
+      #resume .resume-item,
+      #resume .resume-list,
+      #resume .resume-skills {
+        overflow: visible !important;
+        max-height: none !important
+      }
+
+      #resume .resume-name {
+        margin: 0 0 6pt;
+        font-size: 16pt;
+        font-weight: 700
+      }
+
+      #resume .resume-contact {
+        margin: 0 0 8pt;
+        font-size: 8.8pt;
+        line-height: 1.2
+      }
+
+      #resume .resume-section {
+        margin-bottom: 6pt;
+        page-break-inside: avoid;
+        break-inside: avoid-page
+      }
+
+      #resume .resume-section-title {
+        margin: 0 0 3pt;
+        padding-bottom: 2pt;
+        border-bottom: 1pt solid #111;
+        font: 9.6pt "Space Mono", monospace;
+        letter-spacing: .04em
+      }
+
+      #resume .resume-summary,
+      #resume .resume-text,
+      #resume li,
+      #resume .skill-group p {
+        margin: 0;
+        font-size: 8.4pt;
+        line-height: 1.22
+      }
+
+      #resume .resume-item {
+        margin-bottom: 4pt
+      }
+
+      #resume .resume-role {
+        font-weight: 700;
+        font-size: 9pt
+      }
+
+      #resume .resume-date {
+        font-size: 8.2pt
+      }
+
+      #resume .resume-list {
+        margin: 1pt 0 0 12pt;
+        padding: 0
+      }
+
+      a {
+        color: #111 !important;
+        text-decoration: none
+      }
+
+      a[href^="http"]::after,
+      a[href^="mailto:"]::after {
+        content: " (" attr(href) ")";
+        font-size: 8pt;
+        color: #333;
+        word-break: break-all
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      html {
+        scroll-behavior: auto
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important
+      }
+    }
+    @media (max-width:1120px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 16px
+      }
+
+      .console-body {
+        grid-template-columns: 1fr
+      }
+
+      .guide-steps {
+        grid-template-columns: 1fr
+      }
+    }
+
+    @media (max-width:720px) {
+      .hero {
+        padding: 18px 14px
+      }
+
+      .hero h1 {
+        max-width: none;
+        font-size: clamp(2.7rem, 12vw, 4rem)
+      }
+
+      .hero-guide {
+        padding: 14px
+      }
+
+      .guide-step {
+        grid-template-columns: 30px 1fr
+      }
+
+      .guide-step span {
+        width: 30px;
+        height: 30px
+      }
+
+      .console-head {
+        gap: 12px
+      }
+
+      .console-head p {
+        max-width: none
+      }
+
+      .stack-top h3 {
+        font-size: 1.65rem
+      }
+
+      .switch {
+        width: 100%
+      }
+
+      .switch button {
+        flex: 1
+      }
+    }
   </style>
 </head>
+
 <body>
-  <div class="ambient" aria-hidden="true"><div class="blob a"></div><div class="blob b"></div><div class="blob c"></div></div>
+  <div class="ambient" aria-hidden="true">
+    <div class="blob a"></div>
+    <div class="blob b"></div>
+    <div class="blob c"></div>
+  </div>
   <div class="top-progress" id="topProgress" aria-hidden="true"></div>
   <header class="site-nav">
     <div class="brand">
@@ -59,68 +1575,84 @@
   <main>
     <section id="hero" class="panel hero">
       <div class="hero-copy reveal">
-        <p class="eyebrow">Interactive Resume + Portfolio</p>
-        <h1><span class="hero-gradient">Data science</span><br>resume, projects, and proof of work.</h1>
-        <p class="summary">This page is James Liebel's interactive resume and portfolio. It gives a quick profile summary, featured projects, supporting visual work, and a one-page PDF resume for more traditional review.</p>
+        <p class="eyebrow">Resume + Portfolio</p>
+        <h1><span class="hero-gradient">James Liebel</span> builds data science and analytics projects people can use.</h1>
+        <p class="summary">University of Chicago student focused on data science, machine learning, visualization, and
+          AI-assisted prototyping. This page is structured for recruiters: featured work first, full resume below, and
+          a one-page PDF option for standard review.</p>
         <div class="hero-actions">
           <a class="btn" href="#projects">Explore Work</a>
           <a class="btn-soft" href="#resume-live">Open Full Resume</a>
         </div>
-        <div class="intro-grid">
-          <article class="intro-card"><strong>What This Is</strong><span>An interactive resume and portfolio focused on data science, analytics, AI-assisted prototyping, and front-end delivery.</span></article>
-          <article class="intro-card"><strong>What To Review</strong><span>Start with the featured projects for proof of work, then use the resume section for skills, education, and broader background.</span></article>
-          <article class="intro-card"><strong>Best Next Step</strong><span>Use `Save PDF` if you want the one-page resume first, or browse the sections below for more context.</span></article>
+        <div class="hero-guide card reveal-item">
+          <strong class="guide-title">How To Review This Page</strong>
+          <div class="guide-steps">
+            <div class="guide-step"><span>1</span>
+              <p>Start with the featured projects for proof of work, outcomes, and technical depth.</p>
+            </div>
+            <div class="guide-step"><span>2</span>
+              <p>Use the full resume section for skills, education, and broader background.</p>
+            </div>
+            <div class="guide-step"><span>3</span>
+              <p>Use `Save PDF` if you want the one-page resume in a more standard recruiter format.</p>
+            </div>
+          </div>
         </div>
         <div class="pill-row">
           <span class="pill">Python + SQL + FastAPI</span>
-          <span class="pill">ML / AI Prototypes / D3</span>
+          <span class="pill">Machine Learning + D3 + Power BI</span>
+          <span class="pill">React + Next.js + Git</span>
           <span class="pill">UChicago Class of 2030</span>
           <a class="pill" href="mailto:Jamesliebel40@gmail.com">Jamesliebel40@gmail.com</a>
-        </div>
-        <div class="hero-stats">
-          <article class="metric card"><small>Work Areas</small><strong>ML, Web, Geo</strong><span>Projects span machine learning, interactive web work, and data visualization.</span></article>
-          <article class="metric card"><small>Model Metrics</small><strong>85 to 91%</strong><span>Validation accuracy and recall from supervised learning projects.</span></article>
-          <article class="metric card"><small>Delivery Style</small><strong>Interactive</strong><span>Projects are presented as visual tools, dashboards, and usable interfaces.</span></article>
         </div>
       </div>
 
       <div class="console reveal">
         <div class="console-head">
           <div>
-            <h2>Quick Profile Snapshot</h2>
-            <p>Switch modes to view the profile through three practical lenses: building, analysis, and delivery.</p>
+            <h2>Recruiter Snapshot</h2>
+            <p>Use these views if you want to assess the profile from a software, analytics, or delivery angle. The
+              default layout stays broad and easy to scan.</p>
           </div>
           <div class="switch" role="tablist" aria-label="Profile modes">
             <button class="active" type="button" data-mode="builder">Builder</button>
             <button type="button" data-mode="analyst">Analyst</button>
-            <button type="button" data-mode="operator">Operator</button>
+            <button type="button" data-mode="operator">Delivery</button>
           </div>
         </div>
 
         <div class="console-body panel">
           <div class="ring-card">
             <div class="ring" id="signalRing">
-              <div class="ring-core"><strong id="ringScore">Builder</strong><span id="ringLabel">current lens</span></div>
+              <div class="ring-core"><strong id="ringScore">Builder</strong><span id="ringLabel">role view</span>
+              </div>
             </div>
-            <p id="ringFoot">Use the lens switcher to see the profile from the perspective of building, analysis, or delivery.</p>
+            <p id="ringFoot">Switch the view if you want the quickest summary for software, analytics, or delivery-heavy
+              roles.</p>
           </div>
 
           <div class="stack">
             <div class="stack-top">
               <div>
-                <p class="kicker" id="signalKicker">Current mode</p>
-                <h3 id="signalTitle">Building end-to-end systems</h3>
+                <p class="kicker" id="signalKicker">Current view</p>
+                <h3 id="signalTitle">Best evidence for software and product-facing roles</h3>
               </div>
-              <span class="pill" id="signalBadge">Machine learning + product work</span>
+              <span class="pill" id="signalBadge">Applications + ML projects</span>
             </div>
-            <p id="signalBody">The strongest through-line is taking analytical work beyond notebooks: cleaning data, training models, prototyping with AI, and packaging the result as something a person can actually use.</p>
+            <p id="signalBody">This view emphasizes end-to-end project work: data preparation, model implementation,
+              API or workflow logic, interface design, and packaging results into something another person can review
+              and use.</p>
             <div class="signal-grid">
-              <div class="mini"><small id="s1l">Primary stack</small><strong id="s1v">Python / SQL / FastAPI</strong><span id="s1n">Core stack for analytics, prototyping, and delivery.</span></div>
-              <div class="mini"><small id="s2l">Work style</small><strong id="s2v">Interactive</strong><span id="s2n">Dashboards, D3, React surfaces, and live sites instead of flat outputs.</span></div>
-              <div class="mini"><small id="s3l">Strength</small><strong id="s3v">Usable systems</strong><span id="s3n">Evaluation, workflow design, and readable interfaces.</span></div>
+              <div class="mini"><small id="s1l">Core tools</small><strong id="s1v">Python / SQL /
+                  FastAPI</strong><span id="s1n">Main stack for analytics, prototypes, and simple application delivery.</span></div>
+              <div class="mini"><small id="s2l">Shipped examples</small><strong id="s2v">CustomStrat +
+                  JimAI</strong><span id="s2n">Live site work and AI-assisted workflow prototypes.</span></div>
+              <div class="mini"><small id="s3l">What stands out</small><strong id="s3v">Readable
+                  interfaces</strong><span id="s3n">Projects are presented as dashboards, maps, or tools instead of flat notebooks.</span></div>
             </div>
             <div class="tag-row" id="signalTags">
-              <span class="tag">Scikit-learn</span><span class="tag">XGBoost</span><span class="tag">D3.js</span><span class="tag">Power BI</span>
+              <span class="tag">Scikit-learn</span><span class="tag">XGBoost</span><span class="tag">D3.js</span><span
+                class="tag">Power BI</span>
             </div>
           </div>
         </div>
@@ -129,74 +1661,190 @@
 
     <section id="capabilities" class="panel section-shell reveal">
       <div class="head">
-        <div><p class="kicker">What I Do</p><h2>Core strengths, grouped for quick review.</h2></div>
-        <p>This section summarizes the main kinds of work shown on the site: machine learning, statistics, AI-assisted prototyping, and interface-driven delivery.</p>
+        <div>
+          <p class="kicker">What I Do</p>
+          <h2>Core strengths, grouped for quick review.</h2>
+        </div>
+        <p>This section summarizes the main kinds of work shown on the site: machine learning, statistics, AI-assisted
+          prototyping, and interface-driven delivery.</p>
       </div>
       <div class="cap-grid">
-        <article class="cap card"><div class="cap-icon">ML</div><h3>Machine Learning</h3><p>Scikit-learn, XGBoost, TensorFlow, model evaluation, feature engineering, and structured experimentation.</p><div class="tag-row"><span class="tag">Classification</span><span class="tag">Regression</span><span class="tag">Model Evaluation</span></div></article>
-        <article class="cap card"><div class="cap-icon">DS</div><h3>Data + Statistics</h3><p>Python, Pandas, NumPy, SQL, EDA, hypothesis testing, and quantitative analysis across structured data.</p><div class="tag-row"><span class="tag">SQL</span><span class="tag">EDA</span><span class="tag">Hypothesis Testing</span></div></article>
-        <article class="cap card"><div class="cap-icon">AI</div><h3>AI Prototyping</h3><p>AI-assisted development, prompt-driven iteration, local model workflows, and product-style interfaces built with tools like FastAPI and React.</p><div class="tag-row"><span class="tag">Prompting</span><span class="tag">Local AI</span><span class="tag">Automation</span></div></article>
-        <article class="cap card"><div class="cap-icon">VX</div><h3>Visualization + Delivery</h3><p>D3.js, Power BI, Matplotlib, Seaborn, Next.js, Tailwind, and interface-minded presentation that makes work easier to understand.</p><div class="tag-row"><span class="tag">Dashboards</span><span class="tag">GeoJSON</span><span class="tag">Responsive UI</span></div></article>
+        <article class="cap card">
+          <div class="cap-icon">ML</div>
+          <h3>Machine Learning</h3>
+          <p>Scikit-learn, XGBoost, TensorFlow, model evaluation, feature engineering, and structured experimentation.
+          </p>
+          <div class="tag-row"><span class="tag">Classification</span><span class="tag">Regression</span><span
+              class="tag">Model Evaluation</span></div>
+        </article>
+        <article class="cap card">
+          <div class="cap-icon">DS</div>
+          <h3>Data + Statistics</h3>
+          <p>Python, Pandas, NumPy, SQL, EDA, hypothesis testing, and quantitative analysis across structured data.</p>
+          <div class="tag-row"><span class="tag">SQL</span><span class="tag">EDA</span><span class="tag">Hypothesis
+              Testing</span></div>
+        </article>
+        <article class="cap card">
+          <div class="cap-icon">AI</div>
+          <h3>AI Prototyping</h3>
+          <p>AI-assisted development, prompt-driven iteration, local model workflows, and product-style interfaces built
+            with tools like FastAPI and React.</p>
+          <div class="tag-row"><span class="tag">Prompting</span><span class="tag">Local AI</span><span
+              class="tag">Automation</span></div>
+        </article>
+        <article class="cap card">
+          <div class="cap-icon">VX</div>
+          <h3>Visualization + Delivery</h3>
+          <p>D3.js, Power BI, Matplotlib, Seaborn, Next.js, Tailwind, and interface-minded presentation that makes work
+            easier to understand.</p>
+          <div class="tag-row"><span class="tag">Dashboards</span><span class="tag">GeoJSON</span><span
+              class="tag">Responsive UI</span></div>
+        </article>
       </div>
     </section>
 
     <section id="journey" class="panel section-shell reveal">
       <div class="head">
-        <div><p class="kicker">Background</p><h2>Resume context, organized for quick scanning.</h2></div>
-        <p>The left rail organizes the story into overview, experience, education, and leadership instead of forcing everything into one long block of text.</p>
+        <div>
+          <p class="kicker">Background</p>
+          <h2>Resume context, organized for quick scanning.</h2>
+        </div>
+        <p>The left rail organizes the story into overview, experience, education, and leadership instead of forcing
+          everything into one long block of text.</p>
       </div>
       <div class="journey">
         <div class="rail" role="tablist" aria-label="Journey sections">
-          <button class="active" type="button" data-journey="overview"><strong>Overview</strong><span>Profile summary and broad signal across modeling, analytics, and presentation.</span></button>
-          <button type="button" data-journey="experience"><strong>Experience</strong><span>Independent builds, shipped work, and technical communication.</span></button>
-          <button type="button" data-journey="education"><strong>Education</strong><span>University track, certifications, and formal grounding.</span></button>
-          <button type="button" data-journey="leadership"><strong>Leadership</strong><span>Clubs, workshops, and presentation under pressure.</span></button>
+          <button class="active" type="button" data-journey="overview"><strong>Overview</strong><span>Profile summary
+              and broad signal across modeling, analytics, and presentation.</span></button>
+          <button type="button" data-journey="experience"><strong>Experience</strong><span>Independent builds, shipped
+              work, and technical communication.</span></button>
+          <button type="button" data-journey="education"><strong>Education</strong><span>University track,
+              certifications, and formal grounding.</span></button>
+          <button type="button" data-journey="leadership"><strong>Leadership</strong><span>Clubs, workshops, and
+              presentation under pressure.</span></button>
         </div>
         <div class="journey-panels">
           <article class="jpanel active" data-panel="overview">
             <h3>Analytical work that is easy to inspect, not just easy to claim.</h3>
-            <p>Incoming University of Chicago student pursuing Data Science and Statistics, with current emphasis on predictive modeling, AI-assisted prototyping, ETL design, and presenting technical work through interactive front-end surfaces.</p>
+            <p>Incoming University of Chicago student pursuing Data Science and Statistics, with current emphasis on
+              predictive modeling, AI-assisted prototyping, ETL design, and presenting technical work through
+              interactive front-end surfaces.</p>
             <div class="split">
               <div>
-                <div class="timeline"><h4>What stands out</h4><p class="meta">Core profile</p><ul><li>Builds classification and predictive workflows with measurable evaluation outcomes.</li><li>Uses Python and SQL across data analysis, AI-assisted prototyping, and workflow design.</li><li>Packages work visually through D3.js, deployed web apps, and portfolio-grade interfaces.</li></ul></div>
-                <div class="timeline"><h4>Current direction</h4><p class="meta">Summer 2026 target</p><ul><li>Seeking internships where statistical rigor and product-minded presentation both matter.</li><li>Interested in roles spanning analytics engineering, data science, and ML-adjacent product work.</li></ul></div>
+                <div class="timeline">
+                  <h4>What stands out</h4>
+                  <p class="meta">Core profile</p>
+                  <ul>
+                    <li>Builds classification and predictive workflows with measurable evaluation outcomes.</li>
+                    <li>Uses Python and SQL across data analysis, AI-assisted prototyping, and workflow design.</li>
+                    <li>Packages work visually through D3.js, deployed web apps, and portfolio-grade interfaces.</li>
+                  </ul>
+                </div>
+                <div class="timeline">
+                  <h4>Current direction</h4>
+                  <p class="meta">Summer 2026 target</p>
+                  <ul>
+                    <li>Seeking internships where statistical rigor and product-minded presentation both matter.</li>
+                    <li>Interested in roles spanning analytics engineering, data science, and ML-adjacent product work.
+                    </li>
+                  </ul>
+                </div>
               </div>
               <div class="mini-stack">
-                <div class="mini"><small>Validation</small><strong>85%+</strong><span>Typical supervised benchmark range.</span></div>
-                <div class="mini"><small>Recall</small><strong>91%</strong><span>Fraud detection benchmark surfaced as a headline metric.</span></div>
-                <div class="mini"><small>Scale</small><strong>10,000+</strong><span>Records handled in SQL and ETL-driven analysis.</span></div>
+                <div class="mini"><small>Validation</small><strong>85%+</strong><span>Typical supervised benchmark
+                    range.</span></div>
+                <div class="mini"><small>Recall</small><strong>91%</strong><span>Fraud detection benchmark surfaced as a
+                    headline metric.</span></div>
+                <div class="mini"><small>Scale</small><strong>10,000+</strong><span>Records handled in SQL and
+                    ETL-driven analysis.</span></div>
               </div>
             </div>
           </article>
 
           <article class="jpanel" data-panel="experience">
             <h3>Experience is portfolio-led, but now includes shipped product work.</h3>
-            <p>The strongest evidence comes from self-directed builds that combine analysis, prototyping, interface work, and real delivery. That sits alongside teaching and technical communication.</p>
-            <div class="timeline"><h4>JimAI / AI Workspace Prototype</h4><p class="meta">Independent build</p><ul><li>Built an AI-assisted local workspace prototype for research, code generation, and workflow experimentation.</li><li>Worked with tools and concepts including FastAPI, React/Vite, local model workflows, browser automation, and agent-oriented interfaces.</li><li>Focused on practical prompting, product structure, and usability rather than low-level model engineering.</li></ul></div>
-            <div class="timeline"><h4>CustomStrat Advisory Website</h4><p class="meta">Live deployment</p><ul><li>Built and deployed customstrat.com using Next.js 14, TypeScript, Tailwind CSS, GitHub Pages, and a custom domain.</li><li>Used AI-assisted iteration to speed up UI and content prototyping, then refined structure and deployment into a production-facing site.</li></ul></div>
+            <p>The strongest evidence comes from self-directed builds that combine analysis, prototyping, interface
+              work, and real delivery. That sits alongside teaching and technical communication.</p>
+            <div class="timeline">
+              <h4>JimAI / AI Workspace Prototype</h4>
+              <p class="meta">Independent build</p>
+              <ul>
+                <li>Built an AI-assisted local workspace prototype for research, code generation, and workflow
+                  experimentation.</li>
+                <li>Worked with tools and concepts including FastAPI, React/Vite, local model workflows, browser
+                  automation, and agent-oriented interfaces.</li>
+                <li>Focused on practical prompting, product structure, and usability rather than low-level model
+                  engineering.</li>
+              </ul>
+            </div>
+            <div class="timeline">
+              <h4>CustomStrat Advisory Website</h4>
+              <p class="meta">Live deployment</p>
+              <ul>
+                <li>Built and deployed customstrat.com using Next.js 14, TypeScript, Tailwind CSS, GitHub Pages, and a
+                  custom domain.</li>
+                <li>Used AI-assisted iteration to speed up UI and content prototyping, then refined structure and
+                  deployment into a production-facing site.</li>
+              </ul>
+            </div>
           </article>
 
           <article class="jpanel" data-panel="education">
             <h3>Formal training is early, but the stack is already broad.</h3>
-            <p>The academic path is just beginning, but it is supported by certifications and hands-on project execution that already touches modeling, analytics, visualization, and cloud workflows.</p>
+            <p>The academic path is just beginning, but it is supported by certifications and hands-on project execution
+              that already touches modeling, analytics, visualization, and cloud workflows.</p>
             <div class="split">
               <div>
-                <div class="timeline"><h4>University of Chicago</h4><p class="meta">Expected June 2030</p><ul><li>B.S. in Data Science and Statistics.</li><li>Quantitative work paired with modern computational tooling.</li></ul></div>
-                <div class="timeline"><h4>Certifications</h4><p class="meta">Completed and in progress</p><ul><li>IBM Data Science Professional Certificate.</li><li>Microsoft PL-300 Power BI Data Analyst.</li><li>Google Cloud Machine Learning Engineer in progress.</li></ul></div>
+                <div class="timeline">
+                  <h4>University of Chicago</h4>
+                  <p class="meta">Expected June 2030</p>
+                  <ul>
+                    <li>B.S. in Data Science and Statistics.</li>
+                    <li>Quantitative work paired with modern computational tooling.</li>
+                  </ul>
+                </div>
+                <div class="timeline">
+                  <h4>Certifications</h4>
+                  <p class="meta">Completed and in progress</p>
+                  <ul>
+                    <li>IBM Data Science Professional Certificate.</li>
+                    <li>Microsoft PL-300 Power BI Data Analyst.</li>
+                    <li>Google Cloud Machine Learning Engineer in progress.</li>
+                  </ul>
+                </div>
               </div>
               <div class="mini-stack">
-                <div class="mini"><small>IBM</small><strong>Data Science</strong><span>Practical grounding in data science workflows.</span></div>
-                <div class="mini"><small>PL-300</small><strong>Power BI</strong><span>Visualization and reporting credibility.</span></div>
-                <div class="mini"><small>Delivery focus</small><strong>Interactive work</strong><span>Stronger signal currently comes from shipped visual and analytical projects than from cloud certification tracking.</span></div>
+                <div class="mini"><small>IBM</small><strong>Data Science</strong><span>Practical grounding in data
+                    science workflows.</span></div>
+                <div class="mini"><small>PL-300</small><strong>Power BI</strong><span>Visualization and reporting
+                    credibility.</span></div>
+                <div class="mini"><small>Delivery focus</small><strong>Interactive work</strong><span>Stronger signal
+                    currently comes from shipped visual and analytical projects than from cloud certification
+                    tracking.</span></div>
               </div>
             </div>
           </article>
 
           <article class="jpanel" data-panel="leadership">
             <h3>Leadership here is technical, presentational, and competitive.</h3>
-            <p>The resume is not only about building models. It also shows the ability to present analysis, lead peers through concepts, and defend decisions in front of other people.</p>
-            <div class="timeline"><h4>Co-President, Machine Learning Club</h4><p class="meta">Workshops + mentoring</p><ul><li>Lead sessions on neural networks, evaluation, and practical AI project framing.</li><li>Help other students move from vague AI interest to concrete implementation.</li></ul></div>
-            <div class="timeline"><h4>DECA Competitor</h4><p class="meta">2022 to 2024</p><ul><li>Presented data-backed business analysis and strategic recommendations.</li><li>Developed poise under time pressure and stronger judgment in live presentation settings.</li></ul></div>
+            <p>The resume is not only about building models. It also shows the ability to present analysis, lead peers
+              through concepts, and defend decisions in front of other people.</p>
+            <div class="timeline">
+              <h4>Co-President, Machine Learning Club</h4>
+              <p class="meta">Workshops + mentoring</p>
+              <ul>
+                <li>Lead sessions on neural networks, evaluation, and practical AI project framing.</li>
+                <li>Help other students move from vague AI interest to concrete implementation.</li>
+              </ul>
+            </div>
+            <div class="timeline">
+              <h4>DECA Competitor</h4>
+              <p class="meta">2022 to 2024</p>
+              <ul>
+                <li>Presented data-backed business analysis and strategic recommendations.</li>
+                <li>Developed poise under time pressure and stronger judgment in live presentation settings.</li>
+              </ul>
+            </div>
           </article>
         </div>
       </div>
@@ -204,31 +1852,83 @@
 
     <section id="projects" class="panel section-shell reveal">
       <div class="head">
-        <div><p class="kicker">Featured Work</p><h2>Start here for the clearest proof of what I can build.</h2></div>
+        <div>
+          <p class="kicker">Featured Work</p>
+          <h2>Start here for the clearest proof of what I can build.</h2>
+        </div>
         <p>Select a project on the left to see what it is, how it was built, and why it matters in a hiring context.</p>
       </div>
       <div class="projects">
         <div class="project-rail" role="tablist" aria-label="Featured projects">
-          <button class="active" type="button" data-label="Fraud Detection" data-title="Credit Card Fraud Detection" data-copy="A fraud-detection model built for a heavily imbalanced dataset using XGBoost, Random Forest, SMOTE, and recall-focused evaluation." data-a-label="Model recall" data-a-value="91%" data-b-label="Dataset size" data-b-value="284k+ rows" data-c-label="Key tools" data-c-value="XGBoost + SMOTE" data-outline="Built around class imbalance, anomaly detection pressure, and model comparison.|Used resampling and targeted metrics to prioritize practical fraud capture.|Strong example of machine learning work with business-facing consequences." data-stack="Scikit-learn,XGBoost,Random Forest,SMOTE,Precision-Recall,Model Evaluation" data-link="https://github.com/James-Liebel"><small>01 · ML</small><strong>Credit Card Fraud Detection</strong><span>Imbalanced classification with recall-focused evaluation.</span></button>
-          <button type="button" data-label="JimAI" data-title="JimAI AI Workspace Prototype" data-copy="An AI-assisted workspace prototype for research, code generation, and workflow testing, built through prompting and iterative product development." data-a-label="Project type" data-a-value="Prototype" data-b-label="Main tools" data-b-value="FastAPI / React / local AI" data-c-label="Main focus" data-c-value="Prompting + workflow design" data-outline="Shows practical work with AI tooling without overstating low-level systems expertise.|Combines prompting, interface design, and workflow experimentation into a usable prototype.|Useful resume signal because it demonstrates applied AI building, not just AI interest." data-stack="FastAPI,React,Vite,Ollama,Automation,Prompting,Workflow Design" data-link="https://github.com/James-Liebel/JimAI"><small>02 · AI</small><strong>JimAI AI Workspace Prototype</strong><span>AI-assisted prototype focused on workflow design and usable tooling.</span></button>
-          <button type="button" data-label="CustomStrat" data-title="CustomStrat Advisory Website" data-copy="A live client website built and deployed for CustomStrat Advisory with reusable content structure, responsive design, and a custom domain." data-a-label="Live site" data-a-value="customstrat.com" data-b-label="Stack" data-b-value="Next.js 14 + TypeScript" data-c-label="Deployment" data-c-value="GitHub Pages + custom domain" data-outline="Shows shipped execution for a real audience instead of another classroom-style demo.|Used AI-assisted iteration as a workflow accelerator while keeping the implementation grounded and maintainable.|Adds strong front-end and delivery signal alongside data science work." data-stack="Next.js,TypeScript,Tailwind CSS,GitHub Pages,Responsive Design,Content Architecture" data-link="https://customstrat.com"><small>03 · Web</small><strong>CustomStrat Advisory Website</strong><span>Production-facing website built and deployed for a live business.</span></button>
-          <button type="button" data-label="Food Access Map" data-title="Cincinnati Food Access Map" data-copy="An interactive D3 choropleth built to show low-income, low-access neighborhoods in a clearer and more usable way than a static map or PDF." data-a-label="Format" data-a-value="Interactive map" data-b-label="Data source" data-b-value="GeoJSON + census" data-c-label="Key tool" data-c-value="D3.js" data-outline="Combines analytical framing with front-end communication quality.|Keeps the visualization directly embedded in the portfolio instead of hiding it behind screenshots.|Shows that visual delivery is part of the skill set rather than an afterthought." data-stack="D3.js,SVG,GeoJSON,Choropleth,Data Storytelling,Geospatial Analysis" data-link="projects/web/visualizations/choropleth_map.html"><small>04 · Geo</small><strong>Cincinnati Food Access Map</strong><span>Geospatial analysis designed for exploration, not just documentation.</span></button>
+          <button class="active" type="button" data-label="Fraud Detection" data-title="Credit Card Fraud Detection"
+            data-copy="A fraud-detection model built for a heavily imbalanced dataset using XGBoost, Random Forest, SMOTE, and recall-focused evaluation."
+            data-a-label="Model recall" data-a-value="91%" data-b-label="Dataset size" data-b-value="284k+ rows"
+            data-c-label="Key tools" data-c-value="XGBoost + SMOTE"
+            data-outline="Built around class imbalance, anomaly detection pressure, and model comparison.|Used resampling and targeted metrics to prioritize practical fraud capture.|Strong example of machine learning work with business-facing consequences."
+            data-stack="Scikit-learn,XGBoost,Random Forest,SMOTE,Precision-Recall,Model Evaluation"
+            data-link="https://github.com/James-Liebel/Personal_Projects/tree/main/projects/machine_learning"><small>01
+              · ML</small><strong>Credit Card Fraud Detection</strong><span>Imbalanced classification with
+              recall-focused evaluation.</span></button>
+          <button type="button" data-label="JimAI" data-title="JimAI AI Workspace Prototype"
+            data-copy="An AI-assisted workspace prototype for research, code generation, and workflow testing, built through prompting and iterative product development."
+            data-a-label="Project type" data-a-value="Prototype" data-b-label="Main tools"
+            data-b-value="FastAPI / React / local AI" data-c-label="Main focus"
+            data-c-value="Prompting + workflow design"
+            data-outline="Shows practical work with AI tooling without overstating low-level systems expertise.|Combines prompting, interface design, and workflow experimentation into a usable prototype.|Useful resume signal because it demonstrates applied AI building, not just AI interest."
+            data-stack="FastAPI,React,Vite,Ollama,Automation,Prompting,Workflow Design"
+            data-link="https://github.com/James-Liebel/JimAI"><small>02 · AI</small><strong>JimAI AI Workspace
+              Prototype</strong><span>AI-assisted prototype focused on workflow design and usable
+              tooling.</span></button>
+          <button type="button" data-label="CustomStrat" data-title="CustomStrat Advisory Website"
+            data-copy="A live client website built and deployed for CustomStrat Advisory with reusable content structure, responsive design, and a custom domain."
+            data-a-label="Live site" data-a-value="customstrat.com" data-b-label="Stack"
+            data-b-value="Next.js 14 + TypeScript" data-c-label="Deployment" data-c-value="GitHub Pages + custom domain"
+            data-outline="Shows shipped execution for a real audience instead of another classroom-style demo.|Used AI-assisted iteration as a workflow accelerator while keeping the implementation grounded and maintainable.|Adds strong front-end and delivery signal alongside data science work."
+            data-stack="Next.js,TypeScript,Tailwind CSS,GitHub Pages,Responsive Design,Content Architecture"
+            data-link="https://customstrat.com"><small>03 · Web</small><strong>CustomStrat Advisory
+              Website</strong><span>Production-facing website built and deployed for a live business.</span></button>
+          <button type="button" data-label="Food Access Map" data-title="Cincinnati Food Access Map"
+            data-copy="An interactive D3 choropleth built to show low-income, low-access neighborhoods in a clearer and more usable way than a static map or PDF."
+            data-a-label="Format" data-a-value="Interactive map" data-b-label="Data source"
+            data-b-value="GeoJSON + census" data-c-label="Key tool" data-c-value="D3.js"
+            data-outline="Combines analytical framing with front-end communication quality.|Keeps the visualization directly embedded in the portfolio instead of hiding it behind screenshots.|Shows that visual delivery is part of the skill set rather than an afterthought."
+            data-stack="D3.js,SVG,GeoJSON,Choropleth,Data Storytelling,Geospatial Analysis"
+            data-link="https://github.com/James-Liebel/Personal_Projects/tree/main/projects/web/visualizations"><small>04
+              · Geo</small><strong>Cincinnati Food Access Map</strong><span>Geospatial analysis designed for
+              exploration, not just documentation.</span></button>
         </div>
 
         <article class="project-display card">
           <div class="project-top">
-            <div><p class="kicker" id="plabel">Fraud Detection</p><h3 id="ptitle">Credit Card Fraud Detection</h3></div>
-            <a class="btn-soft" id="plink" href="https://github.com/James-Liebel" target="_blank" rel="noopener noreferrer">Open Project</a>
+            <div>
+              <p class="kicker" id="plabel">Fraud Detection</p>
+              <h3 id="ptitle">Credit Card Fraud Detection</h3>
+            </div>
+            <a class="btn-soft" id="plink" href="https://github.com/James-Liebel" target="_blank"
+              rel="noopener noreferrer">Open Project</a>
           </div>
-          <p class="project-copy" id="pcopy">A high-imbalance classification workflow using XGBoost, Random Forest, SMOTE, and evaluation grounded in precision-recall behavior rather than surface-level accuracy.</p>
+          <p class="project-copy" id="pcopy">A high-imbalance classification workflow using XGBoost, Random Forest,
+            SMOTE, and evaluation grounded in precision-recall behavior rather than surface-level accuracy.</p>
           <div class="pmetrics">
             <div class="pmetric"><small id="pal">Top benchmark</small><strong id="pav">91% recall</strong></div>
             <div class="pmetric"><small id="pbl">Data profile</small><strong id="pbv">284k+ rows</strong></div>
             <div class="pmetric"><small id="pcl">Primary tools</small><strong id="pcv">XGBoost + SMOTE</strong></div>
           </div>
           <div class="pdetails">
-            <div class="detail"><h4>Why it matters</h4><ul id="poutline"><li>Built around class imbalance, anomaly detection pressure, and model comparison.</li><li>Used resampling and targeted evaluation metrics to prioritize practical fraud capture.</li><li>Strong example of ML work with business-facing consequences.</li></ul></div>
-            <div class="detail"><h4>Stack snapshot</h4><div class="tag-row" id="ptags"><span class="tag">Scikit-learn</span><span class="tag">XGBoost</span><span class="tag">Random Forest</span><span class="tag">SMOTE</span><span class="tag">Precision-Recall</span></div></div>
+            <div class="detail">
+              <h4>Why it matters</h4>
+              <ul id="poutline">
+                <li>Built around class imbalance, anomaly detection pressure, and model comparison.</li>
+                <li>Used resampling and targeted evaluation metrics to prioritize practical fraud capture.</li>
+                <li>Strong example of ML work with business-facing consequences.</li>
+              </ul>
+            </div>
+            <div class="detail">
+              <h4>Stack snapshot</h4>
+              <div class="tag-row" id="ptags"><span class="tag">Scikit-learn</span><span class="tag">XGBoost</span><span
+                  class="tag">Random Forest</span><span class="tag">SMOTE</span><span
+                  class="tag">Precision-Recall</span></div>
+            </div>
           </div>
         </article>
       </div>
@@ -236,55 +1936,261 @@
 
     <section id="visualizations" class="panel section-shell reveal">
       <div class="head">
-        <div><p class="kicker">Additional Visualizations</p><h2>Supporting D3 and data-visualization work.</h2></div>
-        <p>These embedded projects are supporting examples. They show map, chart, and storytelling work beyond the primary featured projects above.</p>
+        <div>
+          <p class="kicker">Additional Visualizations</p>
+          <h2>Supporting D3 and data-visualization work.</h2>
+        </div>
+        <p>These embedded projects are supporting examples. They show map, chart, and storytelling work beyond the
+          primary featured projects above.</p>
       </div>
       <div class="viz-grid">
-        <article class="viz span2 card"><h3>United States GDP Growth Dynamics</h3><div class="tag-row"><span class="tag">D3.js</span><span class="tag">Time Series</span><span class="tag">SVG</span></div><iframe src="projects/web/visualizations/bar_chart.html" loading="lazy" title="United States GDP Growth Dynamics preview"></iframe><a href="projects/web/visualizations/bar_chart.html" target="_blank" rel="noopener noreferrer">Open Visualization</a></article>
-        <article class="viz card"><h3>Doping in Professional Cycling</h3><div class="tag-row"><span class="tag">D3.js</span><span class="tag">Scatter</span><span class="tag">EDA</span></div><iframe src="projects/web/visualizations/scatter_plot.html" loading="lazy" title="Doping in Professional Cycling preview"></iframe><a href="projects/web/visualizations/scatter_plot.html" target="_blank" rel="noopener noreferrer">Open Visualization</a></article>
-        <article class="viz card"><h3>Global Temperature Heatmap</h3><div class="tag-row"><span class="tag">D3.js</span><span class="tag">Heatmap</span><span class="tag">Climate</span></div><iframe src="projects/web/visualizations/heatmap.html" loading="lazy" title="Global Temperature Heatmap preview"></iframe><a href="projects/web/visualizations/heatmap.html" target="_blank" rel="noopener noreferrer">Open Visualization</a></article>
-        <article class="viz card"><h3>Cincinnati Food Access Map</h3><div class="tag-row"><span class="tag">D3.js</span><span class="tag">GeoJSON</span><span class="tag">Choropleth</span></div><iframe src="projects/web/visualizations/choropleth_map.html" loading="lazy" title="Cincinnati Food Access Map preview"></iframe><a href="projects/web/visualizations/choropleth_map.html" target="_blank" rel="noopener noreferrer">Open Visualization</a></article>
-        <article class="viz card"><h3>Multi-Dataset Treemap Dashboard</h3><div class="tag-row"><span class="tag">D3.js</span><span class="tag">Hierarchical</span><span class="tag">Dynamic</span></div><iframe src="projects/web/visualizations/treemap.html" loading="lazy" title="Multi-Dataset Treemap Dashboard preview"></iframe><a href="projects/web/visualizations/treemap.html" target="_blank" rel="noopener noreferrer">Open Visualization</a></article>
-        <article class="viz card"><h3>Cincinnati Food Deserts</h3><div class="tag-row"><span class="tag">D3.js</span><span class="tag">Map</span><span class="tag">Access</span></div><iframe src="projects/web/visualizations/food_deserts.html" loading="lazy" title="Cincinnati Food Deserts preview"></iframe><a href="projects/web/visualizations/food_deserts.html" target="_blank" rel="noopener noreferrer">Open Visualization</a></article>
+        <article class="viz span2 card">
+          <h3>United States GDP Growth Dynamics</h3>
+          <div class="tag-row"><span class="tag">D3.js</span><span class="tag">Time Series</span><span
+              class="tag">SVG</span></div><iframe src="projects/web/visualizations/bar_chart.html" loading="lazy"
+            title="United States GDP Growth Dynamics preview"></iframe><a
+            href="projects/web/visualizations/bar_chart.html" target="_blank" rel="noopener noreferrer">Open
+            Visualization</a>
+        </article>
+        <article class="viz card">
+          <h3>Doping in Professional Cycling</h3>
+          <div class="tag-row"><span class="tag">D3.js</span><span class="tag">Scatter</span><span
+              class="tag">EDA</span></div><iframe src="projects/web/visualizations/scatter_plot.html" loading="lazy"
+            title="Doping in Professional Cycling preview"></iframe><a
+            href="projects/web/visualizations/scatter_plot.html" target="_blank" rel="noopener noreferrer">Open
+            Visualization</a>
+        </article>
+        <article class="viz card">
+          <h3>Global Temperature Heatmap</h3>
+          <div class="tag-row"><span class="tag">D3.js</span><span class="tag">Heatmap</span><span
+              class="tag">Climate</span></div><iframe src="projects/web/visualizations/heatmap.html" loading="lazy"
+            title="Global Temperature Heatmap preview"></iframe><a href="projects/web/visualizations/heatmap.html"
+            target="_blank" rel="noopener noreferrer">Open Visualization</a>
+        </article>
+        <article class="viz card">
+          <h3>Cincinnati Food Access Map</h3>
+          <div class="tag-row"><span class="tag">D3.js</span><span class="tag">GeoJSON</span><span
+              class="tag">Choropleth</span></div><iframe src="projects/web/visualizations/choropleth_map.html"
+            loading="lazy" title="Cincinnati Food Access Map preview"></iframe><a
+            href="projects/web/visualizations/choropleth_map.html" target="_blank" rel="noopener noreferrer">Open
+            Visualization</a>
+        </article>
+        <article class="viz card">
+          <h3>Multi-Dataset Treemap Dashboard</h3>
+          <div class="tag-row"><span class="tag">D3.js</span><span class="tag">Hierarchical</span><span
+              class="tag">Dynamic</span></div><iframe src="projects/web/visualizations/treemap.html" loading="lazy"
+            title="Multi-Dataset Treemap Dashboard preview"></iframe><a href="projects/web/visualizations/treemap.html"
+            target="_blank" rel="noopener noreferrer">Open Visualization</a>
+        </article>
+        <article class="viz card">
+          <h3>Cincinnati Food Deserts</h3>
+          <div class="tag-row"><span class="tag">D3.js</span><span class="tag">Map</span><span class="tag">Access</span>
+          </div><iframe src="projects/web/visualizations/food_deserts.html" loading="lazy"
+            title="Cincinnati Food Deserts preview"></iframe><a href="projects/web/visualizations/food_deserts.html"
+            target="_blank" rel="noopener noreferrer">Open Visualization</a>
+        </article>
       </div>
     </section>
 
     <section id="resume-live" class="panel section-shell reveal">
       <div class="head">
-        <div><p class="kicker">Structured Resume</p><h2>The complete resume is organized here in a standard format.</h2></div>
-        <p>Use this section for the full on-page resume. Use the PDF button if you want the condensed one-page version.</p>
+        <div>
+          <p class="kicker">Structured Resume</p>
+          <h2>The complete resume is organized here in a standard format.</h2>
+        </div>
+        <p>Use this section for the full on-page resume. Use the PDF button if you want the condensed one-page version.
+        </p>
       </div>
       <div class="resume-shell">
         <div class="resume-tabs" role="tablist" aria-label="Resume sections">
-          <button class="active" type="button" data-resume="summary"><strong>Summary</strong><span>High-level positioning and internship target.</span></button>
-          <button type="button" data-resume="skills"><strong>Skills</strong><span>Machine learning, AI-assisted development, data, and visualization tooling.</span></button>
-          <button type="button" data-resume="experience"><strong>Experience</strong><span>Project-based work and quantitative execution.</span></button>
-          <button type="button" data-resume="education"><strong>Education</strong><span>University path and certifications.</span></button>
-          <button type="button" data-resume="leadership"><strong>Leadership</strong><span>Communication, workshops, and business competition signal.</span></button>
+          <button class="active" type="button" data-resume="summary"><strong>Summary</strong><span>High-level
+              positioning and internship target.</span></button>
+          <button type="button" data-resume="skills"><strong>Skills</strong><span>Machine learning, AI-assisted
+              development, data, and visualization tooling.</span></button>
+          <button type="button" data-resume="experience"><strong>Experience</strong><span>Project-based work and
+              quantitative execution.</span></button>
+          <button type="button" data-resume="education"><strong>Education</strong><span>University path and
+              certifications.</span></button>
+          <button type="button" data-resume="leadership"><strong>Leadership</strong><span>Communication, workshops, and
+              business competition signal.</span></button>
         </div>
         <div class="resume-display">
-          <article class="rpanel active" data-rpanel="summary"><h3>Professional summary</h3><p>Incoming University of Chicago student pursuing a double major in Data Science and Statistics. Builds machine learning projects, AI-assisted prototypes, and interactive data products with Python, SQL, FastAPI, React, D3.js, and Power BI.</p><div class="resume-pills"><span class="tag">Summer 2026 internship search</span><span class="tag">Machine learning</span><span class="tag">AI-assisted development</span><span class="tag">Data visualization</span></div></article>
-          <article class="rpanel" data-rpanel="skills"><h3>Technical skills</h3><div class="rgrid"><div class="rcard"><h4>Machine Learning and AI</h4><p>Scikit-learn, XGBoost, TensorFlow, NLP, feature engineering, model evaluation, prompt-driven prototyping, local AI workflows.</p></div><div class="rcard"><h4>Programming and Data</h4><p>Python, Pandas, NumPy, SQL, FastAPI, React, TypeScript, JavaScript, Git, Jupyter.</p></div><div class="rcard"><h4>Quantitative and Statistical</h4><p>Statistical modeling, EDA, hypothesis testing, A/B testing, time-series analysis, probability.</p></div><div class="rcard"><h4>Visualization and Delivery</h4><p>ETL pipelines, Power BI, Matplotlib, Seaborn, D3.js, GeoJSON, Next.js, Tailwind CSS, GitHub Pages, responsive UI.</p></div></div></article>
-          <article class="rpanel" data-rpanel="experience"><h3>Data science and quantitative experience</h3><p>Independent work spans predictive modeling, AI-assisted prototyping, and shipped web delivery rather than notebook-only projects.</p><ul><li>Built JimAI, an AI-assisted workspace prototype for research, code generation, and workflow experimentation.</li><li>Worked with tools including FastAPI, React/Vite, local AI workflows, browser automation, and agent-style interfaces.</li><li>Built and deployed customstrat.com using Next.js 14, TypeScript, Tailwind CSS, GitHub Pages, and a custom domain.</li><li>Developed predictive models, ETL workflows, and interactive visualizations across fraud detection, NLP, and geospatial analysis.</li></ul></article>
-          <article class="rpanel" data-rpanel="education"><h3>Education and certifications</h3><div class="rgrid"><div class="rcard"><h4>University of Chicago</h4><p>B.S. in Data Science and Statistics. Expected June 2030. Chicago, Illinois.</p></div><div class="rcard"><h4>Certifications</h4><p>IBM Data Science Professional Certificate; Microsoft PL-300 Power BI Data Analyst.</p></div></div></article>
-          <article class="rpanel" data-rpanel="leadership"><h3>Leadership and business acumen</h3><p>The leadership side of the resume shows more than extracurricular participation. It shows presentation discipline, workshop delivery, and the ability to explain decisions clearly.</p><ul><li>Co-President of Machine Learning Club, leading workshops on neural networks, evaluation, and practical AI workflows.</li><li>DECA competitor from 2022 to 2024, presenting data-backed market research and strategic recommendations.</li></ul></article>
+          <article class="rpanel active" data-rpanel="summary">
+            <h3>Professional summary</h3>
+            <p>Incoming University of Chicago student pursuing a double major in Data Science and Statistics. Builds
+              machine learning projects, AI-assisted prototypes, and interactive data products with Python, SQL,
+              FastAPI, React, D3.js, and Power BI.</p>
+            <div class="resume-pills"><span class="tag">Summer 2026 internship search</span><span class="tag">Machine
+                learning</span><span class="tag">AI-assisted development</span><span class="tag">Data
+                visualization</span></div>
+          </article>
+          <article class="rpanel" data-rpanel="skills">
+            <h3>Technical skills</h3>
+            <div class="rgrid">
+              <div class="rcard">
+                <h4>Machine Learning and AI</h4>
+                <p>Scikit-learn, XGBoost, TensorFlow, NLP, feature engineering, model evaluation, prompt-driven
+                  prototyping, local AI workflows.</p>
+              </div>
+              <div class="rcard">
+                <h4>Programming and Data</h4>
+                <p>Python, Pandas, NumPy, SQL, FastAPI, React, TypeScript, JavaScript, Git, Jupyter.</p>
+              </div>
+              <div class="rcard">
+                <h4>Quantitative and Statistical</h4>
+                <p>Statistical modeling, EDA, hypothesis testing, A/B testing, time-series analysis, probability.</p>
+              </div>
+              <div class="rcard">
+                <h4>Visualization and Delivery</h4>
+                <p>ETL pipelines, Power BI, Matplotlib, Seaborn, D3.js, GeoJSON, Next.js, Tailwind CSS, GitHub Pages,
+                  responsive UI.</p>
+              </div>
+            </div>
+          </article>
+          <article class="rpanel" data-rpanel="experience">
+            <h3>Data science and quantitative experience</h3>
+            <p>Independent work spans predictive modeling, AI-assisted prototyping, and shipped web delivery rather than
+              notebook-only projects.</p>
+            <ul>
+              <li>Built JimAI, an AI-assisted workspace prototype for research, code generation, and workflow
+                experimentation.</li>
+              <li>Worked with tools including FastAPI, React/Vite, local AI workflows, browser automation, and
+                agent-style interfaces.</li>
+              <li>Built and deployed customstrat.com using Next.js 14, TypeScript, Tailwind CSS, GitHub Pages, and a
+                custom domain.</li>
+              <li>Developed predictive models, ETL workflows, and interactive visualizations across fraud detection,
+                NLP, and geospatial analysis.</li>
+            </ul>
+          </article>
+          <article class="rpanel" data-rpanel="education">
+            <h3>Education and certifications</h3>
+            <div class="rgrid">
+              <div class="rcard">
+                <h4>University of Chicago</h4>
+                <p>B.S. in Data Science and Statistics. Expected June 2030. Chicago, Illinois.</p>
+              </div>
+              <div class="rcard">
+                <h4>Certifications</h4>
+                <p>IBM Data Science Professional Certificate; Microsoft PL-300 Power BI Data Analyst.</p>
+              </div>
+            </div>
+          </article>
+          <article class="rpanel" data-rpanel="leadership">
+            <h3>Leadership and business acumen</h3>
+            <p>The leadership side of the resume shows more than extracurricular participation. It shows presentation
+              discipline, workshop delivery, and the ability to explain decisions clearly.</p>
+            <ul>
+              <li>Co-President of Machine Learning Club, leading workshops on neural networks, evaluation, and practical
+                AI workflows.</li>
+              <li>DECA competitor from 2022 to 2024, presenting data-backed market research and strategic
+                recommendations.</li>
+            </ul>
+          </article>
         </div>
       </div>
     </section>
 
-    <footer>JAMES LIEBEL · GITHUB · LINKEDIN · INTERACTIVE DATA SCIENCE PORTFOLIO</footer>
+    <footer>
+      JAMES LIEBEL ·
+      <a href="https://github.com/James-Liebel" target="_blank" rel="noopener noreferrer">GITHUB</a> ·
+      <a href="https://linkedin.com/in/james-liebel" target="_blank" rel="noopener noreferrer">LINKEDIN</a> ·
+      INTERACTIVE DATA SCIENCE PORTFOLIO
+    </footer>
   </main>
   <section id="resume" aria-hidden="true">
     <div class="resume-page">
       <header class="resume-head">
         <h1 class="resume-name">JAMES LIEBEL</h1>
-        <p class="resume-contact">Chicago, IL | jliebel@uchicago.edu | linkedin.com/in/james-liebel | github.com/James-Liebel</p>
+        <p class="resume-contact">Chicago, IL | Jamesliebel40@gmail.com | linkedin.com/in/james-liebel |
+          github.com/James-Liebel</p>
       </header>
-      <section class="resume-section"><h2 class="resume-section-title">PROFESSIONAL SUMMARY</h2><p class="resume-summary">Incoming University of Chicago student (Class of 2030) pursuing a double major in Data Science and Statistics. Builds machine learning projects, AI-assisted prototypes, and interactive data products with Python, SQL, FastAPI, React, and visualization tooling. Seeking a Summer 2026 internship where analytical rigor, technical execution, and communication all matter.</p></section>
-      <section class="resume-section"><h2 class="resume-section-title">SELECTED EXPERIENCE</h2><div class="resume-item"><div class="resume-item-head"><p class="resume-role">CustomStrat Advisory Website</p><p class="resume-date">Live deployment</p></div><ul class="resume-list"><li>Built and deployed customstrat.com using Next.js 14, TypeScript, Tailwind CSS, GitHub Pages, and a custom domain.</li><li>Used AI-assisted iteration to speed up UI and content prototyping while keeping the implementation production-facing and maintainable.</li></ul></div><div class="resume-item"><div class="resume-item-head"><p class="resume-role">JimAI / AI Workspace Prototype</p><p class="resume-date">Independent build</p></div><ul class="resume-list"><li>Built an AI-assisted workspace prototype for research, code generation, and workflow experimentation.</li><li>Worked with FastAPI, React/Vite, local AI workflows, and automation-oriented tooling.</li></ul></div></section>
-      <section class="resume-section"><h2 class="resume-section-title">SELECTED PROJECTS</h2><div class="resume-item"><div class="resume-item-head"><p class="resume-role">Credit Card Fraud Detection</p><p class="resume-date">Machine learning</p></div><ul class="resume-list"><li>Built an imbalanced-class classification workflow with XGBoost, Random Forest, SMOTE, and recall-focused evaluation.</li></ul></div><div class="resume-item"><div class="resume-item-head"><p class="resume-role">Cincinnati Food Access Map</p><p class="resume-date">Data visualization</p></div><ul class="resume-list"><li>Created an interactive D3 choropleth for low-income and low-access neighborhood analysis.</li></ul></div></section>
-      <section class="resume-section"><h2 class="resume-section-title">TECHNICAL SKILLS</h2><div class="resume-skills"><div class="skill-group"><h3>Machine Learning &amp; AI</h3><p>Scikit-learn, XGBoost, TensorFlow, Classification, Regression, NLP, Feature Engineering, Model Evaluation, Prompting</p></div><div class="skill-group"><h3>Programming &amp; Data</h3><p>Python, Pandas, NumPy, SQL, FastAPI, React, TypeScript, JavaScript, Git, Jupyter</p></div><div class="skill-group"><h3>Workflow &amp; Visualization</h3><p>ETL Pipelines, Reproducible Analysis, Power BI, Matplotlib, Seaborn, D3.js, GeoJSON, Next.js, Tailwind CSS, GitHub Pages</p></div></div></section>
-      <section class="resume-section"><h2 class="resume-section-title">EDUCATION &amp; LEADERSHIP</h2><div class="resume-item"><div class="resume-item-head"><p class="resume-role">University of Chicago</p><p class="resume-date">Expected June 2030</p></div><p class="resume-text">B.S. in Data Science and Statistics. Certifications: IBM Data Science Professional Certificate; Microsoft PL-300 (Power BI Data Analyst).</p><p class="resume-text">Leadership: DECA competitor, 2022 to 2024; presented data-backed market research and strategic recommendations.</p></div></section>
+      <section class="resume-section">
+        <h2 class="resume-section-title">PROFESSIONAL SUMMARY</h2>
+        <p class="resume-summary">Incoming University of Chicago student (Class of 2030) pursuing a double major in Data
+          Science and Statistics. Builds machine learning projects, AI-assisted prototypes, and interactive data
+          products with Python, SQL, FastAPI, React, and visualization tooling. Seeking a Summer 2026 internship where
+          analytical rigor, technical execution, and communication all matter.</p>
+      </section>
+      <section class="resume-section">
+        <h2 class="resume-section-title">SELECTED EXPERIENCE</h2>
+        <div class="resume-item">
+          <div class="resume-item-head">
+            <p class="resume-role">CustomStrat Advisory Website</p>
+            <p class="resume-date">Live deployment</p>
+          </div>
+          <ul class="resume-list">
+            <li>Built and deployed customstrat.com using Next.js 14, TypeScript, Tailwind CSS, GitHub Pages, and a
+              custom domain.</li>
+            <li>Used AI-assisted iteration to speed up UI and content prototyping while keeping the implementation
+              production-facing and maintainable.</li>
+          </ul>
+        </div>
+        <div class="resume-item">
+          <div class="resume-item-head">
+            <p class="resume-role">JimAI / AI Workspace Prototype</p>
+            <p class="resume-date">Independent build</p>
+          </div>
+          <ul class="resume-list">
+            <li>Built an AI-assisted workspace prototype for research, code generation, and workflow experimentation.
+            </li>
+            <li>Worked with FastAPI, React/Vite, local AI workflows, and automation-oriented tooling.</li>
+          </ul>
+        </div>
+      </section>
+      <section class="resume-section">
+        <h2 class="resume-section-title">SELECTED PROJECTS</h2>
+        <div class="resume-item">
+          <div class="resume-item-head">
+            <p class="resume-role">Credit Card Fraud Detection</p>
+            <p class="resume-date">Machine learning</p>
+          </div>
+          <ul class="resume-list">
+            <li>Built an imbalanced-class classification workflow with XGBoost, Random Forest, SMOTE, and recall-focused
+              evaluation.</li>
+          </ul>
+        </div>
+        <div class="resume-item">
+          <div class="resume-item-head">
+            <p class="resume-role">Cincinnati Food Access Map</p>
+            <p class="resume-date">Data visualization</p>
+          </div>
+          <ul class="resume-list">
+            <li>Created an interactive D3 choropleth for low-income and low-access neighborhood analysis.</li>
+          </ul>
+        </div>
+      </section>
+      <section class="resume-section">
+        <h2 class="resume-section-title">TECHNICAL SKILLS</h2>
+        <div class="resume-skills">
+          <div class="skill-group">
+            <h3>Machine Learning &amp; AI</h3>
+            <p>Scikit-learn, XGBoost, TensorFlow, Classification, Regression, NLP, Feature Engineering, Model
+              Evaluation, Prompting</p>
+          </div>
+          <div class="skill-group">
+            <h3>Programming &amp; Data</h3>
+            <p>Python, Pandas, NumPy, SQL, FastAPI, React, TypeScript, JavaScript, Git, Jupyter</p>
+          </div>
+          <div class="skill-group">
+            <h3>Workflow &amp; Visualization</h3>
+            <p>ETL Pipelines, Reproducible Analysis, Power BI, Matplotlib, Seaborn, D3.js, GeoJSON, Next.js, Tailwind
+              CSS, GitHub Pages</p>
+          </div>
+        </div>
+      </section>
+      <section class="resume-section">
+        <h2 class="resume-section-title">EDUCATION &amp; LEADERSHIP</h2>
+        <div class="resume-item">
+          <div class="resume-item-head">
+            <p class="resume-role">University of Chicago</p>
+            <p class="resume-date">Expected June 2030</p>
+          </div>
+          <p class="resume-text">B.S. in Data Science and Statistics. Certifications: IBM Data Science Professional
+            Certificate; Microsoft PL-300 (Power BI Data Analyst).</p>
+          <p class="resume-text">Leadership: DECA competitor, 2022 to 2024; presented data-backed market research and
+            strategic recommendations.</p>
+        </div>
+      </section>
     </div>
   </section>
 
@@ -302,44 +2208,45 @@
     const resumePanels = document.querySelectorAll(".rpanel");
 
     const modeData = {
-      builder:{angle:300,word:"Builder",label:"current lens",title:"Building end-to-end systems",badge:"Machine learning + product work",body:"This lens highlights the end-to-end side of the work: data cleaning, model building, AI-assisted prototyping, and packaging results into something a person can use.",s1:["Primary stack","Python / SQL / FastAPI","Core stack for analytics, prototyping, and delivery."],s2:["Work style","Interactive","Dashboards, D3, React surfaces, and live sites instead of flat outputs."],s3:["Strength","Usable systems","Evaluation, workflow design, and readable interfaces."],foot:"Best fit for roles that value technical execution plus product-minded delivery.",tags:["FastAPI","React","D3.js","Prompting"]},
-      analyst:{angle:210,word:"Analyst",label:"current lens",title:"Finding reliable signal in messy data",badge:"Statistics + evaluation",body:"This lens highlights the analytical side of the work: dealing with imperfect data, choosing the right metrics, and explaining outcomes with clear evidence.",s1:["Benchmark lens","Recall + accuracy","Performance is framed with meaningful evaluation choices."],s2:["Signal extraction","NLP / EDA","Text, time-series, and structured feature work all show up."],s3:["Decision style","Comparative","Multiple models, multiple baselines, cleaner justification."],foot:"Best fit for roles centered on statistical reasoning, model judgment, and interpretation.",tags:["Hypothesis Testing","TF-IDF","EDA","XGBoost"]},
-      operator:{angle:120,word:"Delivery",label:"current lens",title:"Turning experiments into repeatable workflows",badge:"AI tooling + shipped delivery",body:"This lens highlights operational discipline: structuring pipelines, using AI as a practical accelerator, and shipping interfaces another person can understand and use.",s1:["Workflow core","ETL + AI assistance","Preparation, iteration, and execution are treated as first-class work."],s2:["Workflow design","Git + automation","Reproducible project structure matters more than cloud buzzwords."],s3:["Output style","Readable systems","Sites, dashboards, and workflow surfaces keep the work usable."],foot:"Best fit for roles where dependable delivery matters as much as experimentation.",tags:["Automation","Next.js","Documentation","Prompting"]}
+      builder: { angle: 300, word: "Builder", label: "role view", title: "Best evidence for software and product-facing roles", badge: "Applications + ML projects", body: "This view emphasizes end-to-end project work: data preparation, model implementation, API or workflow logic, interface design, and packaging results into something another person can review and use.", s1: ["Core tools", "Python / SQL / FastAPI", "Main stack for analytics, prototypes, and lightweight application delivery."], s2: ["Shipped examples", "CustomStrat + JimAI", "Live site work and AI-assisted workflow prototypes."], s3: ["What stands out", "Readable interfaces", "Projects are presented as dashboards, maps, or tools instead of flat notebooks."], foot: "Best fit for software, ML-adjacent, and product-minded internships.", tags: ["FastAPI", "React", "Next.js", "D3.js"] },
+      analyst: { angle: 210, word: "Analyst", label: "role view", title: "Best evidence for data science and analytics roles", badge: "Modeling + evaluation", body: "This view emphasizes supervised learning, NLP, EDA, feature work, and explaining outcomes with metrics a recruiter can interpret quickly.", s1: ["Model work", "Fraud + sentiment", "Classification and text analysis projects show applied modeling experience."], s2: ["Evaluation", "Recall / accuracy / baselines", "Results are framed with metrics, comparisons, and tradeoffs."], s3: ["Communication", "Charts + writeups", "Visuals and plain-language explanations support the technical work."], foot: "Best fit for data science, analytics, and research-oriented internships.", tags: ["Scikit-learn", "XGBoost", "EDA", "TF-IDF"] },
+      operator: { angle: 120, word: "Delivery", label: "role view", title: "Best evidence for dependable execution", badge: "Project structure + shipped outputs", body: "This view emphasizes finishing work well: organizing projects, using AI as a practical accelerator, documenting decisions, and shipping interfaces another person can navigate.", s1: ["Workflow habits", "Git + iteration", "Versioning, cleanup, and repeated refinement matter across the portfolio."], s2: ["Output style", "Sites + dashboards", "Work is packaged in a form that is easier to review than raw notebooks alone."], s3: ["Team signal", "Readable handoff", "The projects show an effort to make technical work understandable to other people."], foot: "Best fit for roles where follow-through and usable outputs matter as much as experimentation.", tags: ["Documentation", "Automation", "GitHub Pages", "Prompting"] }
     };
 
-    function updateProgress(){const max=document.documentElement.scrollHeight-window.innerHeight;progressBar.style.transform=`scaleX(${max>0?window.scrollY/max:0})`}
-    const revealObserver=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");revealObserver.unobserve(e.target)}}),{threshold:.18});
-    revealEls.forEach(el=>revealObserver.observe(el));
-    const navObserver=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;navLinks.forEach(link=>link.classList.toggle("active",link.getAttribute("href")==="#" + e.target.id))}),{threshold:.45});
-    sections.forEach(section=>navObserver.observe(section));
-    document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener("click",e=>{const t=document.querySelector(a.getAttribute("href"));if(!t)return;e.preventDefault();t.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"})}));
+    function updateProgress() { const max = document.documentElement.scrollHeight - window.innerHeight; progressBar.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})` }
+    const revealObserver = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("visible"); revealObserver.unobserve(e.target) } }), { threshold: .18 });
+    revealEls.forEach(el => revealObserver.observe(el));
+    const navObserver = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; navLinks.forEach(link => link.classList.toggle("active", link.getAttribute("href") === "#" + e.target.id)) }), { threshold: .45 });
+    sections.forEach(section => navObserver.observe(section));
+    document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener("click", e => { const t = document.querySelector(a.getAttribute("href")); if (!t) return; e.preventDefault(); t.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }) }));
 
-    const ring=document.getElementById("signalRing"), ringScore=document.getElementById("ringScore"), ringLabel=document.getElementById("ringLabel"), ringFoot=document.getElementById("ringFoot");
-    const signalTitle=document.getElementById("signalTitle"), signalBadge=document.getElementById("signalBadge"), signalBody=document.getElementById("signalBody");
-    const s1l=document.getElementById("s1l"), s1v=document.getElementById("s1v"), s1n=document.getElementById("s1n");
-    const s2l=document.getElementById("s2l"), s2v=document.getElementById("s2v"), s2n=document.getElementById("s2n");
-    const s3l=document.getElementById("s3l"), s3v=document.getElementById("s3v"), s3n=document.getElementById("s3n");
-    const signalTags=document.getElementById("signalTags");
-    function renderMode(key){const m=modeData[key];if(!m)return;ring.style.setProperty("--angle",`${m.angle}deg`);ringScore.textContent=m.word;ringLabel.textContent=m.label;ringFoot.textContent=m.foot;signalTitle.textContent=m.title;signalBadge.textContent=m.badge;signalBody.textContent=m.body;[[s1l,s1v,s1n,m.s1],[s2l,s2v,s2n,m.s2],[s3l,s3v,s3n,m.s3]].forEach(([a,b,c,d])=>{a.textContent=d[0];b.textContent=d[1];c.textContent=d[2]});signalTags.innerHTML=m.tags.map(tag=>`<span class="tag">${tag}</span>`).join("");modeButtons.forEach(btn=>btn.classList.toggle("active",btn.dataset.mode===key))}
-    modeButtons.forEach(btn=>btn.addEventListener("click",()=>renderMode(btn.dataset.mode)));renderMode("builder");
+    const ring = document.getElementById("signalRing"), ringScore = document.getElementById("ringScore"), ringLabel = document.getElementById("ringLabel"), ringFoot = document.getElementById("ringFoot");
+    const signalTitle = document.getElementById("signalTitle"), signalBadge = document.getElementById("signalBadge"), signalBody = document.getElementById("signalBody");
+    const s1l = document.getElementById("s1l"), s1v = document.getElementById("s1v"), s1n = document.getElementById("s1n");
+    const s2l = document.getElementById("s2l"), s2v = document.getElementById("s2v"), s2n = document.getElementById("s2n");
+    const s3l = document.getElementById("s3l"), s3v = document.getElementById("s3v"), s3n = document.getElementById("s3n");
+    const signalTags = document.getElementById("signalTags");
+    function renderMode(key) { const m = modeData[key]; if (!m) return; ring.style.setProperty("--angle", `${m.angle}deg`); ringScore.textContent = m.word; ringLabel.textContent = m.label; ringFoot.textContent = m.foot; signalTitle.textContent = m.title; signalBadge.textContent = m.badge; signalBody.textContent = m.body;[[s1l, s1v, s1n, m.s1], [s2l, s2v, s2n, m.s2], [s3l, s3v, s3n, m.s3]].forEach(([a, b, c, d]) => { a.textContent = d[0]; b.textContent = d[1]; c.textContent = d[2] }); signalTags.innerHTML = m.tags.map(tag => `<span class="tag">${tag}</span>`).join(""); modeButtons.forEach(btn => btn.classList.toggle("active", btn.dataset.mode === key)) }
+    modeButtons.forEach(btn => btn.addEventListener("click", () => renderMode(btn.dataset.mode))); renderMode("builder");
 
-    journeyButtons.forEach(btn=>btn.addEventListener("click",()=>{journeyButtons.forEach(b=>b.classList.toggle("active",b===btn));journeyPanels.forEach(p=>p.classList.toggle("active",p.dataset.panel===btn.dataset.journey))}));
+    journeyButtons.forEach(btn => btn.addEventListener("click", () => { journeyButtons.forEach(b => b.classList.toggle("active", b === btn)); journeyPanels.forEach(p => p.classList.toggle("active", p.dataset.panel === btn.dataset.journey)) }));
 
-    const plabel=document.getElementById("plabel"), ptitle=document.getElementById("ptitle"), pcopy=document.getElementById("pcopy"), pal=document.getElementById("pal"), pav=document.getElementById("pav"), pbl=document.getElementById("pbl"), pbv=document.getElementById("pbv"), pcl=document.getElementById("pcl"), pcv=document.getElementById("pcv"), plink=document.getElementById("plink"), po=document.getElementById("poutline"), ptags=document.getElementById("ptags");
-    function renderProject(btn){projectButtons.forEach(b=>b.classList.toggle("active",b===btn));plabel.textContent=btn.dataset.label||"";ptitle.textContent=btn.dataset.title||"";pcopy.textContent=btn.dataset.copy||"";pal.textContent=btn.dataset.aLabel||"";pav.textContent=btn.dataset.aValue||"";pbl.textContent=btn.dataset.bLabel||"";pbv.textContent=btn.dataset.bValue||"";pcl.textContent=btn.dataset.cLabel||"";pcv.textContent=btn.dataset.cValue||"";plink.href=btn.dataset.link||"#";plink.target=(btn.dataset.link||"").startsWith("http")?"_blank":"_self";plink.rel=plink.target==="_blank"?"noopener noreferrer":"";po.innerHTML=(btn.dataset.outline||"").split("|").filter(Boolean).map(x=>`<li>${x}</li>`).join("");ptags.innerHTML=(btn.dataset.stack||"").split(",").map(x=>x.trim()).filter(Boolean).map(x=>`<span class="tag">${x}</span>`).join("")}
-    projectButtons.forEach(btn=>btn.addEventListener("click",()=>renderProject(btn)));renderProject(projectButtons[0]);
+    const plabel = document.getElementById("plabel"), ptitle = document.getElementById("ptitle"), pcopy = document.getElementById("pcopy"), pal = document.getElementById("pal"), pav = document.getElementById("pav"), pbl = document.getElementById("pbl"), pbv = document.getElementById("pbv"), pcl = document.getElementById("pcl"), pcv = document.getElementById("pcv"), plink = document.getElementById("plink"), po = document.getElementById("poutline"), ptags = document.getElementById("ptags");
+    function renderProject(btn) { projectButtons.forEach(b => b.classList.toggle("active", b === btn)); plabel.textContent = btn.dataset.label || ""; ptitle.textContent = btn.dataset.title || ""; pcopy.textContent = btn.dataset.copy || ""; pal.textContent = btn.dataset.aLabel || ""; pav.textContent = btn.dataset.aValue || ""; pbl.textContent = btn.dataset.bLabel || ""; pbv.textContent = btn.dataset.bValue || ""; pcl.textContent = btn.dataset.cLabel || ""; pcv.textContent = btn.dataset.cValue || ""; plink.href = btn.dataset.link || "#"; plink.target = (btn.dataset.link || "").startsWith("http") ? "_blank" : "_self"; plink.rel = plink.target === "_blank" ? "noopener noreferrer" : ""; po.innerHTML = (btn.dataset.outline || "").split("|").filter(Boolean).map(x => `<li>${x}</li>`).join(""); ptags.innerHTML = (btn.dataset.stack || "").split(",").map(x => x.trim()).filter(Boolean).map(x => `<span class="tag">${x}</span>`).join("") }
+    projectButtons.forEach(btn => btn.addEventListener("click", () => renderProject(btn))); renderProject(projectButtons[0]);
 
-    resumeButtons.forEach(btn=>btn.addEventListener("click",()=>{resumeButtons.forEach(b=>b.classList.toggle("active",b===btn));resumePanels.forEach(p=>p.classList.toggle("active",p.dataset.rpanel===btn.dataset.resume))}));
+    resumeButtons.forEach(btn => btn.addEventListener("click", () => { resumeButtons.forEach(b => b.classList.toggle("active", b === btn)); resumePanels.forEach(p => p.classList.toggle("active", p.dataset.rpanel === btn.dataset.resume)) }));
 
-    document.querySelectorAll(".intro-card,.metric,.cap,.timeline,.rcard,.detail,.viz,.project-rail button,.resume-tabs button").forEach((el,i)=>{el.style.transitionDelay=`${(i%6)*55}ms`});
-    if(!reduced){document.querySelectorAll(".panel,.card,.cap,.project-rail button").forEach(el=>el.addEventListener("pointermove",e=>{const r=el.getBoundingClientRect();el.style.setProperty("--cx",`${(e.clientX-r.left)/r.width*100}%`);el.style.setProperty("--cy",`${(e.clientY-r.top)/r.height*100}%`)}));window.addEventListener("pointermove",e=>{document.body.style.setProperty("--px",`${e.clientX}px`);document.body.style.setProperty("--py",`${e.clientY}px`)},{passive:true})}
+    document.querySelectorAll(".hero-guide,.guide-step,.metric,.cap,.timeline,.rcard,.detail,.viz,.project-rail button,.resume-tabs button").forEach((el, i) => { el.style.transitionDelay = `${(i % 6) * 55}ms` });
+    if (!reduced) { document.querySelectorAll(".panel,.card,.cap,.project-rail button").forEach(el => el.addEventListener("pointermove", e => { const r = el.getBoundingClientRect(); el.style.setProperty("--cx", `${(e.clientX - r.left) / r.width * 100}%`); el.style.setProperty("--cy", `${(e.clientY - r.top) / r.height * 100}%`) })); window.addEventListener("pointermove", e => { document.body.style.setProperty("--px", `${e.clientX}px`); document.body.style.setProperty("--py", `${e.clientY}px`) }, { passive: true }) }
 
-    function fitResumeToOnePage(){const resume=document.getElementById("resume"), page=document.querySelector("#resume .resume-page");if(!resume||!page)return;const prev={display:resume.style.display,position:resume.style.position,visibility:resume.style.visibility,left:resume.style.left,top:resume.style.top,width:resume.style.width};resume.style.display="block";resume.style.position="absolute";resume.style.visibility="hidden";resume.style.left="-10000px";resume.style.top="0";const pageHeightIn=11,pageWidthIn=8.5,marginIn=1.5/2.54,printableHeightPx=(pageHeightIn-marginIn*2)*96,printableWidthIn=pageWidthIn-marginIn*2;resume.style.width=`${printableWidthIn}in`;page.style.zoom="";let scale=1;for(let i=0;i<3;i+=1){page.style.zoom=scale.toFixed(3);const h=page.scrollHeight;if(h<=printableHeightPx)break;scale=Math.max(.78,scale*(printableHeightPx/h))}page.style.zoom=scale.toFixed(3);resume.style.display=prev.display;resume.style.position=prev.position;resume.style.visibility=prev.visibility;resume.style.left=prev.left;resume.style.top=prev.top;resume.style.width=prev.width}
-    function clearResumeScale(){const page=document.querySelector("#resume .resume-page");if(page)page.style.zoom=""}
-    let printing=false,printTimer=null;function restoreResume(){if(!printing)return;if(printTimer){clearTimeout(printTimer);printTimer=null}clearResumeScale();printing=false}
-    function printResume(){if(printing)return;printing=true;fitResumeToOnePage();window.addEventListener("afterprint",restoreResume,{once:true});window.addEventListener("focus",restoreResume,{once:true});printTimer=setTimeout(restoreResume,4000);requestAnimationFrame(()=>requestAnimationFrame(()=>window.print()))}
-    document.getElementById("pdfBtn").addEventListener("click",printResume);window.printResume=printResume;
-    window.addEventListener("scroll",updateProgress,{passive:true});updateProgress();
+    function fitResumeToOnePage() { const resume = document.getElementById("resume"), page = document.querySelector("#resume .resume-page"); if (!resume || !page) return; const prev = { display: resume.style.display, position: resume.style.position, visibility: resume.style.visibility, left: resume.style.left, top: resume.style.top, width: resume.style.width }; resume.style.display = "block"; resume.style.position = "absolute"; resume.style.visibility = "hidden"; resume.style.left = "-10000px"; resume.style.top = "0"; const pageHeightIn = 11, pageWidthIn = 8.5, marginIn = 1.5 / 2.54, printableHeightPx = (pageHeightIn - marginIn * 2) * 96, printableWidthIn = pageWidthIn - marginIn * 2; resume.style.width = `${printableWidthIn}in`; page.style.transform = ""; page.style.transformOrigin = "top center"; page.style.marginBottom = ""; const h = page.scrollHeight; let scale = 1; if (h > printableHeightPx) { scale = Math.max(.78, printableHeightPx / h); } page.style.transform = `scale(${scale.toFixed(3)})`; page.style.marginBottom = `-${(1 - scale) * h}px`; resume.style.display = prev.display; resume.style.position = prev.position; resume.style.visibility = prev.visibility; resume.style.left = prev.left; resume.style.top = prev.top; resume.style.width = prev.width; }
+    function clearResumeScale() { const page = document.querySelector("#resume .resume-page"); if (page) { page.style.transform = ""; page.style.transformOrigin = ""; page.style.marginBottom = ""; } }
+    let printing = false, printTimer = null; function restoreResume() { if (!printing) return; if (printTimer) { clearTimeout(printTimer); printTimer = null } clearResumeScale(); printing = false }
+    function printResume() { if (printing) return; printing = true; fitResumeToOnePage(); window.addEventListener("afterprint", restoreResume, { once: true }); window.addEventListener("focus", restoreResume, { once: true }); printTimer = setTimeout(restoreResume, 4000); requestAnimationFrame(() => requestAnimationFrame(() => window.print())) }
+    document.getElementById("pdfBtn").addEventListener("click", printResume); window.printResume = printResume;
+    window.addEventListener("scroll", updateProgress, { passive: true }); updateProgress();
   </script>
 </body>
+
 </html>

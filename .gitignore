@@ -13,9 +13,19 @@ token.pickle
 master.key
 *.key
 
+# npm cache (preventing folder name issues)
+.npm/
+.npm-cache/
+node_modules/
+package-lock.json
+
 # Private Tools (User Requested)
 projects/tools/self_typing_demo.py
 projects/tools/click_typer/
 
 # Jupyter Notebook Checkpoints
 .ipynb_checkpoints/
+.ssh/
+.bash_history
+.git-credentials
+%USERPROFILE%

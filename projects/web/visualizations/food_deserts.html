@@ -166,6 +166,25 @@
             color: #d8b4fe;
             border: 1px solid #a855f7;
         }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                overflow: auto;
+            }
+
+            #sidebar {
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                box-sizing: border-box;
+            }
+
+            #map-container {
+                height: 60vh;
+            }
+        }
     </style>
 </head>
 
@@ -251,14 +270,16 @@
         </div>
 
         <script>
-            const width = window.innerWidth - 360;
-            const height = window.innerHeight;
+            const container = document.getElementById("map-container");
+            const width = container.clientWidth || 800;
+            const height = container.clientHeight || 600;
 
             const svg = d3.select("#map-container")
                 .append("svg")
                 .attr("width", "100%")
                 .attr("height", "100%")
-                .attr("viewBox", `0 0 ${width} ${height}`);
+                .attr("viewBox", `0 0 ${width} ${height}`)
+                .attr("preserveAspectRatio", "xMidYMid meet");
 
             // Define Swamp Pattern
             const defs = svg.append("defs");

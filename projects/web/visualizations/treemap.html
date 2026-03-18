@@ -177,8 +177,10 @@
       d3.json(config.url).then(data => {
         const svg = d3.select("#chart")
           .append("svg")
-          .attr("width", width)
-          .attr("height", height);
+          .attr("width", "100%")
+          .attr("height", "100%")
+          .attr("viewBox", `0 0 ${width} ${height}`)
+          .attr("preserveAspectRatio", "xMidYMid meet");
 
         const root = d3.hierarchy(data)
           .eachBefore(d => d.data.id = (d.parent ? d.parent.data.id + "." : "") + d.data.name)
@@ -245,8 +247,10 @@
 
         const legendSvg = d3.select("#legend")
           .append("svg")
-          .attr("width", width)
-          .attr("height", 100);
+          .attr("width", "100%")
+          .attr("height", "100%")
+          .attr("viewBox", `0 0 ${width} 100`)
+          .attr("preserveAspectRatio", "xMidYMid meet");
 
         const legendItems = legendSvg.selectAll("g")
           .data(uniqueCategories)
