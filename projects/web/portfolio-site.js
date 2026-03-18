@@ -17,8 +17,8 @@
   const hero = document.getElementById("hero");
   const heroTitle = document.getElementById("heroTitle");
   const heroWord = document.getElementById("heroWord");
-  const heroSubWord = document.getElementById("heroSubWord");
   const heroPills = document.getElementById("heroPills");
+  const heroPillsMarkup = heroPills ? heroPills.innerHTML : "";
   const signalTags = document.getElementById("signalTags");
   const journeyIndicator = document.getElementById("journeyIndicator");
   const resumeIndicator = document.getElementById("resumeIndicator");
@@ -32,12 +32,12 @@
       angle: 300,
       word: "Builder",
       label: "role view",
-      title: "Best evidence for software and product-facing roles",
+      title: "Best evidence for software and product work",
       badge: "Applications + ML projects",
       body: "This view highlights end-to-end work: data preparation, model implementation, workflow logic, interface design, and usable delivery.",
       s1: ["Core tools", "Python / SQL / FastAPI", "Main stack for analytics, prototypes, and lightweight application delivery."],
       s2: ["Shipped examples", "CustomStrat + JimAI", "Live site work and AI-assisted workflow prototypes."],
-      s3: ["What stands out", "Readable interfaces", "Projects are presented as dashboards, maps, or tools instead of flat notebooks."],
+      s3: ["What stands out", "Readable interfaces", "Projects are shown as sites, maps, dashboards, or tools instead of flat notebooks."],
       foot: "Best fit for software, ML-adjacent, and product-minded internships.",
       tags: ["FastAPI", "React", "Next.js", "D3.js"]
     },
@@ -49,7 +49,7 @@
       badge: "Modeling + evaluation",
       body: "This view highlights supervised learning, NLP, EDA, feature work, and recruiter-readable evaluation.",
       s1: ["Model work", "Fraud + sentiment", "Classification and text analysis projects show applied modeling experience."],
-      s2: ["Evaluation", "Recall / accuracy / baselines", "Results are framed with metrics, comparisons, and tradeoffs."],
+      s2: ["Evaluation", "Recall / benchmarks / tradeoffs", "Results are framed with metrics, comparisons, and tradeoffs."],
       s3: ["Communication", "Charts + writeups", "Visuals and plain-language explanations support the technical work."],
       foot: "Best fit for data science, analytics, and research-oriented internships.",
       tags: ["Scikit-learn", "XGBoost", "EDA", "TF-IDF"]
@@ -58,7 +58,7 @@
       angle: 120,
       word: "Delivery",
       label: "role view",
-      title: "Best evidence for dependable execution",
+      title: "Best evidence for execution and follow-through",
       badge: "Project structure + shipped outputs",
       body: "This view highlights finishing work well: organizing projects, documenting decisions, and shipping interfaces another person can navigate.",
       s1: ["Workflow habits", "Git + iteration", "Versioning, cleanup, and repeated refinement matter across the portfolio."],
@@ -101,7 +101,7 @@
 
   function updateProgress() {
     const max = document.documentElement.scrollHeight - window.innerHeight;
-    progressBar.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+    progressBar.style.width = `${max > 0 ? (window.scrollY / max) * 100 : 0}%`;
   }
 
   function setStagger(selector, step, revealType = "up") {
@@ -141,7 +141,7 @@
       entry.target.classList.add("visible");
       revealObserver.unobserve(entry.target);
     });
-  }, { threshold: 0.16, rootMargin: "0px 0px -8% 0px" });
+  }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
 
   revealTargets.forEach(el => revealObserver.observe(el));
 
@@ -241,7 +241,6 @@
   document.querySelectorAll(".mobile-nav-links a").forEach(link => link.addEventListener("click", closeMobileNav));
 
   const heroWords = ["data science", "machine learning", "visualization", "analytics"];
-  const heroSubWords = ["machine learning", "interactive delivery", "data products", "workflow design"];
   let heroWordIndex = 0;
 
   function swapWord(el, nextValue) {
@@ -256,7 +255,6 @@
   function cycleHeroWords() {
     heroWordIndex = (heroWordIndex + 1) % heroWords.length;
     swapWord(heroWord, heroWords[heroWordIndex]);
-    swapWord(heroSubWord, heroSubWords[heroWordIndex]);
   }
 
   if (!reduced) window.setInterval(cycleHeroWords, 2800);
@@ -284,6 +282,10 @@
   function setupHeroMarquee() {
     if (!heroPills) return;
     if (window.innerWidth > 760 || reduced) {
+      if (heroPills.dataset.cloned === "true") {
+        heroPills.innerHTML = heroPillsMarkup;
+        heroPills.dataset.cloned = "false";
+      }
       heroPills.classList.remove("is-marquee");
       return;
     }

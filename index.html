@@ -1560,13 +1560,15 @@
     .top-progress {
       height: 3px;
       background: linear-gradient(90deg, #f6852f, #ff9d3d);
-      box-shadow: 0 0 16px rgba(246, 133, 47, .35)
+      box-shadow: 0 0 16px rgba(246, 133, 47, .35);
+      width: 0;
+      transform: none
     }
 
     .site-nav {
       position: sticky;
-      top: 10px;
-      z-index: 100;
+      top: 0;
+      z-index: 140;
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       background: rgba(255, 251, 245, .72);
@@ -1676,10 +1678,8 @@
       position: fixed;
       inset: 0;
       z-index: 160;
-      padding: 14px;
-      background: rgba(31, 18, 9, .18);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px)
+      padding: 0;
+      background: rgba(255, 249, 241, .98)
     }
 
     .mobile-nav[hidden] {
@@ -1687,11 +1687,18 @@
     }
 
     .mobile-nav-inner {
-      min-height: calc(100vh - 28px);
+      min-height: 100vh;
       display: grid;
       grid-template-rows: auto 1fr auto;
-      gap: 24px;
-      padding: 18px
+      gap: 32px;
+      padding: 20px 18px 24px;
+      border-radius: 0;
+      transform: translateX(100%);
+      transition: transform .45s var(--ease-premium)
+    }
+
+    .mobile-nav.open .mobile-nav-inner {
+      transform: translateX(0)
     }
 
     .mobile-nav-top,
@@ -1705,18 +1712,18 @@
     .mobile-nav-links {
       display: grid;
       align-content: start;
-      gap: 10px
+      gap: 18px
     }
 
     .mobile-nav-links a {
-      padding: 16px 18px;
-      min-height: 52px;
+      padding: 18px 20px;
+      min-height: 60px;
       border-radius: 20px;
       background: rgba(255, 255, 255, .56);
       box-shadow: inset 0 0 0 1px var(--line);
       color: var(--text);
       text-decoration: none;
-      font-size: clamp(1.2rem, 4vw, 1.6rem);
+      font-size: clamp(2rem, 8vw, 2.45rem);
       letter-spacing: -.03em;
       opacity: 0;
       transform: translateY(20px);
@@ -1836,6 +1843,9 @@
     }
 
     .hero-pill-track {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       width: max-content;
       transition: transform .4s var(--ease-premium)
     }
@@ -1929,10 +1939,14 @@
     }
 
     .rail {
+      align-content: start;
+      align-self: start;
       padding-left: 14px
     }
 
     .resume-tabs {
+      align-content: start;
+      align-self: start;
       padding-left: 14px
     }
 
@@ -2060,14 +2074,15 @@
       margin-top: 10px;
       border-radius: 18px;
       overflow: hidden;
-      min-height: 270px;
-      height: 270px;
+      min-height: 220px;
+      height: 220px;
       background: linear-gradient(180deg, rgba(255, 255, 255, .92), rgba(246, 239, 228, .86));
       box-shadow: inset 0 0 0 1px var(--line)
     }
 
     .viz iframe {
       height: 100%;
+      pointer-events: none;
       transition: transform .45s var(--ease-premium), opacity .35s var(--ease-premium)
     }
 
@@ -2126,9 +2141,17 @@
       line-height: 1.6
     }
 
+    .viz-fallback em {
+      font-style: normal;
+      color: #8c470f;
+      font: 12px "Space Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: .08em
+    }
+
     .site-footer {
       display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(260px, .8fr);
+      grid-template-columns: minmax(0, 1fr) minmax(260px, .9fr);
       gap: 18px;
       align-items: end;
       margin-top: 18px;
@@ -2353,6 +2376,129 @@
         scroll-behavior: auto !important
       }
     }
+
+    main section[id] {
+      scroll-margin-top: 108px
+    }
+
+    @media (max-width:760px) {
+      main section[id] {
+        scroll-margin-top: 84px
+      }
+    }
+
+    /* Section 2 + 3 layout and motion overrides */
+    @media (min-width:761px) {
+      .cap-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+      }
+
+      .journey {
+        grid-template-columns: 280px 1fr;
+        align-items: start
+      }
+
+      .projects {
+        grid-template-columns: 340px minmax(0, 1fr);
+        align-items: start
+      }
+
+      .resume-shell {
+        grid-template-columns: 260px minmax(0, 1fr);
+        align-items: start
+      }
+    }
+
+    @media (max-width:760px) {
+      .site-nav {
+        top: 0;
+        margin: 0 auto
+      }
+
+      .journey,
+      .projects,
+      .resume-shell {
+        grid-template-columns: 1fr
+      }
+
+      .rail,
+      .resume-tabs {
+        padding-left: 0
+      }
+
+      .viz-grid .viz:nth-child(n+4) {
+        display: grid
+      }
+    }
+
+    @media (max-width:720px) {
+      .rail {
+        display: flex;
+        overflow-x: auto;
+        gap: 10px;
+        padding-bottom: 6px;
+        scrollbar-width: none
+      }
+
+      .rail::-webkit-scrollbar {
+        display: none
+      }
+
+      .rail .tab-indicator.vertical,
+      .resume-tabs .tab-indicator.vertical {
+        display: none
+      }
+
+      .rail button,
+      .resume-tabs button {
+        min-width: 210px;
+        flex: 0 0 auto
+      }
+    }
+
+    .js .reveal,
+    .js .reveal-item,
+    .js [data-reveal] {
+      transition: opacity .6s cubic-bezier(0.16, 1, 0.3, 1), transform .6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .stack,
+    .project-display,
+    .journey-panels,
+    .resume-display {
+      transition: opacity .25s var(--ease-swift), transform .25s var(--ease-swift)
+    }
+
+    .stack.is-switching,
+    .project-display.is-switching,
+    .journey-panels.is-switching,
+    .resume-display.is-switching {
+      opacity: 0;
+      transform: translateY(8px)
+    }
+
+    .jpanel,
+    .rpanel {
+      transition: .25s var(--ease-swift)
+    }
+
+    .project-rail button {
+      min-height: 108px
+    }
+
+    .project-rail button:hover,
+    .project-rail button.active {
+      background: rgba(255, 248, 239, .82)
+    }
+
+    .viz {
+      transition: transform .25s var(--ease-swift), box-shadow .25s var(--ease-swift)
+    }
+
+    .viz:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 22px 34px rgba(126, 76, 28, .14)
+    }
   </style>
 </head>
 
@@ -2421,8 +2567,8 @@
         <p class="summary">University of Chicago student focused on data science, machine learning, visualization, and
           AI-assisted prototyping. This page is structured for recruiters: featured work first, full resume below, and
           a one-page PDF option for standard review.</p>
-        <p class="hero-subline">Focused on <span id="heroSubWord">machine learning</span> with an emphasis on readable,
-          interactive delivery.</p>
+        <p class="hero-subline">Focused on <span id="heroSubWord">machine learning</span> and interactive data work
+          that is easy to review.</p>
         <div class="hero-actions">
           <a class="btn" href="#projects">Explore Work</a>
           <a class="btn-soft" href="#resume-live">Open Full Resume</a>
@@ -2431,13 +2577,13 @@
           <strong class="guide-title">How To Review This Page</strong>
           <div class="guide-steps">
             <div class="guide-step"><span>1</span>
-              <p>Start with the featured projects for proof of work, outcomes, and technical depth.</p>
+              <p>Start with the featured projects to see what was built, how it was evaluated, and what tools were used.</p>
             </div>
             <div class="guide-step"><span>2</span>
-              <p>Use the full resume section for skills, education, and broader background.</p>
+              <p>Use the resume section for skills, education, certifications, and supporting context.</p>
             </div>
             <div class="guide-step"><span>3</span>
-              <p>Use `Save PDF` if you want the one-page resume in a more standard recruiter format.</p>
+              <p>Use `Save PDF` if you want the one-page version in a standard recruiter format.</p>
             </div>
           </div>
         </div>
@@ -2456,8 +2602,8 @@
         <div class="console-head">
           <div>
             <h2>Recruiter Snapshot</h2>
-            <p>Use these views if you want to assess the profile from a software, analytics, or delivery angle. The
-              default layout stays broad and easy to scan.</p>
+            <p>Choose the lens that best matches the role: software and product work, analytics and modeling, or
+              delivery and execution.</p>
           </div>
           <div class="switch" id="modeSwitch" role="tablist" aria-label="Profile modes">
             <span class="switch-indicator" id="modeIndicator" aria-hidden="true"></span>
@@ -2473,7 +2619,7 @@
               <div class="ring-core"><strong id="ringScore">Builder</strong><span id="ringLabel">role view</span>
               </div>
             </div>
-            <p id="ringFoot">Switch the view if you want the quickest summary for software, analytics, or delivery-heavy
+            <p id="ringFoot">Switch views to get a faster read on fit for software, analytics, or execution-focused
               roles.</p>
           </div>
 
@@ -2511,7 +2657,7 @@
           <p class="kicker">What I Do</p>
           <h2>Core strengths.</h2>
         </div>
-        <p>Machine learning, analytics, AI-assisted prototyping, and front-end delivery.</p>
+        <p>Machine learning, analytics, AI-assisted prototyping, and presentation-minded delivery.</p>
       </div>
       <div class="cap-grid">
         <article class="cap card">
@@ -2554,7 +2700,7 @@
           <p class="kicker">Background</p>
           <h2>Background, summarized.</h2>
         </div>
-        <p>Use the left rail for overview, experience, education, and leadership.</p>
+        <p>Use the tabs for the short version of experience, education, and leadership.</p>
       </div>
       <div class="journey">
         <div class="rail" id="journeyRail" role="tablist" aria-label="Journey sections">
@@ -2570,26 +2716,26 @@
         </div>
         <div class="journey-panels">
           <article class="jpanel active" data-panel="overview">
-            <h3>Analytical work that is easy to inspect.</h3>
-            <p>Incoming University of Chicago student focused on predictive modeling, AI-assisted prototyping, ETL
-              design, and interactive delivery.</p>
+            <h3>Technical work with clear outputs.</h3>
+            <p>Incoming University of Chicago student focused on predictive modeling, analytics workflows, and
+              interactive delivery.</p>
             <div class="split">
               <div>
                 <div class="timeline">
                   <h4>What stands out</h4>
                   <p class="meta">Core profile</p>
                   <ul>
-                    <li>Builds classification and predictive workflows with measurable evaluation outcomes.</li>
+                    <li>Builds classification and predictive workflows with measurable evaluation results.</li>
                     <li>Uses Python and SQL across data analysis, AI-assisted prototyping, and workflow design.</li>
-                    <li>Packages work visually through D3.js, deployed web apps, and portfolio-grade interfaces.</li>
+                    <li>Presents work through D3.js, deployed sites, dashboards, and other recruiter-readable formats.</li>
                   </ul>
                 </div>
                 <div class="timeline">
                   <h4>Current direction</h4>
                   <p class="meta">Summer 2026 target</p>
                   <ul>
-                    <li>Seeking internships where statistical rigor and product-minded presentation both matter.</li>
-                    <li>Interested in roles spanning analytics engineering, data science, and ML-adjacent product work.
+                    <li>Seeking internships where statistical rigor and communication both matter.</li>
+                    <li>Interested in analytics engineering, data science, and ML-adjacent product roles.
                     </li>
                   </ul>
                 </div>
@@ -2600,18 +2746,18 @@
                     range.</span></div>
                 <div class="mini"><small>Recall</small><strong class="count-up" data-value="91"
                       data-suffix="%">91%</strong><span>Fraud detection benchmark surfaced as a
-                    headline metric.</span></div>
+                    headline result.</span></div>
                 <div class="mini"><small>Scale</small><strong class="count-up" data-value="10000"
-                      data-suffix="+">10,000+</strong><span>Records handled in SQL and
+                      data-suffix="+">10,000+</strong><span>Rows handled in SQL and
                     ETL-driven analysis.</span></div>
               </div>
             </div>
           </article>
 
           <article class="jpanel" data-panel="experience">
-            <h3>Portfolio-led experience, now with shipped product work.</h3>
-            <p>The strongest signal comes from self-directed builds that combine analysis, prototyping, interfaces, and
-              real delivery.</p>
+            <h3>Project-based experience with shipped work.</h3>
+            <p>The strongest signal comes from self-directed builds that combine analysis, interfaces, prototyping, and
+              real deployment.</p>
             <div class="timeline">
               <h4>JimAI / AI Workspace Prototype</h4>
               <p class="meta">Independent build</p>
@@ -2637,8 +2783,8 @@
           </article>
 
           <article class="jpanel" data-panel="education">
-            <h3>Formal training is early, but the stack is already broad.</h3>
-            <p>The academic path is just beginning, supported by certifications and hands-on project work in modeling,
+            <h3>Formal training supported by project work.</h3>
+            <p>The academic path is still early, supported by completed certifications and hands-on work in modeling,
               analytics, and visualization.</p>
             <div class="split">
               <div>
@@ -2656,7 +2802,6 @@
                   <ul>
                     <li>IBM Data Science Professional Certificate.</li>
                     <li>Microsoft PL-300 Power BI Data Analyst.</li>
-                    <li>Google Cloud Machine Learning Engineer in progress.</li>
                   </ul>
                 </div>
               </div>
@@ -2665,16 +2810,15 @@
                     science workflows.</span></div>
                 <div class="mini"><small>PL-300</small><strong>Power BI</strong><span>Visualization and reporting
                     credibility.</span></div>
-                <div class="mini"><small>Delivery focus</small><strong>Interactive work</strong><span>Stronger signal
-                    currently comes from shipped visual and analytical projects than from cloud certification
-                    tracking.</span></div>
+                <div class="mini"><small>Delivery focus</small><strong>Interactive work</strong><span>Strongest signal
+                    comes from shipped visual and analytical projects.</span></div>
               </div>
             </div>
           </article>
 
           <article class="jpanel" data-panel="leadership">
-            <h3>Leadership here is technical and presentational.</h3>
-            <p>The resume also shows workshop delivery, peer guidance, and presenting analytical work clearly.</p>
+            <h3>Leadership here is practical and communication-focused.</h3>
+            <p>The profile also shows workshop delivery, peer guidance, and presenting analytical work clearly.</p>
             <div class="timeline">
               <h4>Co-President, Machine Learning Club</h4>
               <p class="meta">Workshops + mentoring</p>
@@ -2702,7 +2846,7 @@
           <p class="kicker">Featured Work</p>
           <h2>Start here for the clearest proof of work.</h2>
         </div>
-        <p>Select a project to see the build, stack, and hiring relevance.</p>
+        <p>Select a project to see what it does, how it was built, and why it matters.</p>
       </div>
       <div class="projects">
         <div class="project-rail" role="tablist" aria-label="Featured projects">
@@ -2710,7 +2854,7 @@
             data-copy="A fraud-detection model built for a heavily imbalanced dataset using XGBoost, Random Forest, SMOTE, and recall-focused evaluation."
             data-a-label="Model recall" data-a-value="91%" data-b-label="Dataset size" data-b-value="284k+ rows"
             data-c-label="Key tools" data-c-value="XGBoost + SMOTE"
-            data-outline="Built around class imbalance, anomaly detection pressure, and model comparison.|Used resampling and targeted metrics to prioritize practical fraud capture.|Strong example of machine learning work with business-facing consequences."
+            data-outline="Built for class imbalance, fraud-detection pressure, and model comparison.|Used resampling and targeted metrics to prioritize practical fraud capture.|Strong example of machine learning work with business-facing consequences."
             data-stack="Scikit-learn,XGBoost,Random Forest,SMOTE,Precision-Recall,Model Evaluation"
             data-link="https://github.com/James-Liebel/Personal_Projects/tree/main/projects/machine_learning"><small>01
               · ML</small><strong>Credit Card Fraud Detection</strong><span>Imbalanced classification with
@@ -2720,7 +2864,7 @@
             data-a-label="Project type" data-a-value="Prototype" data-b-label="Main tools"
             data-b-value="FastAPI / React / local AI" data-c-label="Main focus"
             data-c-value="Prompting + workflow design"
-            data-outline="Shows practical work with AI tooling without overstating low-level systems expertise.|Combines prompting, interface design, and workflow experimentation into a usable prototype.|Useful resume signal because it demonstrates applied AI building, not just AI interest."
+            data-outline="Shows practical work with AI tooling without overstating low-level systems expertise.|Combines prompting, interface design, and workflow experimentation in a usable prototype.|Useful resume signal because it shows applied AI building, not just AI interest."
             data-stack="FastAPI,React,Vite,Ollama,Automation,Prompting,Workflow Design"
             data-link="https://github.com/James-Liebel/JimAI"><small>02 · AI</small><strong>JimAI AI Workspace
               Prototype</strong><span>AI-assisted prototype focused on workflow design and usable
@@ -2729,7 +2873,7 @@
             data-copy="A live client website built and deployed for CustomStrat Advisory with reusable content structure, responsive design, and a custom domain."
             data-a-label="Live site" data-a-value="customstrat.com" data-b-label="Stack"
             data-b-value="Next.js 14 + TypeScript" data-c-label="Deployment" data-c-value="GitHub Pages + custom domain"
-            data-outline="Shows shipped execution for a real audience instead of another classroom-style demo.|Used AI-assisted iteration as a workflow accelerator while keeping the implementation grounded and maintainable.|Adds strong front-end and delivery signal alongside data science work."
+            data-outline="Shows shipped execution for a real audience instead of another school-style demo.|Used AI-assisted iteration as a workflow accelerator while keeping the implementation grounded and maintainable.|Adds strong front-end and delivery signal alongside data science work."
             data-stack="Next.js,TypeScript,Tailwind CSS,GitHub Pages,Responsive Design,Content Architecture"
             data-link="https://customstrat.com"><small>03 · Web</small><strong>CustomStrat Advisory
               Website</strong><span>Production-facing website built and deployed for a live business.</span></button>
@@ -2737,7 +2881,7 @@
             data-copy="An interactive D3 choropleth built to show low-income, low-access neighborhoods in a clearer and more usable way than a static map or PDF."
             data-a-label="Format" data-a-value="Interactive map" data-b-label="Data source"
             data-b-value="GeoJSON + census" data-c-label="Key tool" data-c-value="D3.js"
-            data-outline="Combines analytical framing with front-end communication quality.|Keeps the visualization directly embedded in the portfolio instead of hiding it behind screenshots.|Shows that visual delivery is part of the skill set rather than an afterthought."
+            data-outline="Combines analytical framing with strong front-end communication.|Keeps the visualization embedded in the portfolio instead of hiding it behind screenshots.|Shows that visual delivery is part of the skill set rather than an afterthought."
             data-stack="D3.js,SVG,GeoJSON,Choropleth,Data Storytelling,Geospatial Analysis"
             data-link="https://github.com/James-Liebel/Personal_Projects/tree/main/projects/web/visualizations"><small>04
               · Geo</small><strong>Cincinnati Food Access Map</strong><span>Geospatial analysis designed for
@@ -2750,7 +2894,9 @@
               <p class="kicker" id="plabel">Fraud Detection</p>
               <h3 id="ptitle">Credit Card Fraud Detection</h3>
             </div>
-            <a class="btn-soft" id="plink" href="https://github.com/James-Liebel" target="_blank"
+            <!-- TODO: Replace each project detail link with the final project-specific destination if the default item order changes. -->
+            <a class="btn-soft" id="plink"
+              href="https://github.com/James-Liebel/Personal_Projects/tree/main/projects/machine_learning" target="_blank"
               rel="noopener noreferrer">Open Project</a>
           </div>
           <p class="project-copy" id="pcopy">A high-imbalance classification workflow using XGBoost, Random Forest,
@@ -2764,7 +2910,7 @@
             <div class="detail">
               <h4>Why it matters</h4>
               <ul id="poutline">
-                <li>Built around class imbalance, anomaly detection pressure, and model comparison.</li>
+                <li>Built for class imbalance, fraud-detection pressure, and model comparison.</li>
                 <li>Used resampling and targeted evaluation metrics to prioritize practical fraud capture.</li>
                 <li>Strong example of ML work with business-facing consequences.</li>
               </ul>
@@ -2786,7 +2932,7 @@
           <p class="kicker">Additional Visualizations</p>
           <h2>More visualization work.</h2>
         </div>
-        <p>Additional map, chart, and storytelling work beyond the featured projects above.</p>
+        <p>Additional map, chart, and storytelling work that supports the main project section.</p>
       </div>
       <div class="viz-grid">
         <article class="viz span2 card">
@@ -2800,6 +2946,7 @@
             <div class="viz-fallback" hidden>
               <strong>United States GDP Growth Dynamics</strong>
               <span>D3.js · Time Series · SVG</span>
+              <em>Visualization coming soon</em>
             </div>
           </div><a href="projects/web/visualizations/bar_chart.html" target="_blank" rel="noopener noreferrer">Open
             Visualization</a>
@@ -2815,6 +2962,7 @@
             <div class="viz-fallback" hidden>
               <strong>Doping in Professional Cycling</strong>
               <span>D3.js · Scatter · EDA</span>
+              <em>Visualization coming soon</em>
             </div>
           </div><a href="projects/web/visualizations/scatter_plot.html" target="_blank" rel="noopener noreferrer">Open
             Visualization</a>
@@ -2830,6 +2978,7 @@
             <div class="viz-fallback" hidden>
               <strong>Global Temperature Heatmap</strong>
               <span>D3.js · Heatmap · Climate</span>
+              <em>Visualization coming soon</em>
             </div>
           </div><a href="projects/web/visualizations/heatmap.html" target="_blank"
             rel="noopener noreferrer">Open Visualization</a>
@@ -2845,6 +2994,7 @@
             <div class="viz-fallback" hidden>
               <strong>Cincinnati Food Access Map</strong>
               <span>D3.js · GeoJSON · Choropleth</span>
+              <em>Visualization coming soon</em>
             </div>
           </div><a href="projects/web/visualizations/choropleth_map.html" target="_blank"
             rel="noopener noreferrer">Open Visualization</a>
@@ -2860,6 +3010,7 @@
             <div class="viz-fallback" hidden>
               <strong>Multi-Dataset Treemap Dashboard</strong>
               <span>D3.js · Hierarchical · Dynamic</span>
+              <em>Visualization coming soon</em>
             </div>
           </div><a href="projects/web/visualizations/treemap.html" target="_blank"
             rel="noopener noreferrer">Open Visualization</a>
@@ -2875,6 +3026,7 @@
             <div class="viz-fallback" hidden>
               <strong>Cincinnati Food Deserts</strong>
               <span>D3.js · Map · Access</span>
+              <em>Visualization coming soon</em>
             </div>
           </div><a href="projects/web/visualizations/food_deserts.html" target="_blank"
             rel="noopener noreferrer">Open Visualization</a>
@@ -2908,7 +3060,8 @@
           <article class="rpanel active" data-rpanel="summary">
             <h3>Professional summary</h3>
             <p>Incoming University of Chicago student building machine learning projects, AI-assisted prototypes, and
-              interactive data products with Python, SQL, FastAPI, React, D3.js, and Power BI.</p>
+              interactive data products with Python, SQL, FastAPI, React, D3.js, and Power BI for analytics,
+              modeling, and product-minded delivery.</p>
             <div class="resume-pills"><span class="tag">Summer 2026 internship search</span><span class="tag">Machine
                 learning</span><span class="tag">AI-assisted development</span><span class="tag">Data
                 visualization</span></div>
@@ -2937,13 +3090,13 @@
             </div>
           </article>
           <article class="rpanel" data-rpanel="experience">
-            <h3>Data science and quantitative experience</h3>
+            <h3>Selected experience</h3>
             <p>Independent work spans predictive modeling, AI-assisted prototyping, and shipped web delivery.</p>
             <ul>
               <li>Built JimAI, an AI-assisted workspace prototype for research, code generation, and workflow
                 experimentation.</li>
-              <li>Worked with tools including FastAPI, React/Vite, local AI workflows, browser automation, and
-                agent-style interfaces.</li>
+              <li>Worked with FastAPI, React/Vite, local AI workflows, browser automation, and workflow-oriented
+                interfaces.</li>
               <li>Built and deployed customstrat.com using Next.js 14, TypeScript, Tailwind CSS, GitHub Pages, and a
                 custom domain.</li>
               <li>Developed predictive models, ETL workflows, and interactive visualizations across fraud detection,
@@ -2964,8 +3117,8 @@
             </div>
           </article>
           <article class="rpanel" data-rpanel="leadership">
-            <h3>Leadership and business acumen</h3>
-            <p>Leadership here means workshop delivery, presentation discipline, and explaining decisions clearly.</p>
+            <h3>Leadership and communication</h3>
+            <p>Leadership here means workshop delivery, presentation discipline, and explaining technical decisions clearly.</p>
             <ul>
               <li>Co-President of Machine Learning Club, leading workshops on neural networks, evaluation, and practical
                 AI workflows.</li>
@@ -2980,14 +3133,13 @@
     <footer class="site-footer panel reveal">
       <div>
         <h2>James Liebel</h2>
-        <p>Data science, machine learning, visualization, and interactive product-minded delivery.</p>
       </div>
       <div class="footer-links">
         <a href="mailto:Jamesliebel40@gmail.com">Jamesliebel40@gmail.com</a>
         <a href="https://github.com/James-Liebel" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://linkedin.com/in/james-liebel" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
-      <p class="footer-note">Built by James Liebel</p>
+      <p class="footer-note">Built by James Liebel · UChicago Class of 2030</p>
     </footer>
   </main>
   <section id="resume" aria-hidden="true">
@@ -2999,10 +3151,10 @@
       </header>
       <section class="resume-section">
         <h2 class="resume-section-title">PROFESSIONAL SUMMARY</h2>
-        <p class="resume-summary">Incoming University of Chicago student (Class of 2030) pursuing a double major in Data
-          Science and Statistics. Builds machine learning projects, AI-assisted prototypes, and interactive data
-          products with Python, SQL, FastAPI, React, and visualization tooling. Seeking a Summer 2026 internship where
-          analytical rigor, technical execution, and communication all matter.</p>
+        <p class="resume-summary">Incoming University of Chicago student (Class of 2030) pursuing Data Science and
+          Statistics. Builds machine learning projects, AI-assisted prototypes, and interactive data products with
+          Python, SQL, FastAPI, React, and D3.js. Seeking a Summer 2026 internship in data science, analytics, or
+          ML-adjacent product work.</p>
       </section>
       <section class="resume-section">
         <h2 class="resume-section-title">SELECTED EXPERIENCE</h2>
@@ -3014,8 +3166,8 @@
           <ul class="resume-list">
             <li>Built and deployed customstrat.com using Next.js 14, TypeScript, Tailwind CSS, GitHub Pages, and a
               custom domain.</li>
-            <li>Used AI-assisted iteration to speed up UI and content prototyping while keeping the implementation
-              production-facing and maintainable.</li>
+            <li>Used AI-assisted iteration to speed UI and content prototyping while keeping the implementation
+              maintainable and production-facing.</li>
           </ul>
         </div>
         <div class="resume-item">
@@ -3038,8 +3190,8 @@
             <p class="resume-date">Machine learning</p>
           </div>
           <ul class="resume-list">
-            <li>Built an imbalanced-class classification workflow with XGBoost, Random Forest, SMOTE, and recall-focused
-              evaluation.</li>
+            <li>Built an imbalanced-class classification workflow with XGBoost, Random Forest, SMOTE, and
+              recall-focused evaluation.</li>
           </ul>
         </div>
         <div class="resume-item">
@@ -3080,67 +3232,13 @@
           </div>
           <p class="resume-text">B.S. in Data Science and Statistics. Certifications: IBM Data Science Professional
             Certificate; Microsoft PL-300 (Power BI Data Analyst).</p>
-          <p class="resume-text">Leadership: DECA competitor, 2022 to 2024; presented data-backed market research and
-            strategic recommendations.</p>
+          <p class="resume-text">Leadership: Co-President, Machine Learning Club; DECA competitor, 2022 to 2024.</p>
         </div>
       </section>
     </div>
   </section>
 
   <script src="projects/web/portfolio-site.js"></script>
-  <script type="text/plain" data-disabled-script>
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const progressBar = document.getElementById("topProgress");
-    const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
-    const sections = document.querySelectorAll("main section[id]");
-    const revealEls = document.querySelectorAll(".reveal");
-    const modeButtons = document.querySelectorAll(".switch button");
-    const journeyButtons = document.querySelectorAll(".rail button");
-    const journeyPanels = document.querySelectorAll(".jpanel");
-    const projectButtons = document.querySelectorAll(".project-rail button");
-    const resumeButtons = document.querySelectorAll(".resume-tabs button");
-    const resumePanels = document.querySelectorAll(".rpanel");
-
-    const modeData = {
-      builder: { angle: 300, word: "Builder", label: "role view", title: "Best evidence for software and product-facing roles", badge: "Applications + ML projects", body: "This view emphasizes end-to-end project work: data preparation, model implementation, API or workflow logic, interface design, and packaging results into something another person can review and use.", s1: ["Core tools", "Python / SQL / FastAPI", "Main stack for analytics, prototypes, and lightweight application delivery."], s2: ["Shipped examples", "CustomStrat + JimAI", "Live site work and AI-assisted workflow prototypes."], s3: ["What stands out", "Readable interfaces", "Projects are presented as dashboards, maps, or tools instead of flat notebooks."], foot: "Best fit for software, ML-adjacent, and product-minded internships.", tags: ["FastAPI", "React", "Next.js", "D3.js"] },
-      analyst: { angle: 210, word: "Analyst", label: "role view", title: "Best evidence for data science and analytics roles", badge: "Modeling + evaluation", body: "This view emphasizes supervised learning, NLP, EDA, feature work, and explaining outcomes with metrics a recruiter can interpret quickly.", s1: ["Model work", "Fraud + sentiment", "Classification and text analysis projects show applied modeling experience."], s2: ["Evaluation", "Recall / accuracy / baselines", "Results are framed with metrics, comparisons, and tradeoffs."], s3: ["Communication", "Charts + writeups", "Visuals and plain-language explanations support the technical work."], foot: "Best fit for data science, analytics, and research-oriented internships.", tags: ["Scikit-learn", "XGBoost", "EDA", "TF-IDF"] },
-      operator: { angle: 120, word: "Delivery", label: "role view", title: "Best evidence for dependable execution", badge: "Project structure + shipped outputs", body: "This view emphasizes finishing work well: organizing projects, using AI as a practical accelerator, documenting decisions, and shipping interfaces another person can navigate.", s1: ["Workflow habits", "Git + iteration", "Versioning, cleanup, and repeated refinement matter across the portfolio."], s2: ["Output style", "Sites + dashboards", "Work is packaged in a form that is easier to review than raw notebooks alone."], s3: ["Team signal", "Readable handoff", "The projects show an effort to make technical work understandable to other people."], foot: "Best fit for roles where follow-through and usable outputs matter as much as experimentation.", tags: ["Documentation", "Automation", "GitHub Pages", "Prompting"] }
-    };
-
-    function updateProgress() { const max = document.documentElement.scrollHeight - window.innerHeight; progressBar.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})` }
-    const revealObserver = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("visible"); revealObserver.unobserve(e.target) } }), { threshold: .18 });
-    revealEls.forEach(el => revealObserver.observe(el));
-    const navObserver = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; navLinks.forEach(link => link.classList.toggle("active", link.getAttribute("href") === "#" + e.target.id)) }), { threshold: .45 });
-    sections.forEach(section => navObserver.observe(section));
-    document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener("click", e => { const t = document.querySelector(a.getAttribute("href")); if (!t) return; e.preventDefault(); t.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }) }));
-
-    const ring = document.getElementById("signalRing"), ringScore = document.getElementById("ringScore"), ringLabel = document.getElementById("ringLabel"), ringFoot = document.getElementById("ringFoot");
-    const signalTitle = document.getElementById("signalTitle"), signalBadge = document.getElementById("signalBadge"), signalBody = document.getElementById("signalBody");
-    const s1l = document.getElementById("s1l"), s1v = document.getElementById("s1v"), s1n = document.getElementById("s1n");
-    const s2l = document.getElementById("s2l"), s2v = document.getElementById("s2v"), s2n = document.getElementById("s2n");
-    const s3l = document.getElementById("s3l"), s3v = document.getElementById("s3v"), s3n = document.getElementById("s3n");
-    const signalTags = document.getElementById("signalTags");
-    function renderMode(key) { const m = modeData[key]; if (!m) return; ring.style.setProperty("--angle", `${m.angle}deg`); ringScore.textContent = m.word; ringLabel.textContent = m.label; ringFoot.textContent = m.foot; signalTitle.textContent = m.title; signalBadge.textContent = m.badge; signalBody.textContent = m.body;[[s1l, s1v, s1n, m.s1], [s2l, s2v, s2n, m.s2], [s3l, s3v, s3n, m.s3]].forEach(([a, b, c, d]) => { a.textContent = d[0]; b.textContent = d[1]; c.textContent = d[2] }); signalTags.innerHTML = m.tags.map(tag => `<span class="tag">${tag}</span>`).join(""); modeButtons.forEach(btn => btn.classList.toggle("active", btn.dataset.mode === key)) }
-    modeButtons.forEach(btn => btn.addEventListener("click", () => renderMode(btn.dataset.mode))); renderMode("builder");
-
-    journeyButtons.forEach(btn => btn.addEventListener("click", () => { journeyButtons.forEach(b => b.classList.toggle("active", b === btn)); journeyPanels.forEach(p => p.classList.toggle("active", p.dataset.panel === btn.dataset.journey)) }));
-
-    const plabel = document.getElementById("plabel"), ptitle = document.getElementById("ptitle"), pcopy = document.getElementById("pcopy"), pal = document.getElementById("pal"), pav = document.getElementById("pav"), pbl = document.getElementById("pbl"), pbv = document.getElementById("pbv"), pcl = document.getElementById("pcl"), pcv = document.getElementById("pcv"), plink = document.getElementById("plink"), po = document.getElementById("poutline"), ptags = document.getElementById("ptags");
-    function renderProject(btn) { projectButtons.forEach(b => b.classList.toggle("active", b === btn)); plabel.textContent = btn.dataset.label || ""; ptitle.textContent = btn.dataset.title || ""; pcopy.textContent = btn.dataset.copy || ""; pal.textContent = btn.dataset.aLabel || ""; pav.textContent = btn.dataset.aValue || ""; pbl.textContent = btn.dataset.bLabel || ""; pbv.textContent = btn.dataset.bValue || ""; pcl.textContent = btn.dataset.cLabel || ""; pcv.textContent = btn.dataset.cValue || ""; plink.href = btn.dataset.link || "#"; plink.target = (btn.dataset.link || "").startsWith("http") ? "_blank" : "_self"; plink.rel = plink.target === "_blank" ? "noopener noreferrer" : ""; po.innerHTML = (btn.dataset.outline || "").split("|").filter(Boolean).map(x => `<li>${x}</li>`).join(""); ptags.innerHTML = (btn.dataset.stack || "").split(",").map(x => x.trim()).filter(Boolean).map(x => `<span class="tag">${x}</span>`).join("") }
-    projectButtons.forEach(btn => btn.addEventListener("click", () => renderProject(btn))); renderProject(projectButtons[0]);
-
-    resumeButtons.forEach(btn => btn.addEventListener("click", () => { resumeButtons.forEach(b => b.classList.toggle("active", b === btn)); resumePanels.forEach(p => p.classList.toggle("active", p.dataset.rpanel === btn.dataset.resume)) }));
-
-    document.querySelectorAll(".hero-guide,.guide-step,.metric,.cap,.timeline,.rcard,.detail,.viz,.project-rail button,.resume-tabs button").forEach((el, i) => { el.style.transitionDelay = `${(i % 6) * 55}ms` });
-    if (!reduced) { document.querySelectorAll(".panel,.card,.cap,.project-rail button").forEach(el => el.addEventListener("pointermove", e => { const r = el.getBoundingClientRect(); el.style.setProperty("--cx", `${(e.clientX - r.left) / r.width * 100}%`); el.style.setProperty("--cy", `${(e.clientY - r.top) / r.height * 100}%`) })); window.addEventListener("pointermove", e => { document.body.style.setProperty("--px", `${e.clientX}px`); document.body.style.setProperty("--py", `${e.clientY}px`) }, { passive: true }) }
-
-    function fitResumeToOnePage() { const resume = document.getElementById("resume"), page = document.querySelector("#resume .resume-page"); if (!resume || !page) return; const prev = { display: resume.style.display, position: resume.style.position, visibility: resume.style.visibility, left: resume.style.left, top: resume.style.top, width: resume.style.width }; resume.style.display = "block"; resume.style.position = "absolute"; resume.style.visibility = "hidden"; resume.style.left = "-10000px"; resume.style.top = "0"; const pageHeightIn = 11, pageWidthIn = 8.5, marginIn = 1.5 / 2.54, printableHeightPx = (pageHeightIn - marginIn * 2) * 96, printableWidthIn = pageWidthIn - marginIn * 2; resume.style.width = `${printableWidthIn}in`; page.style.transform = ""; page.style.transformOrigin = "top center"; page.style.marginBottom = ""; const h = page.scrollHeight; let scale = 1; if (h > printableHeightPx) { scale = Math.max(.78, printableHeightPx / h); } page.style.transform = `scale(${scale.toFixed(3)})`; page.style.marginBottom = `-${(1 - scale) * h}px`; resume.style.display = prev.display; resume.style.position = prev.position; resume.style.visibility = prev.visibility; resume.style.left = prev.left; resume.style.top = prev.top; resume.style.width = prev.width; }
-    function clearResumeScale() { const page = document.querySelector("#resume .resume-page"); if (page) { page.style.transform = ""; page.style.transformOrigin = ""; page.style.marginBottom = ""; } }
-    let printing = false, printTimer = null; function restoreResume() { if (!printing) return; if (printTimer) { clearTimeout(printTimer); printTimer = null } clearResumeScale(); printing = false }
-    function printResume() { if (printing) return; printing = true; fitResumeToOnePage(); window.addEventListener("afterprint", restoreResume, { once: true }); window.addEventListener("focus", restoreResume, { once: true }); printTimer = setTimeout(restoreResume, 4000); requestAnimationFrame(() => requestAnimationFrame(() => window.print())) }
-    document.getElementById("pdfBtn").addEventListener("click", printResume); window.printResume = printResume;
-    window.addEventListener("scroll", updateProgress, { passive: true }); updateProgress();
-  </script>
 </body>
 
 </html>
