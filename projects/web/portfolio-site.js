@@ -54,22 +54,22 @@
   const modeData = {
     builder: {
       angle: 300,
-      word: "Builder",
-      label: "role view",
-      title: "Best evidence for software and product work",
-      badge: "Applications + ML projects",
-      body: "This view highlights end-to-end work: data preparation, model implementation, workflow logic, interface design, and usable delivery.",
-      s1: ["Core tools", "Python / SQL / FastAPI", "Main stack for analytics, prototypes, and lightweight application delivery."],
-      s2: ["Shipped examples", "CustomStrat + JimAI", "Live site work and AI-assisted workflow prototypes."],
-      s3: ["What stands out", "Readable interfaces", "Projects are shown as sites, maps, dashboards, or tools instead of flat notebooks."],
-      foot: "Best fit for software, ML-adjacent, and product-minded internships.",
-      tags: ["FastAPI", "React", "Next.js", "D3.js"]
+      word: "Data Engineering",
+      label: "",
+      title: "Best evidence for data engineering work",
+      badge: "Pipelines + delivery",
+      body: "This view highlights transformation work, SQL structure, application plumbing, and moving data into usable outputs.",
+      s1: ["Core tools", "Python / SQL / FastAPI", "Main stack for data movement, workflow logic, and lightweight back-end delivery."],
+      s2: ["Workflow focus", "ETL + modeling + APIs", "Projects show preparation, structuring, and exposing data in recruiter-readable formats."],
+      s3: ["What stands out", "Usable systems", "The work connects raw inputs to dashboards, tools, maps, and interactive outputs."],
+      foot: "Best fit for data engineering, analytics engineering, and platform-adjacent internships.",
+      tags: ["SQL", "ETL", "FastAPI", "Power Query"]
     },
     analyst: {
       angle: 210,
-      word: "Analyst",
-      label: "role view",
-      title: "Best evidence for data science and analytics roles",
+      word: "Data Science",
+      label: "",
+      title: "Best evidence for data science work",
       badge: "Modeling + evaluation",
       body: "This view highlights supervised learning, NLP, EDA, feature work, and recruiter-readable evaluation.",
       s1: ["Model work", "Fraud + sentiment", "Classification and text analysis projects show applied modeling experience."],
@@ -80,20 +80,20 @@
     },
     operator: {
       angle: 120,
-      word: "Delivery",
-      label: "role view",
-      title: "Best evidence for execution and follow-through",
-      badge: "Project structure + shipped outputs",
-      body: "This view highlights finishing work well: organizing projects, documenting decisions, and shipping interfaces another person can navigate.",
-      s1: ["Workflow habits", "Git + iteration", "Versioning, cleanup, and repeated refinement matter across the portfolio."],
-      s2: ["Output style", "Sites + dashboards", "Work is packaged in a form that is easier to review than raw notebooks alone."],
-      s3: ["Team signal", "Readable handoff", "The projects show an effort to make technical work understandable to other people."],
-      foot: "Best fit for roles where follow-through and usable outputs matter as much as experimentation.",
-      tags: ["Documentation", "Automation", "GitHub Pages", "Prompting"]
+      word: "Data Analysis",
+      label: "",
+      title: "Best evidence for data analysis work",
+      badge: "Dashboards + reporting",
+      body: "This view highlights exploratory analysis, clear visual explanation, BI delivery, and turning findings into readable outputs.",
+      s1: ["Analysis stack", "SQL / Power BI / D3", "The portfolio emphasizes reporting, visual framing, and digging into structured data."],
+      s2: ["Output style", "Dashboards + stories", "Projects are packaged as charts, maps, and panels another person can review quickly."],
+      s3: ["What stands out", "Readable decisions", "The work focuses on making results understandable, comparable, and useful."],
+      foot: "Best fit for data analysis, BI, and decision-support internships.",
+      tags: ["Power BI", "DAX", "D3.js", "Reporting"]
     }
   };
 
-  const heroWords = ["data science", "machine learning", "visualization", "analytics"];
+  const heroWords = ["data science", "machine learning", "visualization", "AI prototyping"];
   let heroWordIndex = 0;
   let lenis = null;
   let gsapScrollProgress = false;
@@ -121,21 +121,47 @@
     });
   }
 
-  function movePillIndicator(indicator, target) {
+  function movePillIndicator(indicator, target, animate = false) {
     if (!indicator || !target || !target.parentElement) return;
     const parentRect = target.parentElement.getBoundingClientRect();
     const rect = target.getBoundingClientRect();
-    indicator.style.width = `${rect.width}px`;
-    indicator.style.transform = `translate(${rect.left - parentRect.left}px, 0)`;
+    const x = rect.left - parentRect.left;
+    const width = rect.width;
+    if (animate && window.gsap) {
+      window.gsap.to(indicator, {
+        x: x,
+        width,
+        duration: 0.28,
+        ease: "power2.inOut",
+        overwrite: true
+      });
+    } else {
+      if (window.gsap) {
+        window.gsap.set(indicator, { x, width });
+      } else {
+        indicator.style.width = `${width}px`;
+        indicator.style.transform = `translate(${x}px, 0)`;
+      }
+    }
   }
 
   function moveNavIndicator(activeLink) {
     if (!navIndicator || !activeLink || !activeLink.parentElement || window.innerWidth <= 920) return;
     const parentRect = activeLink.parentElement.getBoundingClientRect();
     const rect = activeLink.getBoundingClientRect();
-    navIndicator.style.width = `${rect.width}px`;
-    navIndicator.style.transform = `translate(${rect.left - parentRect.left}px, 0)`;
     navIndicator.classList.add("ready");
+    if (window.gsap) {
+      window.gsap.to(navIndicator, {
+        x: rect.left - parentRect.left,
+        width: rect.width,
+        duration: 0.32,
+        ease: "power2.out",
+        overwrite: true
+      });
+    } else {
+      navIndicator.style.width = `${rect.width}px`;
+      navIndicator.style.transform = `translate(${rect.left - parentRect.left}px, 0)`;
+    }
   }
 
   function getNavLinkBaseColor(link) {
@@ -144,7 +170,7 @@
     if (scrolled) {
       return link.classList.contains("active") ? "var(--dark)" : "rgba(36, 50, 79, 0.68)";
     }
-    return link.classList.contains("active") ? "var(--cream)" : "rgba(255, 247, 239, 0.84)";
+    return link.classList.contains("active") ? "var(--cream)" : "rgba(255, 247, 239, 0.95)";
   }
 
   function applyNavLinkState(link) {
@@ -170,22 +196,73 @@
 
   function closeMobileNav() {
     if (!mobileNav || mobileNav.hidden) return;
-    mobileNav.hidden = true;
-    document.body.classList.remove("menu-open");
-    if (navToggle) navToggle.setAttribute("aria-expanded", "false");
+    if (!window.gsap || reduced) {
+      mobileNav.hidden = true;
+      document.body.classList.remove("menu-open");
+      if (navToggle) {
+        navToggle.classList.remove("is-open");
+        navToggle.setAttribute("aria-expanded", "false");
+      }
+      return;
+    }
+    const { gsap } = window;
+    gsap.to("#mobileNav", {
+      x: "100%",
+      opacity: 0,
+      duration: 0.4,
+      ease: "power3.in",
+      onComplete: () => {
+        mobileNav.hidden = true;
+        document.body.classList.remove("menu-open");
+        if (navToggle) {
+          navToggle.classList.remove("is-open");
+          navToggle.setAttribute("aria-expanded", "false");
+        }
+      }
+    });
   }
 
   function openMobileNav() {
     if (!mobileNav) return;
+    if (!window.gsap || reduced) {
+      mobileNav.hidden = false;
+      document.body.classList.add("menu-open");
+      if (navToggle) {
+        navToggle.classList.add("is-open");
+        navToggle.setAttribute("aria-expanded", "true");
+      }
+      return;
+    }
+    const { gsap } = window;
     mobileNav.hidden = false;
     document.body.classList.add("menu-open");
-    if (navToggle) navToggle.setAttribute("aria-expanded", "true");
+    if (navToggle) {
+      navToggle.classList.add("is-open");
+      navToggle.setAttribute("aria-expanded", "true");
+    }
+    const links = mobileNav.querySelectorAll(".mobile-nav-links a");
+    gsap.fromTo("#mobileNav", { x: "100%", opacity: 0 }, {
+      x: "0%",
+      opacity: 1,
+      duration: 0.5,
+      ease: "power3.out"
+    });
+    if (links.length) {
+      gsap.from(links, {
+        x: 40,
+        opacity: 0,
+        stagger: 0.07,
+        duration: 0.4,
+        ease: "power2.out",
+        delay: 0.2
+      });
+    }
   }
 
   function scrollToTarget(target) {
     if (!target) return;
     if (lenis) {
-      lenis.scrollTo(target, { offset: -88, duration: 1.05 });
+      lenis.scrollTo(target, { offset: -92, duration: 1.2 });
     } else {
       target.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
     }
@@ -208,7 +285,7 @@
 
   function splitHeadlineWords() {
     if (!heroTitle || heroTitle.dataset.split === "true") {
-      return heroTitle ? [...heroTitle.querySelectorAll(".hero-word-fragment")] : [];
+      return heroTitle ? [...heroTitle.querySelectorAll(".hw")] : [];
     }
     const lineNodes = [...heroTitle.querySelectorAll(".hero-name, .hero-line")].filter(node => !node.classList.contains("hero-rotator"));
     lineNodes.forEach(line => {
@@ -217,17 +294,22 @@
       if (!words.length) return;
       line.textContent = "";
       words.forEach((word, index) => {
-        const fragment = document.createElement("span");
-        fragment.className = "hero-word-fragment";
-        fragment.textContent = word;
-        line.appendChild(fragment);
+        const outer = document.createElement("span");
+        const inner = document.createElement("span");
+        outer.style.display = "inline-block";
+        outer.style.overflow = "hidden";
+        inner.className = "hw";
+        inner.style.display = "inline-block";
+        inner.textContent = word;
+        outer.appendChild(inner);
+        line.appendChild(outer);
         if (index < words.length - 1) {
           line.appendChild(document.createTextNode(" "));
         }
       });
     });
     heroTitle.dataset.split = "true";
-    return [...heroTitle.querySelectorAll(".hero-word-fragment")];
+    return [...heroTitle.querySelectorAll(".hw")];
   }
 
   function renderMode(key) {
@@ -235,7 +317,7 @@
     if (!next) return;
     const activeButton = modeButtons.find(button => button.dataset.mode === key);
     modeButtons.forEach(button => button.classList.toggle("active", button === activeButton));
-    movePillIndicator(modeIndicator, activeButton);
+    movePillIndicator(modeIndicator, activeButton, true);
     if (ring) ring.style.setProperty("--angle", `${next.angle}deg`);
     if (ringScore) ringScore.textContent = next.word;
     if (ringLabel) ringLabel.textContent = next.label;
@@ -312,6 +394,183 @@
         }
       });
     });
+  }
+
+  function setupSkillsTransition() {
+    if (reduced || !window.gsap || !window.ScrollTrigger) return;
+    const { gsap } = window;
+    const bridge = document.getElementById("skillsTransition");
+    const sectionHead = document.querySelector("#capabilities .section-head");
+    const beam = bridge?.querySelector(".skills-transition-beam") ?? null;
+    const glow = bridge?.querySelector(".skills-transition-glow") ?? null;
+    const stage = bridge?.querySelector(".skills-transition-stage") ?? null;
+    const portal = bridge?.querySelector(".skills-transition-portal") ?? null;
+    const ticker = bridge?.querySelector(".skills-transition-ticker") ?? null;
+    const rings = bridge ? [...bridge.querySelectorAll(".skills-transition-ring")] : [];
+    const shards = bridge ? [...bridge.querySelectorAll(".skills-transition-shard")] : [];
+
+    if (!bridge || !stage || !beam || !glow || !portal || !rings.length || !shards.length) return;
+
+    gsap.set(beam, { scaleX: 0.18, opacity: 0.24, transformOrigin: "center center" });
+    gsap.set(glow, { scale: 0.7, opacity: 0.14 });
+    gsap.set(portal, {
+      y: 76,
+      scale: 0.82,
+      opacity: 0,
+      rotateX: 24,
+      transformPerspective: 1200,
+      transformOrigin: "50% 50%"
+    });
+    gsap.set(rings, {
+      scale: index => 1.18 - index * 0.08,
+      opacity: index => 0.18 + index * 0.08
+    });
+    gsap.set(shards, {
+      y: index => 60 + index * 8,
+      x: index => [-38, 34, 44, -42, 28, -26][index] ?? 0,
+      rotate: index => [-12, 10, 8, -9, 12, -7][index] ?? 0,
+      opacity: 0,
+      transformOrigin: "50% 50%"
+    });
+    if (ticker) gsap.set(ticker, { y: 34, opacity: 0 });
+
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: bridge,
+        start: "top 88%",
+        end: "bottom 60%",
+        scrub: 1
+      }
+    })
+      .to(glow, {
+        scale: 1,
+        opacity: 0.92,
+        duration: 1
+      }, 0)
+      .to(beam, {
+        scaleX: 1,
+        opacity: 1,
+        duration: 0.72,
+        ease: "power2.out"
+      }, 0.04)
+      .to(portal, {
+        y: 0,
+        rotateX: 0,
+        scale: 1,
+        opacity: 1,
+        duration: 0.92,
+        ease: "power3.out"
+      }, 0.08)
+      .to(shards, {
+        y: 0,
+        x: 0,
+        rotate: 0,
+        opacity: 1,
+        duration: 0.68,
+        stagger: 0.06,
+        ease: "power2.out"
+      }, 0.16)
+      .to(ticker, {
+        y: 0,
+        opacity: 1,
+        duration: 0.42,
+        ease: "power2.out"
+      }, 0.24)
+      .to(stage, {
+        y: -26,
+        duration: 1,
+        ease: "none"
+      }, 0);
+
+    gsap.to(rings[0], {
+      rotate: 360,
+      duration: 18,
+      repeat: -1,
+      ease: "none"
+    });
+    gsap.to(rings[1], {
+      rotate: -360,
+      duration: 14,
+      repeat: -1,
+      ease: "none"
+    });
+    gsap.to(rings[2], {
+      rotate: 360,
+      duration: 10,
+      repeat: -1,
+      ease: "none"
+    });
+
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      bridge.addEventListener("mousemove", event => {
+        const rect = bridge.getBoundingClientRect();
+        const px = (event.clientX - rect.left) / rect.width - 0.5;
+        const py = (event.clientY - rect.top) / rect.height - 0.5;
+
+        gsap.to(portal, {
+          x: px * 26,
+          y: py * 18,
+          rotateY: px * 8,
+          rotateX: py * -8,
+          duration: 0.7,
+          ease: "power2.out"
+        });
+
+        gsap.to(glow, {
+          x: px * 18,
+          y: py * 14,
+          duration: 0.8,
+          ease: "power2.out"
+        });
+
+        shards.forEach((shard, index) => {
+          const depth = (index % 3) + 1;
+          gsap.to(shard, {
+            x: px * 18 * depth,
+            y: py * 12 * depth,
+            duration: 0.8,
+            ease: "power2.out"
+          });
+        });
+      });
+
+      bridge.addEventListener("mouseleave", () => {
+        gsap.to(portal, {
+          x: 0,
+          y: 0,
+          rotateX: 0,
+          rotateY: 0,
+          duration: 0.9,
+          ease: "power3.out"
+        });
+        gsap.to(glow, {
+          x: 0,
+          y: 0,
+          duration: 0.9,
+          ease: "power3.out"
+        });
+        gsap.to(shards, {
+          x: 0,
+          y: 0,
+          duration: 0.9,
+          ease: "power3.out"
+        });
+      });
+    }
+
+    if (sectionHead) {
+      gsap.from(sectionHead, {
+        y: 40,
+        opacity: 0,
+        duration: 0.7,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionHead,
+          start: "top 82%",
+          once: true
+        }
+      });
+    }
   }
 
   function setupBentoMotion() {
@@ -392,6 +651,245 @@
           }
         });
       });
+    });
+  }
+
+  function setupSkillShowcases() {
+    if (reduced || !window.gsap || !window.ScrollTrigger) return;
+    const { gsap, ScrollTrigger } = window;
+    const showcases = [...document.querySelectorAll(".skills-showcase")];
+    if (!showcases.length) return;
+
+    showcases.forEach(showcase => {
+      const revealTargets = [
+        ...showcase.querySelectorAll(".skills-pipeline-node"),
+        ...showcase.querySelectorAll(".skills-inline-chips span"),
+        ...showcase.querySelectorAll(".skills-lab-core, .skills-lab-node, .skills-lab-meter"),
+        ...showcase.querySelectorAll(".skills-insight-card, .skills-insight-callout, .skills-insight-bar")
+      ];
+
+      if (revealTargets.length) {
+        gsap.from(revealTargets, {
+          opacity: 0,
+          y: 28,
+          scale: 0.96,
+          duration: 0.58,
+          stagger: 0.05,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: showcase,
+            start: "top 82%",
+            once: true
+          }
+        });
+      }
+
+      const heroElement = showcase.querySelector(".skills-pipeline-grid, .skills-lab-field, .skills-insight-screen");
+      if (heroElement) {
+        gsap.from(heroElement, {
+          opacity: 0,
+          scale: 0.94,
+          duration: 0.72,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: showcase,
+            start: "top 84%",
+            once: true
+          }
+        });
+      }
+
+      if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+      const parallaxTargets = [
+        ...showcase.querySelectorAll(".skills-pipeline-node, .skills-pipeline-packet"),
+        ...showcase.querySelectorAll(".skills-lab-core, .skills-lab-node, .skills-lab-meter"),
+        ...showcase.querySelectorAll(".skills-insight-card, .skills-insight-callout")
+      ];
+
+      showcase.addEventListener("mousemove", event => {
+        const rect = showcase.getBoundingClientRect();
+        const px = (event.clientX - rect.left) / rect.width - 0.5;
+        const py = (event.clientY - rect.top) / rect.height - 0.5;
+
+        parallaxTargets.forEach((target, index) => {
+          const depth = (index % 4) + 1;
+          gsap.to(target, {
+            x: px * depth * 8,
+            y: py * depth * 6,
+            duration: 0.6,
+            ease: "power2.out",
+            overwrite: true
+          });
+        });
+      });
+
+      showcase.addEventListener("mouseleave", () => {
+        gsap.to(parallaxTargets, {
+          x: 0,
+          y: 0,
+          duration: 0.75,
+          ease: "power3.out",
+          overwrite: true
+        });
+      });
+    });
+  }
+
+  function setupSkillsConnectors() {
+    if (reduced || !window.gsap || !window.ScrollTrigger) return;
+    const { gsap, ScrollTrigger } = window;
+    const grid = document.querySelector(".skills-grid");
+    const svg = grid?.querySelector(".skills-grid-network-svg") ?? null;
+    const rootCards = grid ? [...grid.querySelectorAll(".skills-root-card")] : [];
+    const supportCards = grid ? [...grid.querySelectorAll(".skills-support-card")] : [];
+    const bridgeCard = grid?.querySelector(".skills-bridge-card") ?? null;
+
+    if (!grid || !svg || rootCards.length < 3 || supportCards.length < 3 || !bridgeCard) return;
+
+    let connectorAnimated = false;
+
+    const relativePoint = (element, vertical = "center") => {
+      const gridRect = grid.getBoundingClientRect();
+      const rect = element.getBoundingClientRect();
+      const yMap = {
+        top: rect.top - gridRect.top,
+        center: rect.top - gridRect.top + rect.height / 2,
+        bottom: rect.bottom - gridRect.top
+      };
+      return {
+        x: rect.left - gridRect.left + rect.width / 2,
+        y: yMap[vertical] ?? yMap.center
+      };
+    };
+
+    const cubicPath = (start, end, bend = 42) => {
+      const cp1y = start.y + bend;
+      const cp2y = end.y - bend;
+      return `M ${start.x} ${start.y} C ${start.x} ${cp1y}, ${end.x} ${cp2y}, ${end.x} ${end.y}`;
+    };
+
+    const setLineState = () => {
+      const paths = [...svg.querySelectorAll(".skills-grid-path")];
+      const nodes = [...svg.querySelectorAll(".skills-grid-node, .skills-grid-pulse")];
+      paths.forEach(path => {
+        const length = path.getTotalLength();
+        path.style.strokeDasharray = `${length}`;
+        path.style.strokeDashoffset = connectorAnimated ? "0" : `${length}`;
+      });
+      nodes.forEach(node => {
+        node.style.opacity = connectorAnimated ? "1" : "0";
+        node.style.transform = connectorAnimated ? "scale(1)" : "scale(0.7)";
+        node.style.transformBox = "fill-box";
+        node.style.transformOrigin = "center";
+      });
+
+      if (connectorAnimated) {
+        const secondary = svg.querySelectorAll(".skills-grid-path.is-secondary");
+        if (secondary.length) {
+          gsap.to(secondary, {
+            strokeDashoffset: -28,
+            duration: 2.6,
+            repeat: -1,
+            ease: "none",
+            overwrite: true
+          });
+        }
+      }
+    };
+
+    const buildNetwork = () => {
+      if (window.innerWidth <= 1160) {
+        grid.classList.remove("network-active");
+        svg.innerHTML = "";
+        return;
+      }
+
+      grid.classList.add("network-active");
+      const width = grid.clientWidth;
+      const height = grid.clientHeight;
+      svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+
+      const roots = rootCards.map(card => relativePoint(card, "bottom"));
+      const supports = supportCards.map(card => relativePoint(card, "top"));
+      const bridgeTop = relativePoint(bridgeCard, "top");
+      const busY = Math.min(...supports.map(point => point.y)) - 26;
+      const lowerHub = { x: bridgeTop.x, y: bridgeTop.y - 24 };
+      const centerHub = { x: roots[1].x, y: busY };
+
+      const branchPaths = roots.map(root => cubicPath(root, { x: root.x, y: busY }, 22));
+      const supportPaths = supports.map(support => cubicPath({ x: support.x, y: busY }, support, 22));
+      const topBus = `M ${roots[0].x} ${busY} C ${roots[0].x + 110} ${busY}, ${roots[2].x - 110} ${busY}, ${roots[2].x} ${busY}`;
+      const trunk = cubicPath(centerHub, lowerHub, 50);
+      const bridgeFeed = cubicPath(lowerHub, bridgeTop, 22);
+
+      svg.innerHTML = `
+        <path class="skills-grid-path is-secondary" d="${topBus}"></path>
+        ${branchPaths.map(path => `<path class="skills-grid-path" d="${path}"></path>`).join("")}
+        ${supportPaths.map(path => `<path class="skills-grid-path" d="${path}"></path>`).join("")}
+        <path class="skills-grid-path" d="${trunk}"></path>
+        <path class="skills-grid-path is-secondary" d="${bridgeFeed}"></path>
+        ${roots.map(point => `<circle class="skills-grid-node" cx="${point.x}" cy="${point.y}" r="5"></circle>`).join("")}
+        ${supports.map(point => `<circle class="skills-grid-node" cx="${point.x}" cy="${point.y}" r="5"></circle>`).join("")}
+        <circle class="skills-grid-node is-hub" cx="${centerHub.x}" cy="${centerHub.y}" r="6.5"></circle>
+        <circle class="skills-grid-pulse" cx="${centerHub.x}" cy="${centerHub.y}" r="13"></circle>
+        <circle class="skills-grid-node is-hub" cx="${lowerHub.x}" cy="${lowerHub.y}" r="6"></circle>
+        <circle class="skills-grid-pulse" cx="${lowerHub.x}" cy="${lowerHub.y}" r="12"></circle>
+        <circle class="skills-grid-node" cx="${bridgeTop.x}" cy="${bridgeTop.y}" r="5"></circle>
+      `;
+
+      setLineState();
+    };
+
+    const animateNetwork = () => {
+      if (connectorAnimated) return;
+      connectorAnimated = true;
+      const paths = [...svg.querySelectorAll(".skills-grid-path")];
+      const nodes = [...svg.querySelectorAll(".skills-grid-node, .skills-grid-pulse")];
+
+      paths.forEach(path => {
+        const length = path.getTotalLength();
+        path.style.strokeDasharray = `${length}`;
+        path.style.strokeDashoffset = `${length}`;
+      });
+
+      gsap.to(paths, {
+        strokeDashoffset: 0,
+        duration: 1.05,
+        stagger: 0.06,
+        ease: "power3.out"
+      });
+
+      gsap.to(nodes, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.42,
+        stagger: 0.04,
+        ease: "back.out(1.8)"
+      });
+
+      const secondary = svg.querySelectorAll(".skills-grid-path.is-secondary");
+      if (secondary.length) {
+        gsap.to(secondary, {
+          strokeDashoffset: -28,
+          duration: 2.6,
+          repeat: -1,
+          ease: "none"
+        });
+      }
+    };
+
+    buildNetwork();
+
+    ScrollTrigger.create({
+      trigger: grid,
+      start: "top 74%",
+      once: true,
+      onEnter: animateNetwork
+    });
+
+    window.addEventListener("resize", () => {
+      requestAnimationFrame(buildNetwork);
     });
   }
 
@@ -633,6 +1131,39 @@
         }
       });
     });
+
+    // D3 gallery cards extra motion
+    const d3Cards = grid ? [...grid.querySelectorAll(".d3-card")] : [];
+    if (d3Cards.length) {
+      gsap.from(d3Cards, {
+        opacity: 0,
+        y: 55,
+        stagger: 0.09,
+        duration: 0.65,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: d3Cards[0],
+          start: "top 82%",
+          once: true
+        }
+      });
+
+      d3Cards.forEach(card => {
+        const line = card.querySelector(".visual-line");
+        if (!line) return;
+        gsap.from(line, {
+          scaleX: 0,
+          transformOrigin: "left",
+          duration: 0.6,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: line,
+            start: "top 86%",
+            once: true
+          }
+        });
+      });
+    }
   }
 
   function scrollToJourneyStop(target) {
@@ -646,7 +1177,7 @@
     const destination = journeyScrollTrigger.start + (journeyScrollTrigger.end - journeyScrollTrigger.start) * ratio;
 
     if (lenis) {
-      lenis.scrollTo(destination, { duration: 1.05 });
+      lenis.scrollTo(destination, { duration: 1.2 });
     } else {
       window.scrollTo({ top: destination, behavior: reduced ? "auto" : "smooth" });
     }
@@ -654,8 +1185,15 @@
 
   function setupJourneyMotion() {
     if (reduced || !window.gsap || !window.ScrollTrigger || !journey || !journeyTrack || !journeyStops.length) return;
+    if (window.innerWidth <= 768) {
+      journey.classList.remove("journey-motion-active");
+      journeyScrollTrigger = null;
+      return;
+    }
     const { gsap, ScrollTrigger } = window;
     journey.classList.add("journey-motion-active");
+    const shell = journey.querySelector(".journey-track-shell");
+    if (shell) shell.style.overflow = "hidden";
 
     const maxOffset = () => Math.max(0, journeyTrack.scrollWidth - window.innerWidth);
     const journeyTween = gsap.to(journeyTrack, {
@@ -795,18 +1333,15 @@
 
     brandBadges.forEach(badge => {
       badge.addEventListener("mouseenter", () => {
-        gsap.to(badge, { rotate: "+=360", duration: 0.55, ease: "power2.inOut", overwrite: true });
-      });
-    });
-
-    document.querySelectorAll(".nav-availability-dot").forEach(dot => {
-      gsap.to(dot, {
-        scale: 1.4,
-        opacity: 0.4,
-        duration: 0.75,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true
+        gsap.killTweensOf(badge);
+        gsap.set(badge, { rotate: 0 });
+        gsap.to(badge, {
+          rotate: 360,
+          duration: 0.55,
+          ease: "power2.inOut",
+          overwrite: true,
+          onComplete: () => gsap.set(badge, { rotate: 0 })
+        });
       });
     });
 
@@ -910,8 +1445,8 @@
       tl.to(heroWord, {
         yPercent: -100,
         opacity: 0,
-        duration: 0.4,
-        ease: "power2.inOut"
+        duration: 0.38,
+        ease: "power3.inOut"
       })
         .call(() => {
           heroWord.textContent = nextWord;
@@ -920,19 +1455,177 @@
         .to(heroWord, {
           yPercent: 0,
           opacity: 1,
-          duration: 0.4,
-          ease: "power2.out"
+          duration: 0.38,
+          ease: "power3.out"
         }, "+=0.1");
     }, 3000);
   }
 
   function setupHeroParallax() {
     if (!heroTitle || !window.gsap) return;
+    if (!window.matchMedia("(hover: hover)").matches) return;
     document.addEventListener("mousemove", event => {
-      const dx = (event.clientX / window.innerWidth - 0.5) * 16;
-      const dy = (event.clientY / window.innerHeight - 0.5) * 8;
-      window.gsap.to("[data-headline]", { x: dx, y: dy, duration: 0.9, ease: "power2.out", overwrite: true });
+      const dx = (event.clientX / window.innerWidth - 0.5) * 14;
+      const dy = (event.clientY / window.innerHeight - 0.5) * 7;
+      window.gsap.to(heroTitle, { x: dx, y: dy, duration: 0.9, ease: "power2.out", overwrite: true });
     }, { passive: true });
+  }
+
+  function setupScrollReveals() {
+    if (reduced || !window.gsap || !window.ScrollTrigger) return;
+    const { gsap, ScrollTrigger } = window;
+
+    // Eyebrow / kicker labels
+    gsap.utils.toArray(".section-kicker, .section-head .eyebrow, .terminal-label").forEach(el => {
+      gsap.from(el, {
+        opacity: 0,
+        letterSpacing: "0.04em",
+        duration: 0.7,
+        scrollTrigger: {
+          trigger: el,
+          start: "top 88%",
+          once: true
+        }
+      });
+    });
+
+    // Section h2 headings
+    gsap.utils.toArray(".section-head h2, .journey-head h2").forEach(h2 => {
+      if (h2.dataset.split === "true") return;
+      const words = (h2.innerText || "").split(" ");
+      h2.innerHTML = words.map(w => {
+        if (!w) return "";
+        return `<span style="display:inline-block;overflow:hidden"><span class="h2w" style="display:inline-block">${w}</span></span>`;
+      }).join(" ");
+      h2.dataset.split = "true";
+      const wordEls = h2.querySelectorAll(".h2w");
+      gsap.from(wordEls, {
+        y: "100%",
+        opacity: 0,
+        duration: 0.65,
+        stagger: 0.06,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: h2,
+          start: "top 86%",
+          once: true
+        }
+      });
+    });
+
+    // Bento and visual grid cards
+    gsap.utils.toArray(".skills-grid, .visual-grid").forEach(grid => {
+      const cards = grid.querySelectorAll(".bento-card, .visual-card");
+      if (!cards.length) return;
+      gsap.from(cards, {
+        opacity: 0,
+        y: 55,
+        duration: 0.65,
+        stagger: 0.09,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: grid,
+          start: "top 80%",
+          once: true
+        }
+      });
+    });
+
+    // Journey timeline cards
+    gsap.utils.toArray(".timeline-grid, .timeline-stack").forEach(container => {
+      const items = container.querySelectorAll(".timeline");
+      if (!items.length) return;
+      gsap.from(items, {
+        opacity: 0,
+        y: 40,
+        duration: 0.55,
+        stagger: 0.08,
+        scrollTrigger: {
+          trigger: container,
+          start: "top 82%",
+          once: true
+        }
+      });
+    });
+
+    // Project sections
+    gsap.utils.toArray(".project-section").forEach(section => {
+      const copy = section.querySelector(".project-copy");
+      const visual = section.querySelector(".work-visual-card");
+      if (!copy || !visual) return;
+      const isReverse = !!section.querySelector(".project-inner.reverse");
+      gsap.from(copy, {
+        opacity: 0,
+        x: isReverse ? 50 : -50,
+        duration: 0.75,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: section,
+          start: "top 75%",
+          once: true
+        }
+      });
+      gsap.from(visual, {
+        opacity: 0,
+        x: isReverse ? -50 : 50,
+        duration: 0.75,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: section,
+          start: "top 75%",
+          once: true
+        }
+      });
+    });
+
+    // Journey node lines
+    gsap.utils.toArray(".journey-node-line").forEach(line => {
+      gsap.to(line, {
+        scaleY: 1,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: line,
+          start: "top 82%",
+          once: true
+        }
+      });
+    });
+
+    // Recruiter snapshot / metrics count-up (mini, pmetric)
+    document.querySelectorAll(".mini strong, .pmetric strong").forEach(el => {
+      const raw = (el.textContent || "").trim();
+      const num = parseFloat(raw.replace(/[^0-9.]/g, ""));
+      const suffix = raw.replace(/[0-9.,]/g, "");
+      if (isNaN(num)) return;
+      const state = { val: 0 };
+      gsap.from(state, {
+        val: num,
+        duration: 1.4,
+        ease: "power2.out",
+        onUpdate: function () {
+          el.textContent = `${Math.round(state.val)}${suffix}`;
+        },
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%",
+          once: true
+        }
+      });
+    });
+
+    // Footer columns (extra safety; complements existing micro-interactions)
+    gsap.from(".footer-column", {
+      opacity: 0,
+      y: 30,
+      stagger: 0.1,
+      duration: 0.6,
+      scrollTrigger: {
+        trigger: ".site-footer",
+        start: "top 88%",
+        once: true
+      }
+    });
   }
 
   function setupHeroGrain() {
@@ -970,37 +1663,23 @@
     setupHeroGrain();
     setupHeroParallax();
 
-    const headlineWords = splitHeadlineWords();
-    const pillItems = heroPills ? [...heroPills.children] : [];
-    const tl = window.gsap.timeline();
+    splitHeadlineWords();
 
-    window.gsap.set(headlineWords, { y: 40, opacity: 0 });
-    if (heroTerminal) window.gsap.set(heroTerminal, { x: 80, opacity: 0 });
-    window.gsap.set(pillItems, { y: 20, opacity: 0 });
+    const tl = window.gsap.timeline({ defaults: { ease: "power3.out" } });
+    const pillItems = heroPills ? heroPills.querySelectorAll(".pill") : [];
 
-    tl.to(headlineWords, {
-      y: 0,
-      opacity: 1,
-      duration: 0.7,
-      stagger: 0.06,
-      ease: "power3.out"
-    })
-      .to(heroTerminal, {
-        x: 0,
-        opacity: 1,
-        duration: 0.8,
-        ease: "power3.out",
-        onComplete: typeSignalBody
-      }, "-=0.18")
-      .to(pillItems, {
-        y: 0,
-        opacity: 1,
-        duration: 0.3,
-        stagger: 0.05,
-        ease: "power2.out"
-      }, "-=0.2");
+    tl.from(".eyebrow", { opacity: 0, y: 16, duration: 0.5 })
+      .from(".hw", { y: "105%", opacity: 0, duration: 0.65, stagger: 0.05 }, "-=0.2")
+      .from(".summary", { opacity: 0, y: 20, duration: 0.55 }, "-=0.3")
+      .from("[data-hero-btns] > *", { opacity: 0, y: 16, stagger: 0.1, duration: 0.4 }, "-=0.2")
+      .from(pillItems, { opacity: 0, y: 12, stagger: 0.06, duration: 0.35 }, "-=0.2")
+      .from("#heroTerminal", { opacity: 0, x: 60, duration: 0.8, ease: "power3.out", onComplete: typeSignalBody }, 0.4);
 
     setupHeroWordCycle();
+  }
+
+  function initHeroEntrance() {
+    startHeroMotion();
   }
 
   function setupVizFallbacks() {
@@ -1121,52 +1800,14 @@
   }
 
   function setupPreloader() {
-    if (!preloader) return;
-    if (!window.gsap) {
-      preloader.classList.add("is-done");
-      startHeroMotion();
+    if (!preloader) {
+      initHeroEntrance();
       return;
     }
-    const { gsap } = window;
-    const finish = () => {
-      preloader.classList.add("is-done");
-      preloader.style.pointerEvents = "none";
-      startHeroMotion();
-    };
-
-    window.addEventListener("load", () => {
-      const tl = gsap.timeline({ onComplete: finish });
-      gsap.set(preloader, { autoAlpha: 1 });
-      gsap.set(preloaderBarFill, { scaleX: 0, transformOrigin: "left center" });
-      gsap.set([preloaderTop, preloaderBottom], { yPercent: 0 });
-      gsap.set(preloaderMark, { scale: 1, opacity: 1 });
-
-      tl.to(preloaderBarFill, {
-        scaleX: 1,
-        duration: 1.8,
-        ease: "power2.out"
-      })
-        .to(preloaderMark, {
-          scale: 3.333,
-          opacity: 0,
-          duration: 0.45,
-          ease: "power3.inOut"
-        }, "-=0.05")
-        .to(preloaderTop, {
-          yPercent: -100,
-          duration: 0.6,
-          ease: "power3.inOut"
-        }, "-=0.05")
-        .to(preloaderBottom, {
-          yPercent: 100,
-          duration: 0.6,
-          ease: "power3.inOut"
-        }, "<")
-        .to(preloader, {
-          autoAlpha: 0,
-          duration: 0.15
-        }, "-=0.12");
-    }, { once: true });
+    // Safety: bypass preloader visuals entirely and go straight to hero
+    preloader.classList.add("is-done");
+    preloader.style.pointerEvents = "none";
+    initHeroEntrance();
   }
 
   function setupCustomCursor() {
@@ -1233,7 +1874,22 @@
   setupVizFallbacks();
 
   modeButtons.forEach(button => {
-    button.addEventListener("click", () => renderMode(button.dataset.mode));
+    button.addEventListener("click", () => {
+      renderMode(button.dataset.mode);
+      if (signalBody) {
+        window.gsap?.fromTo(signalBody, { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.22, ease: "power2.out" });
+      }
+      if (signalTags) {
+        const tags = signalTags.querySelectorAll(".tag");
+        window.gsap?.from(tags, {
+          scale: 0.8,
+          opacity: 0,
+          stagger: 0.04,
+          duration: 0.28,
+          ease: "back.out(1.4)"
+        });
+      }
+    });
   });
   renderMode("builder");
 
@@ -1278,7 +1934,10 @@
   if (!reduced) {
     setupPreloader();
     setupLenis();
+    setupSkillsTransition();
     setupBentoMotion();
+    setupSkillShowcases();
+    setupSkillsConnectors();
     setupProjectShowcase();
     setupVisualizationGallery();
     setupJourneyMotion();
@@ -1286,6 +1945,7 @@
     setupHeroWordCycle();
     setupCustomCursor();
     setupMicroInteractions();
+    setupScrollReveals();
   } else if (preloader) {
     preloader.classList.add("is-done");
   }
