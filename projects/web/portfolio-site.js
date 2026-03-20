@@ -1,10 +1,6 @@
 (() => {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const preloader = document.getElementById("preloader");
-  const preloaderBarFill = document.getElementById("preloaderBarFill");
-  const preloaderMark = preloader?.querySelector(".preloader-mark") ?? null;
-  const preloaderTop = preloader?.querySelector(".preloader-panel-top") ?? null;
-  const preloaderBottom = preloader?.querySelector(".preloader-panel-bottom") ?? null;
   const siteNav = document.getElementById("siteNav");
   const scrollProgress = document.getElementById("scroll-progress");
   const brandBadges = [...document.querySelectorAll(".brand-badge")];
@@ -25,10 +21,6 @@
   const modeButtons = [...document.querySelectorAll(".switch button[data-mode]")];
   const modeIndicator = document.getElementById("modeIndicator");
   const signalTags = document.getElementById("signalTags");
-  const ring = document.getElementById("signalRing");
-  const ringScore = document.getElementById("ringScore");
-  const ringLabel = document.getElementById("ringLabel");
-  const ringFoot = document.getElementById("ringFoot");
   const signalTitle = document.getElementById("signalTitle");
   const signalBadge = document.getElementById("signalBadge");
   const signalBody = document.getElementById("signalBody");
@@ -43,6 +35,10 @@
   const s3n = document.getElementById("s3n");
   const projectLinks = [...document.querySelectorAll(".project-rail a[href^='#project-']")];
   const projectSections = [...document.querySelectorAll(".project-section[data-project-section]")];
+  const projectRailPreview = document.getElementById("projectRailPreview");
+  const projectRailPreviewTitle = projectRailPreview?.querySelector(".project-rail-preview-title") ?? null;
+  const projectRailPreviewSummary = projectRailPreview?.querySelector(".project-rail-preview-summary") ?? null;
+  const projectRailPreviewMetrics = projectRailPreview?.querySelector(".project-rail-preview-metrics") ?? null;
   const journey = document.getElementById("journey");
   const journeyTrack = document.getElementById("journey-track");
   const journeyLinks = [...document.querySelectorAll(".rail a[data-journey]")];
@@ -154,8 +150,8 @@
       window.gsap.to(navIndicator, {
         x: rect.left - parentRect.left,
         width: rect.width,
-        duration: 0.32,
-        ease: "power2.out",
+        duration: 0.42,
+        ease: "power3.out",
         overwrite: true
       });
     } else {
@@ -168,9 +164,9 @@
     if (!link) return "";
     const scrolled = siteNav?.classList.contains("scrolled");
     if (scrolled) {
-      return link.classList.contains("active") ? "var(--dark)" : "rgba(36, 50, 79, 0.68)";
+      return link.classList.contains("active") ? "var(--dark)" : "rgba(26, 30, 46, 0.64)";
     }
-    return link.classList.contains("active") ? "var(--cream)" : "rgba(255, 247, 239, 0.95)";
+    return link.classList.contains("active") ? "#e8e9f0" : "rgba(232, 233, 240, 0.92)";
   }
 
   function applyNavLinkState(link) {
@@ -318,10 +314,6 @@
     const activeButton = modeButtons.find(button => button.dataset.mode === key);
     modeButtons.forEach(button => button.classList.toggle("active", button === activeButton));
     movePillIndicator(modeIndicator, activeButton, true);
-    if (ring) ring.style.setProperty("--angle", `${next.angle}deg`);
-    if (ringScore) ringScore.textContent = next.word;
-    if (ringLabel) ringLabel.textContent = next.label;
-    if (ringFoot) ringFoot.textContent = next.foot;
     if (signalTitle) signalTitle.textContent = next.title;
     if (signalBadge) signalBadge.textContent = next.badge;
     if (signalBody) signalBody.textContent = next.body;
@@ -340,6 +332,23 @@
       const isActive = link.getAttribute("href") === `#${activeId}`;
       link.classList.toggle("active", isActive);
     });
+
+    if (!projectRailPreview || !activeId) return;
+
+    const activeSection = document.getElementById(activeId);
+    const titleEl = activeSection?.querySelector(".project-copy h3") ?? null;
+    const summaryEl = activeSection?.querySelector(".project-copy > p") ?? null;
+    const metricEls = activeSection ? [...activeSection.querySelectorAll(".project-metrics .metric-pill")] : [];
+
+    projectRailPreviewTitle && (projectRailPreviewTitle.textContent = titleEl?.textContent?.trim() ?? "");
+    projectRailPreviewSummary && (projectRailPreviewSummary.textContent = summaryEl?.textContent?.trim() ?? "");
+    if (projectRailPreviewMetrics) {
+      projectRailPreviewMetrics.innerHTML = metricEls
+        .map(el => `<span class="metric-pill">${(el.textContent || "").trim()}</span>`)
+        .join("");
+    }
+
+    projectRailPreview.classList.toggle("is-visible", Boolean(titleEl));
   }
 
   function updateJourneyRail(activePanel) {
@@ -351,10 +360,17 @@
 
   function setupObservers() {
     const navObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) markActiveNav(entry.target.id);
-      });
-    }, { rootMargin: "-20% 0px -65% 0px", threshold: 0.15 });
+      const visible = entries.filter(entry => entry.isIntersecting);
+      if (!visible.length) return;
+
+      // Choose the most visible section so the nav indicator reliably follows
+      // the user's scroll position (e.g. Home -> Skills).
+      visible.sort((a, b) => (b.intersectionRatio || 0) - (a.intersectionRatio || 0));
+      markActiveNav(visible[0].target.id);
+    }, {
+      rootMargin: "-20% 0px -65% 0px",
+      threshold: [0.01, 0.08, 0.15, 0.25, 0.4, 0.6, 0.8]
+    });
 
     sectionTargets.forEach(section => navObserver.observe(section));
 
@@ -400,106 +416,46 @@
     if (reduced || !window.gsap || !window.ScrollTrigger) return;
     const { gsap } = window;
     const bridge = document.getElementById("skillsTransition");
-    const sectionHead = document.querySelector("#capabilities .section-head");
-    const beam = bridge?.querySelector(".skills-transition-beam") ?? null;
-    const glow = bridge?.querySelector(".skills-transition-glow") ?? null;
     const stage = bridge?.querySelector(".skills-transition-stage") ?? null;
-    const portal = bridge?.querySelector(".skills-transition-portal") ?? null;
-    const ticker = bridge?.querySelector(".skills-transition-ticker") ?? null;
-    const rings = bridge ? [...bridge.querySelectorAll(".skills-transition-ring")] : [];
-    const shards = bridge ? [...bridge.querySelectorAll(".skills-transition-shard")] : [];
+    const curtain = bridge?.querySelector(".skills-transition-curtain") ?? null;
+    const wash = bridge?.querySelector(".skills-transition-wash") ?? null;
 
-    if (!bridge || !stage || !beam || !glow || !portal || !rings.length || !shards.length) return;
+    if (!bridge || !stage || !curtain || !wash) return;
 
-    gsap.set(beam, { scaleX: 0.18, opacity: 0.24, transformOrigin: "center center" });
-    gsap.set(glow, { scale: 0.7, opacity: 0.14 });
-    gsap.set(portal, {
-      y: 76,
-      scale: 0.82,
-      opacity: 0,
-      rotateX: 24,
-      transformPerspective: 1200,
+    gsap.set(stage, { y: 0 });
+    gsap.set(curtain, { opacity: 0.92 });
+    gsap.set(wash, {
+      y: 34,
+      scale: 0.92,
+      opacity: 0.58,
       transformOrigin: "50% 50%"
     });
-    gsap.set(rings, {
-      scale: index => 1.18 - index * 0.08,
-      opacity: index => 0.18 + index * 0.08
-    });
-    gsap.set(shards, {
-      y: index => 60 + index * 8,
-      x: index => [-38, 34, 44, -42, 28, -26][index] ?? 0,
-      rotate: index => [-12, 10, 8, -9, 12, -7][index] ?? 0,
-      opacity: 0,
-      transformOrigin: "50% 50%"
-    });
-    if (ticker) gsap.set(ticker, { y: 34, opacity: 0 });
 
     gsap.timeline({
       scrollTrigger: {
         trigger: bridge,
         start: "top 88%",
-        end: "bottom 60%",
+        end: "bottom 52%",
         scrub: 1
       }
     })
-      .to(glow, {
-        scale: 1,
-        opacity: 0.92,
-        duration: 1
+      .to(curtain, {
+        opacity: 0.72,
+        duration: 1,
+        ease: "none"
       }, 0)
-      .to(beam, {
-        scaleX: 1,
-        opacity: 1,
-        duration: 0.72,
-        ease: "power2.out"
-      }, 0.04)
-      .to(portal, {
+      .to(wash, {
         y: 0,
-        rotateX: 0,
         scale: 1,
-        opacity: 1,
-        duration: 0.92,
-        ease: "power3.out"
-      }, 0.08)
-      .to(shards, {
-        y: 0,
-        x: 0,
-        rotate: 0,
-        opacity: 1,
-        duration: 0.68,
-        stagger: 0.06,
-        ease: "power2.out"
-      }, 0.16)
-      .to(ticker, {
-        y: 0,
-        opacity: 1,
-        duration: 0.42,
-        ease: "power2.out"
-      }, 0.24)
+        opacity: 0.94,
+        duration: 1,
+        ease: "none"
+      }, 0)
       .to(stage, {
-        y: -26,
+        y: -18,
         duration: 1,
         ease: "none"
       }, 0);
-
-    gsap.to(rings[0], {
-      rotate: 360,
-      duration: 18,
-      repeat: -1,
-      ease: "none"
-    });
-    gsap.to(rings[1], {
-      rotate: -360,
-      duration: 14,
-      repeat: -1,
-      ease: "none"
-    });
-    gsap.to(rings[2], {
-      rotate: 360,
-      duration: 10,
-      repeat: -1,
-      ease: "none"
-    });
 
     if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
       bridge.addEventListener("mousemove", event => {
@@ -507,68 +463,23 @@
         const px = (event.clientX - rect.left) / rect.width - 0.5;
         const py = (event.clientY - rect.top) / rect.height - 0.5;
 
-        gsap.to(portal, {
-          x: px * 26,
-          y: py * 18,
-          rotateY: px * 8,
-          rotateX: py * -8,
+        gsap.to(wash, {
+          x: px * 18,
+          y: py * 12,
+          rotateZ: px * 1.4,
           duration: 0.7,
           ease: "power2.out"
-        });
-
-        gsap.to(glow, {
-          x: px * 18,
-          y: py * 14,
-          duration: 0.8,
-          ease: "power2.out"
-        });
-
-        shards.forEach((shard, index) => {
-          const depth = (index % 3) + 1;
-          gsap.to(shard, {
-            x: px * 18 * depth,
-            y: py * 12 * depth,
-            duration: 0.8,
-            ease: "power2.out"
-          });
         });
       });
 
       bridge.addEventListener("mouseleave", () => {
-        gsap.to(portal, {
+        gsap.to(wash, {
           x: 0,
           y: 0,
-          rotateX: 0,
-          rotateY: 0,
+          rotateZ: 0,
           duration: 0.9,
           ease: "power3.out"
         });
-        gsap.to(glow, {
-          x: 0,
-          y: 0,
-          duration: 0.9,
-          ease: "power3.out"
-        });
-        gsap.to(shards, {
-          x: 0,
-          y: 0,
-          duration: 0.9,
-          ease: "power3.out"
-        });
-      });
-    }
-
-    if (sectionHead) {
-      gsap.from(sectionHead, {
-        y: 40,
-        opacity: 0,
-        duration: 0.7,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionHead,
-          start: "top 82%",
-          once: true
-        }
       });
     }
   }
@@ -736,6 +647,299 @@
     });
   }
 
+  function setupSkillsAtlasScreen() {
+    const atlas = document.querySelector(".skills-atlas");
+    const scene = document.getElementById("laptopScene");
+
+    // Populate the three Root boxes on the laptop screen.
+    const screenCards = atlas ? [...atlas.querySelectorAll(".skills-screen-grid .skills-screen-card")] : [];
+    const branchesForContent = atlas ? [...atlas.querySelectorAll(".skills-atlas-branches .skills-branch")] : [];
+
+    if (atlas && screenCards.length >= 3 && branchesForContent.length >= 3) {
+      screenCards.slice(0, 3).forEach((card, index) => {
+        const content = card.querySelector(".skills-screen-root-content");
+        if (!content) return;
+
+        const branch = branchesForContent[index];
+        if (!branch) return;
+
+        const fullDescEl = branch.querySelector("h3")?.nextElementSibling ?? null;
+        const orbitNodes = branch ? [...branch.querySelectorAll(".skills-branch-orbit .skills-branch-node")] : [];
+
+        content.innerHTML = "";
+
+        const full = document.createElement("p");
+        full.className = "skills-screen-root-full";
+        full.textContent = fullDescEl?.textContent?.trim() ?? "";
+        content.appendChild(full);
+
+        const chips = document.createElement("div");
+        chips.className = "skills-screen-root-chips";
+
+        orbitNodes.forEach(node => {
+          const t = (node.textContent || "").trim();
+          if (!t) return;
+          const chip = document.createElement("span");
+          chip.className = "skills-screen-root-chip";
+          chip.textContent = t;
+          chips.appendChild(chip);
+        });
+
+        content.appendChild(chips);
+      });
+    }
+
+    if (reduced || !window.gsap || !window.ScrollTrigger) return;
+    const { gsap, ScrollTrigger } = window;
+
+    const laptop = document.getElementById("skillsLaptop");
+    const lid = document.getElementById("laptopLid");
+    const rear = scene?.querySelector(".skills-computer-rear") ?? null;
+    const base = scene?.querySelector(".skills-computer-base") ?? null;
+    const screen = scene?.querySelector(".skills-computer-screen") ?? null;
+    const cables = atlas?.querySelector(".skills-atlas-cables") ?? null;
+    const shadow = scene?.querySelector(".skills-laptop-shadow") ?? null;
+    const glow = scene?.querySelector(".skills-machine-glow") ?? null;
+    const sockets = atlas ? [...atlas.querySelectorAll(".skills-screen-grid .skills-card-socket")] : [];
+    const branches = screenCards;
+    const cableShells = cables ? [...cables.querySelectorAll(".skills-cable-shell")] : [];
+    const cableCores = cables ? [...cables.querySelectorAll(".skills-cable-core")] : [];
+    const cablePlugs = cables ? [...cables.querySelectorAll(".skills-cable-plug")] : [];
+    const prefersCompact = window.matchMedia("(max-width: 720px)").matches;
+    // Apple-style opening: swing the lid further open and feel more “alive”
+    // while remaining scroll-scrubbed.
+    const CLOSED_DEG = prefersCompact ? -158 : -170;
+    const OPEN_DEG = 12;
+
+    if (!atlas || !scene || !lid || !laptop) return;
+
+    const clamp = value => Math.min(1, Math.max(0, value));
+    const easeOutCubic = value => 1 - Math.pow(1 - value, 3);
+    const easeInOutCubic = value => (
+      value < 0.5
+        ? 4 * value * value * value
+        : 1 - Math.pow(-2 * value + 2, 3) / 2
+    );
+
+    // Re-map cable geometry so the cords visually originate from the laptop rear
+    // and end at each root socket (more “real cords” feel).
+    if (rear && cables && sockets.length >= 3 && cableShells.length >= 3 && cableCores.length >= 3 && cablePlugs.length >= 3) {
+      const svgRect = cables.getBoundingClientRect();
+      const vb = cables.viewBox?.baseVal;
+      const vbW = vb?.width || 1000;
+      const vbH = vb?.height || 560;
+
+      const toViewBox = (x, y) => ({
+        x: ((x - svgRect.left) / svgRect.width) * vbW,
+        y: ((y - svgRect.top) / svgRect.height) * vbH
+      });
+
+      const rearRect = rear.getBoundingClientRect();
+      const start = toViewBox(rearRect.left + rearRect.width / 2, rearRect.top + rearRect.height / 2);
+
+      const side = [-1, 0, 1];
+      const makePathD = (end, sideDir) => {
+        const deltaY = Math.max(40, end.y - start.y);
+        const bendY = deltaY * 0.34;
+        const bendX = 120 * sideDir;
+        const cp1x = start.x + bendX;
+        const cp1y = start.y + bendY;
+        const cp2x = end.x - bendX;
+        const cp2y = end.y - bendY;
+        return `M ${start.x} ${start.y} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${end.x} ${end.y}`;
+      };
+
+      for (let i = 0; i < 3; i += 1) {
+        const sRect = sockets[i].getBoundingClientRect();
+        const end = toViewBox(sRect.left + sRect.width / 2, sRect.top + sRect.height / 2);
+        const d = makePathD(end, side[i]);
+        cableShells[i].setAttribute("d", d);
+        cableCores[i].setAttribute("d", d);
+        cablePlugs[i].setAttribute("cx", `${end.x}`);
+        cablePlugs[i].setAttribute("cy", `${end.y}`);
+      }
+    }
+
+    const shellLengths = cableShells.map(path => {
+      const length = path.getTotalLength();
+      path.style.strokeDasharray = `${length}`;
+      path.style.strokeDashoffset = `${length}`;
+      return length;
+    });
+
+    cableCores.forEach(path => {
+      path.style.opacity = "0";
+    });
+
+    cablePlugs.forEach(plug => {
+      plug.style.opacity = "0";
+      plug.style.transformOrigin = "center center";
+      plug.style.transformBox = "fill-box";
+      plug.style.transform = "scale(0.6)";
+    });
+
+    const setAngle = deg => {
+      scene.style.setProperty("--lid-angle", `${deg}deg`);
+      // Activate screen content slightly earlier so the chamber text/chips
+      // appear together with the opening motion.
+      atlas.classList.toggle("screen-live", deg > -104);
+    };
+
+    const applyProgress = rawProgress => {
+      const progress = clamp(rawProgress);
+      const lidProgress = easeInOutCubic(clamp(progress * 1.06));
+      const chassisProgress = easeOutCubic(clamp((progress - 0.04) / 0.96));
+      // Start the cord energizing earlier so it visually “extends down”.
+      const cableProgress = easeOutCubic(clamp((progress - 0.14) / 0.62));
+      const socketProgress = easeOutCubic(clamp((progress - 0.34) / 0.38));
+
+      const angle = CLOSED_DEG + (OPEN_DEG - CLOSED_DEG) * lidProgress;
+      setAngle(angle);
+
+      scene.style.setProperty("--laptop-rotate-x", `${18 - 15 * chassisProgress}deg`);
+      scene.style.setProperty("--laptop-rotate-y", `${-8 + 7 * chassisProgress}deg`);
+      scene.style.setProperty("--laptop-rotate-z", `${-1.5 + 1.5 * chassisProgress}deg`);
+      scene.style.setProperty("--laptop-shift-y", `${82 - 82 * chassisProgress}px`);
+      scene.style.setProperty("--laptop-scale", `${0.9 + 0.1 * chassisProgress}`);
+
+      if (rear) {
+        scene.style.setProperty("--rear-rise", `${-34 + 34 * chassisProgress}px`);
+        scene.style.setProperty("--rear-opacity", `${0.18 + 0.82 * cableProgress}`);
+      }
+
+      if (base) {
+        scene.style.setProperty("--base-rise", `${26 - 26 * chassisProgress}px`);
+      }
+
+      if (screen) {
+        scene.style.setProperty("--screen-lift", `${16 - 16 * chassisProgress}px`);
+        scene.style.setProperty("--screen-brightness", `${0.76 + 0.3 * chassisProgress}`);
+      }
+
+      if (cables) {
+        atlas.style.setProperty("--cables-opacity", `${0.28 + 0.72 * cableProgress}`);
+        atlas.style.setProperty("--cables-rise", "0px");
+        atlas.style.setProperty("--cables-scale", "1");
+      }
+
+      if (shadow) {
+        scene.style.setProperty("--shadow-opacity", `${0.08 + 0.22 * chassisProgress}`);
+        scene.style.setProperty("--shadow-scale-x", `${0.66 + 0.38 * chassisProgress}`);
+        scene.style.setProperty("--shadow-scale-y", `${0.56 + 0.44 * chassisProgress}`);
+      }
+
+      sockets.forEach(socket => {
+        socket.style.setProperty("--socket-scale", `${0.88 + 0.12 * socketProgress}`);
+        socket.style.setProperty("--socket-opacity", `${0.36 + 0.64 * socketProgress}`);
+      });
+
+      cableShells.forEach((path, index) => {
+        const delay = index === 1 ? 0.045 : index === 2 ? 0.09 : 0;
+        const local = easeOutCubic(clamp((cableProgress - delay) / (1 - delay)));
+        // Earlier thresholds so the cords/plugs feel engaged sooner.
+        const energized = clamp((local - 0.46) / 0.46);
+        const connected = clamp((local - 0.66) / 0.28);
+
+        if (shellLengths[index]) {
+          path.style.strokeDashoffset = `${shellLengths[index] * (1 - local)}`;
+          path.style.opacity = `${0.26 + 0.68 * local}`;
+        }
+
+        if (cableCores[index]) {
+          cableCores[index].style.opacity = `${energized}`;
+        }
+
+        if (cablePlugs[index]) {
+          cablePlugs[index].style.opacity = `${connected}`;
+
+          // Slide the plug along the cable as it draws.
+          // `local=0` => start (rear). `local=1` => end (socket).
+          const travel = shellLengths[index] ? shellLengths[index] * local : 0;
+          const pt = path.getPointAtLength(travel);
+          cablePlugs[index].setAttribute("cx", `${pt.x}`);
+          cablePlugs[index].setAttribute("cy", `${pt.y}`);
+
+          cablePlugs[index].style.transform = `scale(${0.6 + 0.4 * connected})`;
+        }
+
+        if (screenCards[index]) {
+          screenCards[index].classList.toggle("is-connected", connected > 0.78);
+        }
+      });
+
+      atlas.classList.toggle("screen-live", progress > 0.44);
+      if (glow) {
+        glow.style.opacity = `${0.58 + 0.38 * cableProgress}`;
+        glow.style.transform = `translateY(${-10 * cableProgress}px) scale(${0.9 + 0.18 * chassisProgress})`;
+      }
+    };
+
+    applyProgress(0);
+
+    const state = { progress: 0 };
+    gsap.timeline({
+      defaults: { ease: "none" },
+      scrollTrigger: {
+        trigger: scene,
+        // Open earlier as soon as the laptop enters the viewport.
+        start: prefersCompact ? "top 98%" : "top 96%",
+        end: prefersCompact ? "bottom 56%" : "bottom 38%",
+        scrub: 0.82
+      }
+    }).to(state, {
+      progress: 1,
+      onUpdate: () => applyProgress(state.progress)
+    });
+
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+    scene.addEventListener("mousemove", event => {
+      const rect = scene.getBoundingClientRect();
+      const px = (event.clientX - rect.left) / rect.width - 0.5;
+      const py = (event.clientY - rect.top) / rect.height - 0.5;
+      const currentProgress = state.progress;
+
+      gsap.to(scene, {
+        "--laptop-rotate-y": `${-8 + 7 * easeOutCubic(currentProgress) + px * 6}deg`,
+        "--laptop-rotate-x": `${18 - 15 * easeOutCubic(currentProgress) - py * 4}deg`,
+        duration: 0.45,
+        overwrite: true,
+        ease: "power2.out"
+      });
+
+      if (glow) {
+        gsap.to(glow, {
+          x: px * 28,
+          y: py * 18,
+          duration: 0.5,
+          overwrite: true,
+          ease: "power2.out"
+        });
+      }
+    });
+
+    scene.addEventListener("mouseleave", () => {
+      const currentProgress = easeOutCubic(state.progress);
+      gsap.to(scene, {
+        "--laptop-rotate-y": `${-8 + 7 * currentProgress}deg`,
+        "--laptop-rotate-x": `${18 - 15 * currentProgress}deg`,
+        duration: 0.65,
+        overwrite: true,
+        ease: "power3.out"
+      });
+
+      if (glow) {
+        gsap.to(glow, {
+          x: 0,
+          y: 0,
+          duration: 0.7,
+          overwrite: true,
+          ease: "power3.out"
+        });
+      }
+    });
+  }
+
   function setupSkillsConnectors() {
     if (reduced || !window.gsap || !window.ScrollTrigger) return;
     const { gsap, ScrollTrigger } = window;
@@ -745,7 +949,13 @@
     const supportCards = grid ? [...grid.querySelectorAll(".skills-support-card")] : [];
     const bridgeCard = grid?.querySelector(".skills-bridge-card") ?? null;
 
-    if (!grid || !svg || rootCards.length < 3 || supportCards.length < 3 || !bridgeCard) return;
+    // If the grid is hidden (we're in “laptop-only roots” mode), skip building
+    // connector geometry to avoid 0-sized bounding rect math.
+    if (!grid) return;
+    const r = grid.getBoundingClientRect();
+    if (r.width === 0 || r.height === 0) return;
+
+    if (!svg || rootCards.length < 3 || supportCards.length < 3 || !bridgeCard) return;
 
     let connectorAnimated = false;
 
@@ -771,11 +981,15 @@
 
     const setLineState = () => {
       const paths = [...svg.querySelectorAll(".skills-grid-path")];
+      const flows = [...svg.querySelectorAll(".skills-grid-flowline")];
       const nodes = [...svg.querySelectorAll(".skills-grid-node, .skills-grid-pulse")];
       paths.forEach(path => {
         const length = path.getTotalLength();
         path.style.strokeDasharray = `${length}`;
         path.style.strokeDashoffset = connectorAnimated ? "0" : `${length}`;
+      });
+      flows.forEach(flow => {
+        flow.style.opacity = connectorAnimated ? "1" : "0";
       });
       nodes.forEach(node => {
         node.style.opacity = connectorAnimated ? "1" : "0";
@@ -829,6 +1043,9 @@
         ${supportPaths.map(path => `<path class="skills-grid-path" d="${path}"></path>`).join("")}
         <path class="skills-grid-path" d="${trunk}"></path>
         <path class="skills-grid-path is-secondary" d="${bridgeFeed}"></path>
+        <path class="skills-grid-flowline" d="${topBus}"></path>
+        <path class="skills-grid-flowline flow-delay-a" d="${trunk}"></path>
+        <path class="skills-grid-flowline flow-delay-b" d="${bridgeFeed}"></path>
         ${roots.map(point => `<circle class="skills-grid-node" cx="${point.x}" cy="${point.y}" r="5"></circle>`).join("")}
         ${supports.map(point => `<circle class="skills-grid-node" cx="${point.x}" cy="${point.y}" r="5"></circle>`).join("")}
         <circle class="skills-grid-node is-hub" cx="${centerHub.x}" cy="${centerHub.y}" r="6.5"></circle>
@@ -845,6 +1062,7 @@
       if (connectorAnimated) return;
       connectorAnimated = true;
       const paths = [...svg.querySelectorAll(".skills-grid-path")];
+      const flows = [...svg.querySelectorAll(".skills-grid-flowline")];
       const nodes = [...svg.querySelectorAll(".skills-grid-node, .skills-grid-pulse")];
 
       paths.forEach(path => {
@@ -866,6 +1084,13 @@
         duration: 0.42,
         stagger: 0.04,
         ease: "back.out(1.8)"
+      });
+
+      gsap.to(flows, {
+        opacity: 1,
+        duration: 0.35,
+        stagger: 0.08,
+        ease: "power2.out"
       });
 
       const secondary = svg.querySelectorAll(".skills-grid-path.is-secondary");
@@ -1166,6 +1391,26 @@
     }
   }
 
+  function setupLazyD3Iframes() {
+    if (reduced) return;
+    if (!("IntersectionObserver" in window)) return;
+    const iframes = [...document.querySelectorAll("#visualizations iframe.viz-iframe[data-src]")];
+    if (!iframes.length) return;
+
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const iframe = entry.target;
+        const src = iframe.getAttribute("data-src");
+        if (!src) return;
+        iframe.setAttribute("src", src);
+        io.unobserve(iframe);
+      });
+    }, { rootMargin: "220px 0px", threshold: 0.01 });
+
+    iframes.forEach(iframe => io.observe(iframe));
+  }
+
   function scrollToJourneyStop(target) {
     if (!target || !journeyScrollTrigger || !journeyTrack) {
       scrollToTarget(target);
@@ -1196,6 +1441,190 @@
     if (shell) shell.style.overflow = "hidden";
 
     const maxOffset = () => Math.max(0, journeyTrack.scrollWidth - window.innerWidth);
+
+    // Journey spaceship orbit + "beam" that briefly locks-on when a panel becomes active.
+    // Driven off the existing pinned scroll progress for the Journey rail.
+    let updateSpaceshipOrbit = () => {};
+    let activateJourneyStop = () => {};
+
+    const planet = journey.querySelector(".journey-planet");
+    const orbitRing = journey.querySelector(".journey-satellite-orbit");
+    const satellite = journey.querySelector(".journey-satellite");
+    const beamSvg = journey.querySelector(".journey-beam-svg");
+    const beamLine = journey.querySelector(".journey-beam-line");
+    const cordSvg = journey.querySelector(".journey-cord-svg");
+    const cordPath = journey.querySelector(".journey-cord-path");
+    const cordPlug = journey.querySelector(".journey-cord-plug");
+    const ambient = journey.querySelector(".journey-ambient");
+
+    if (planet && orbitRing && satellite && beamSvg && beamLine && cordSvg && cordPath && cordPlug && ambient) {
+      const clamp01 = v => Math.min(1, Math.max(0, v));
+      const startAngle = -Math.PI / 2;
+      const rotations = 1.6;
+
+      const geom = {
+        ambientW: 1,
+        ambientH: 1,
+        cxPct: 50,
+        cyPct: 50,
+        rxPx: 170,
+        ryPx: 110
+      };
+
+      const recalcOrbitGeometry = () => {
+        const ambientRect = ambient.getBoundingClientRect();
+        const planetRect = planet.getBoundingClientRect();
+        if (!ambientRect.width || !ambientRect.height) return;
+
+        geom.ambientW = ambientRect.width;
+        geom.ambientH = ambientRect.height;
+
+        geom.cxPct = ((planetRect.left + planetRect.width / 2 - ambientRect.left) / ambientRect.width) * 100;
+        geom.cyPct = ((planetRect.top + planetRect.height / 2 - ambientRect.top) / ambientRect.height) * 100;
+
+        const base = Math.min(ambientRect.width, ambientRect.height);
+        geom.rxPx = base * 0.22;
+        geom.ryPx = base * 0.13;
+      };
+
+      recalcOrbitGeometry();
+      window.addEventListener("resize", recalcOrbitGeometry, { passive: true });
+
+      const stopCount = journeyStops.length;
+      const segmentSize = stopCount > 1 ? 1 / (stopCount - 1) : 1;
+      let lastActiveIndex = -1;
+
+      const cableState = {
+        length: 0,
+        tStart: 0,
+        tEnd: 0
+      };
+
+      updateSpaceshipOrbit = rawProgress => {
+        const progress = clamp01(rawProgress);
+        const angle = startAngle + progress * (Math.PI * 2 * rotations);
+        const angleDeg = angle * (180 / Math.PI);
+
+        // Rotate the orbit ring (CodePen-style orbit) to drive the satellite path.
+        orbitRing.style.setProperty("--orbit-deg", `${angleDeg}deg`);
+
+        // Squashed Y orbit for beam/cord calculations.
+        const xPx = Math.cos(angle) * geom.rxPx;
+        const yPx = Math.sin(angle) * geom.ryPx;
+
+        const xPct = geom.cxPct + (xPx / geom.ambientW) * 100;
+        const yPct = geom.cyPct + (yPx / geom.ambientH) * 100;
+
+        beamLine.setAttribute("x1", `${geom.cxPct}`);
+        beamLine.setAttribute("y1", `${geom.cyPct}`);
+        beamLine.setAttribute("x2", `${xPct}`);
+        beamLine.setAttribute("y2", `${yPct}`);
+
+        // Map progress to [0..stopCount-1] so every Journey panel gets time,
+        // not just the last one at progress === 1.
+        const activeIndex = Math.min(stopCount - 1, Math.max(0, Math.round(progress * (stopCount - 1))));
+        if (activeIndex !== lastActiveIndex) {
+          lastActiveIndex = activeIndex;
+          const stop = journeyStops[activeIndex];
+          activateJourneyStop(stop, activeIndex, progress);
+        }
+
+        if (cableState.length > 0) {
+          const denom = cableState.tEnd - cableState.tStart || 1;
+          const t = clamp01((progress - cableState.tStart) / denom);
+          const remaining = cableState.length * (1 - t);
+          cordPath.style.strokeDashoffset = String(remaining);
+          const pt = cordPath.getPointAtLength(Math.max(0, cableState.length - remaining));
+          cordPlug.setAttribute("cx", String(pt.x));
+          cordPlug.setAttribute("cy", String(pt.y));
+
+          // Fade cord once it finishes the current segment.
+          cordSvg.style.opacity = t >= 1 ? "0" : "1";
+        }
+      };
+
+      const setupCordToStop = (stop, progress) => {
+        if (!stop || stopCount < 2) return;
+
+        // Skip cords for the first "Overview" so the effect feels intentional.
+        const idx = journeyStops.indexOf(stop);
+        if (idx <= 0) {
+          cordSvg.style.opacity = "0";
+          cableState.length = 0;
+          cordPath.style.strokeDashoffset = "1";
+          return;
+        }
+
+        const ambientRect = ambient.getBoundingClientRect();
+        const stopRect = stop.getBoundingClientRect();
+
+        if (!ambientRect.width || !ambientRect.height || !stopRect.width || !stopRect.height) return;
+
+        const startX = geom.cxPct;
+        const startY = geom.cyPct;
+
+        const endX = ((stopRect.left + stopRect.width / 2 - ambientRect.left) / ambientRect.width) * 100;
+        const endY = ((stopRect.top + stopRect.height / 2 - ambientRect.top) / ambientRect.height) * 100;
+
+        const cpX = (startX + endX) / 2;
+        const cpY = Math.min(startY, endY) - 18;
+
+        cordPath.setAttribute("d", `M ${startX} ${startY} Q ${cpX} ${cpY} ${endX} ${endY}`);
+
+        // Prepare dash + plug at the start point.
+        const length = cordPath.getTotalLength();
+        cableState.length = length;
+        cableState.tStart = progress;
+        cableState.tEnd = Math.min(1, progress + segmentSize * 0.9);
+
+        cordPath.style.strokeDasharray = String(length);
+        cordPath.style.strokeDashoffset = String(length);
+
+        const pt0 = cordPath.getPointAtLength(0);
+        cordPlug.setAttribute("cx", String(pt0.x));
+        cordPlug.setAttribute("cy", String(pt0.y));
+        cordSvg.style.opacity = "1";
+      };
+
+      activateJourneyStop = (stop, activeIndex, progress) => {
+        if (!stop) return;
+
+        journeyStops.forEach(s => s.classList.remove("journey-ship-active"));
+        stop.classList.add("journey-ship-active");
+
+        satellite.classList.add("is-engaged");
+
+        // Brief "pop" on the panel when the ship locks on.
+        gsap.killTweensOf(stop);
+        gsap.fromTo(
+          stop,
+          { y: 0 },
+          {
+            y: -12,
+            duration: 0.24,
+            ease: "power2.out",
+            overwrite: true,
+            onComplete: () => gsap.to(stop, { y: 0, duration: 0.42, ease: "power3.out", overwrite: true })
+          }
+        );
+
+        // Keep the beam as a subtle visual lock, but the thick cord is the main "connecting" element.
+        gsap.killTweensOf(beamSvg);
+        gsap.killTweensOf(beamLine);
+        beamSvg.style.opacity = "1";
+        gsap.fromTo(
+          beamLine,
+          { strokeWidth: 1.6 },
+          { strokeWidth: 3.2, duration: 0.28, ease: "power2.out", overwrite: true }
+        );
+        gsap.to(beamSvg, { opacity: 0, duration: 0.7, ease: "power3.out", overwrite: true });
+
+        setupCordToStop(stop, progress);
+
+        gsap.delayedCall(0.7, () => satellite.classList.remove("is-engaged"));
+      };
+    }
+
     const journeyTween = gsap.to(journeyTrack, {
       x: () => -maxOffset(),
       ease: "none",
@@ -1206,10 +1635,16 @@
         anticipatePin: 1,
         invalidateOnRefresh: true,
         end: () => `+=${Math.max(maxOffset(), window.innerWidth)}`
+      },
+      onUpdate: function () {
+        // `this.progress()` is 0..1 across the pinned scroll span.
+        updateSpaceshipOrbit(this.progress());
       }
     });
 
     journeyScrollTrigger = journeyTween.scrollTrigger;
+
+    updateSpaceshipOrbit(0);
 
     journeyStops.forEach(stop => {
       ScrollTrigger.create({
@@ -1217,8 +1652,12 @@
         containerAnimation: journeyTween,
         start: "left center",
         end: "right center",
-        onEnter: () => updateJourneyRail(stop.dataset.panel || ""),
-        onEnterBack: () => updateJourneyRail(stop.dataset.panel || "")
+        onEnter: () => {
+          updateJourneyRail(stop.dataset.panel || "");
+        },
+        onEnterBack: () => {
+          updateJourneyRail(stop.dataset.panel || "");
+        }
       });
     });
 
@@ -1367,6 +1806,8 @@
     });
 
     if (resumePanel) {
+      // Keep resume readable even if ScrollTrigger doesn't fire for any reason.
+      gsap.set(resumePanel, { opacity: 1, scale: 1 });
       gsap.from(resumePanel, {
         scale: 0.96,
         opacity: 0,
@@ -1376,7 +1817,8 @@
           trigger: resumePanel,
           start: "top 82%",
           once: true
-        }
+        },
+        immediateRender: false
       });
     }
 
@@ -1513,9 +1955,9 @@
       });
     });
 
-    // Bento and visual grid cards
-    gsap.utils.toArray(".skills-grid, .visual-grid").forEach(grid => {
-      const cards = grid.querySelectorAll(".bento-card, .visual-card");
+    // Visualization cards
+    gsap.utils.toArray(".visual-grid").forEach(grid => {
+      const cards = grid.querySelectorAll(".visual-card");
       if (!cards.length) return;
       gsap.from(cards, {
         opacity: 0,
@@ -1578,20 +2020,6 @@
       });
     });
 
-    // Journey node lines
-    gsap.utils.toArray(".journey-node-line").forEach(line => {
-      gsap.to(line, {
-        scaleY: 1,
-        duration: 0.8,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: line,
-          start: "top 82%",
-          once: true
-        }
-      });
-    });
-
     // Recruiter snapshot / metrics count-up (mini, pmetric)
     document.querySelectorAll(".mini strong, .pmetric strong").forEach(el => {
       const raw = (el.textContent || "").trim();
@@ -1614,18 +2042,6 @@
       });
     });
 
-    // Footer columns (extra safety; complements existing micro-interactions)
-    gsap.from(".footer-column", {
-      opacity: 0,
-      y: 30,
-      stagger: 0.1,
-      duration: 0.6,
-      scrollTrigger: {
-        trigger: ".site-footer",
-        start: "top 88%",
-        once: true
-      }
-    });
   }
 
   function setupHeroGrain() {
@@ -1637,24 +2053,23 @@
       const rect = heroGrain.getBoundingClientRect();
       heroGrain.width = Math.max(1, Math.floor(rect.width));
       heroGrain.height = Math.max(1, Math.floor(rect.height));
+      render();
     };
 
     const render = () => {
       const { width, height } = heroGrain;
       context.clearRect(0, 0, width, height);
-      for (let i = 0; i < 1200; i += 1) {
+      for (let i = 0; i < 2000; i += 1) {
         const x = Math.random() * width;
         const y = Math.random() * height;
-        const alpha = Math.random() * 0.18;
-        context.fillStyle = `rgba(250,247,242,${alpha})`;
-        context.fillRect(x, y, 1, 1);
+        const alpha = Math.random() * 0.12;
+        context.fillStyle = `rgba(255,255,255,${alpha})`;
+        context.fillRect(x, y, 1.5, 1.5);
       }
-      requestAnimationFrame(render);
     };
 
     resize();
     window.addEventListener("resize", resize);
-    requestAnimationFrame(render);
   }
 
   function startHeroMotion() {
@@ -1668,12 +2083,11 @@
     const tl = window.gsap.timeline({ defaults: { ease: "power3.out" } });
     const pillItems = heroPills ? heroPills.querySelectorAll(".pill") : [];
 
-    tl.from(".eyebrow", { opacity: 0, y: 16, duration: 0.5 })
-      .from(".hw", { y: "105%", opacity: 0, duration: 0.65, stagger: 0.05 }, "-=0.2")
-      .from(".summary", { opacity: 0, y: 20, duration: 0.55 }, "-=0.3")
-      .from("[data-hero-btns] > *", { opacity: 0, y: 16, stagger: 0.1, duration: 0.4 }, "-=0.2")
-      .from(pillItems, { opacity: 0, y: 12, stagger: 0.06, duration: 0.35 }, "-=0.2")
-      .from("#heroTerminal", { opacity: 0, x: 60, duration: 0.8, ease: "power3.out", onComplete: typeSignalBody }, 0.4);
+    tl.from(".eyebrow", { opacity: 0, y: 20, duration: 0.6 })
+      .from(".hw", { y: "110%", opacity: 0, duration: 0.72, stagger: 0.055 }, "-=0.25")
+      .from(".summary", { opacity: 0, y: 24, duration: 0.6 }, "-=0.3")
+      .from(pillItems, { opacity: 0, y: 14, stagger: 0.07, duration: 0.38 }, "-=0.2")
+      .from("#heroTerminal", { opacity: 0, x: 80, scale: 0.96, duration: 0.9, ease: "power3.out", onComplete: typeSignalBody }, 0.35);
 
     setupHeroWordCycle();
   }
@@ -1683,10 +2097,15 @@
   }
 
   function setupVizFallbacks() {
-    document.querySelectorAll(".visual-frame").forEach(frameShell => {
+    const shells = [...document.querySelectorAll(".visual-frame")];
+    if (!shells.length) return;
+
+    const activateFrame = frameShell => {
       const frame = frameShell.querySelector("iframe");
       const fallback = frameShell.querySelector(".viz-fallback");
-      if (!frame || !fallback) return;
+      if (!frame || !fallback || frame.dataset.activated === "true") return;
+
+      frame.dataset.activated = "true";
       let settled = false;
       const fail = () => {
         if (settled) return;
@@ -1699,12 +2118,34 @@
         settled = true;
         fallback.hidden = true;
       };
+
       frame.addEventListener("load", pass, { once: true });
       frame.addEventListener("error", fail, { once: true });
+
+      const src = frame.dataset.src;
+      if (src && !frame.getAttribute("src")) {
+        frame.setAttribute("src", src);
+      }
+
       window.setTimeout(() => {
         if (!settled) fail();
       }, 3500);
-    });
+    };
+
+    if (!("IntersectionObserver" in window)) {
+      shells.forEach(activateFrame);
+      return;
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        activateFrame(entry.target);
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: "300px 0px" });
+
+    shells.forEach(shell => observer.observe(shell));
   }
 
   function fitResumeToOnePage() {
@@ -1871,6 +2312,12 @@
   }
 
   setupObservers();
+
+  // Ensure the projects preview panel is populated immediately for the initial active dot.
+  const initialProjectLink = projectLinks.find(link => link.classList.contains("active"));
+  const initialProjectId = initialProjectLink?.getAttribute("href")?.replace("#", "") ?? projectSections[0]?.id ?? "";
+  if (initialProjectId) updateProjectRail(initialProjectId);
+
   setupVizFallbacks();
 
   modeButtons.forEach(button => {
@@ -1937,12 +2384,13 @@
     setupSkillsTransition();
     setupBentoMotion();
     setupSkillShowcases();
+    setupSkillsAtlasScreen();
     setupSkillsConnectors();
     setupProjectShowcase();
     setupVisualizationGallery();
+    setupLazyD3Iframes();
     setupJourneyMotion();
     setupCountUps();
-    setupHeroWordCycle();
     setupCustomCursor();
     setupMicroInteractions();
     setupScrollReveals();

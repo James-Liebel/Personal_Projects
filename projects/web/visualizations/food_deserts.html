@@ -270,6 +270,10 @@
         </div>
 
         <script>
+            if (window !== window.top) {
+              document.getElementById('sidebar').style.display = 'none';
+              document.body.style.display = 'block';
+            }
             const container = document.getElementById("map-container");
             const width = container.clientWidth || 800;
             const height = container.clientHeight || 600;

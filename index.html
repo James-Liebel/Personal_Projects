@@ -291,6 +291,8 @@
       align-items: center;
       gap: clamp(18px, 3vw, 48px);
       min-width: 0;
+      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease,
+        padding 0.3s ease, backdrop-filter 0.3s ease;
     }
 
     .site-nav:not(.scrolled) .nav-links {
@@ -337,7 +339,7 @@
     .nav-indicator {
       position: absolute;
       left: 0;
-      bottom: -10px;
+      bottom: 2px;
       width: 8px;
       height: 8px;
       border-radius: 999px;
@@ -685,7 +687,7 @@
       width: 148px;
       height: 148px;
       transform: translate(-50%, -50%);
-      display: grid;
+      display: none;
       place-items: center;
       border-radius: 50%;
       background: radial-gradient(circle at 35% 30%, rgba(255, 247, 239, 0.28), rgba(91, 124, 250, 0.34));
@@ -1195,6 +1197,21 @@
       padding: 108px 0;
     }
 
+    /* Prioritize above-the-fold rendering */
+    #capabilities,
+    #projects,
+    #visualizations,
+    #journey,
+    #resume {
+      content-visibility: auto;
+      contain-intrinsic-size: 1px 900px;
+    }
+
+    /* Resume readability at the bottom: ensure it always renders. */
+    #resume {
+      content-visibility: visible;
+    }
+
     #capabilities.section-shell {
       padding-top: 0;
     }
@@ -1266,6 +1283,13 @@
       pointer-events: none;
     }
 
+    /* Make the Home -> Skills handoff feel like a transition */
+    .skills-transition-portal {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
     .skills-transition-rings {
       position: absolute;
       inset: 0;
@@ -1305,7 +1329,7 @@
       z-index: 2;
       width: 192px;
       height: 192px;
-      display: grid;
+      display: none;
       place-items: center;
       align-content: center;
       gap: 8px;
@@ -1336,6 +1360,7 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
+      display: none;
     }
 
     .skills-transition-shard {
@@ -1394,6 +1419,7 @@
       padding: 0 12px;
       mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
       -webkit-mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+      display: none;
     }
 
     .skills-transition-ticker-track {
@@ -1452,6 +1478,649 @@
       line-height: 1.72;
     }
 
+    .skills-machine {
+      --lid-angle: -170deg;
+      --laptop-rotate-x: 18deg;
+      --laptop-rotate-y: -8deg;
+      --laptop-rotate-z: -1.5deg;
+      --laptop-shift-y: 82px;
+      --laptop-scale: 1;
+      --rear-rise: -34px;
+      --rear-opacity: 0.18;
+      --base-rise: 26px;
+      --screen-lift: 16px;
+      --screen-brightness: 0.76;
+      --cables-opacity: 0;
+      --cables-rise: 0px;
+      --cables-scale: 1;
+      --shadow-opacity: 0.08;
+      --shadow-scale-x: 0.66;
+      --shadow-scale-y: 0.56;
+      --socket-scale: 0.88;
+      --socket-opacity: 0.36;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 12px;
+      padding: 18px 22px 6px;
+      isolation: isolate;
+    }
+
+    .skills-machine-stage {
+      position: relative;
+      width: min(100%, 1120px);
+      min-height: 820px;
+      margin: 0 auto;
+      perspective: 1800px;
+    }
+
+    .skills-machine-glow {
+      position: absolute;
+      inset: 16px 14% auto;
+      height: 260px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, rgba(91, 124, 250, 0.26), rgba(91, 124, 250, 0.04) 48%, transparent 72%);
+      filter: blur(34px);
+      pointer-events: none;
+    }
+
+    .skills-machine-cables {
+      position: absolute;
+      top: 112px;
+      left: 50%;
+      width: min(100%, 1120px);
+      height: 980px;
+      overflow: visible;
+      pointer-events: none;
+      z-index: 1;
+      opacity: var(--cables-opacity, 0);
+      transform: translateX(-50%) translateY(var(--cables-rise, -24px)) scale(var(--cables-scale, 0.84));
+      transform-origin: 50% 0%;
+      will-change: opacity, transform;
+    }
+
+    .skills-cable-shell,
+    .skills-cable-core {
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .skills-cable-shell {
+      stroke: rgba(0, 0, 0, 0.34);
+      stroke-width: 16.2;
+      filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.22));
+      opacity: 0.78;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .skills-cable-core {
+      stroke: rgba(232, 99, 42, 0.9);
+      stroke-width: 8.2;
+      stroke-dasharray: 9 14;
+      animation: skillsCableFlow 4.8s linear infinite;
+      filter: drop-shadow(0 0 18px rgba(232, 99, 42, 0.28));
+      opacity: 0;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .skills-cable-core.cable-center {
+      animation-duration: 4.8s;
+    }
+
+    .skills-cable-core.cable-right {
+      animation-duration: 5.9s;
+    }
+
+    .skills-cable-plug {
+      fill: rgba(12, 12, 16, 0.96);
+      stroke: rgba(232, 99, 42, 0.76);
+      stroke-width: 4.2;
+      filter: drop-shadow(0 0 14px rgba(232, 99, 42, 0.26));
+      animation: skillsCablePulse 3.2s ease-in-out infinite;
+    }
+
+    .skills-laptop-wrap {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 1040px);
+      margin: 0 auto;
+      perspective: 1500px;
+    }
+
+    .skills-laptop {
+      position: relative;
+      padding-top: 24px;
+      transform:
+        translateY(var(--laptop-shift-y))
+        scale(var(--laptop-scale))
+        rotateX(var(--laptop-rotate-x))
+        rotateY(var(--laptop-rotate-y))
+        rotateZ(var(--laptop-rotate-z));
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    .skills-computer-rear {
+      position: absolute;
+      top: 295px;
+      left: 50%;
+      z-index: 1;
+      width: 78%;
+      height: 26px;
+      border-radius: 18px 18px 10px 10px;
+      background:
+        linear-gradient(180deg, rgba(235, 241, 252, 0.98), rgba(156, 171, 198, 0.96));
+      border: 1px solid rgba(36, 50, 79, 0.08);
+      transform: translateX(-50%) translateY(var(--rear-rise));
+      opacity: var(--rear-opacity);
+      box-shadow:
+        0 12px 22px rgba(36, 50, 79, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+
+    .skills-computer-rear::before {
+      content: "";
+      position: absolute;
+      inset: 7px 18%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(36, 50, 79, 0.18), rgba(36, 50, 79, 0.04));
+    }
+
+    .skills-computer-rear span {
+      position: absolute;
+      top: 7px;
+      width: 32px;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(36, 50, 79, 0.14);
+    }
+
+    .skills-computer-rear span:nth-child(1) {
+      left: 18%;
+    }
+
+    .skills-computer-rear span:nth-child(2) {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .skills-computer-rear span:nth-child(3) {
+      right: 18%;
+    }
+
+    .skills-laptop-lid {
+      position: relative;
+      width: 76%;
+      height: 460px;
+      margin: 0 auto -18px;
+      transform-origin: center bottom;
+      transform-style: preserve-3d;
+      transform: rotateX(var(--lid-angle));
+      will-change: transform;
+    }
+
+    .skills-laptop-screen {
+      position: absolute;
+      inset: 0;
+      padding: 34px;
+      border-radius: 24px 24px 16px 16px;
+      background:
+        linear-gradient(160deg, rgba(12, 18, 36, 0.98), rgba(33, 46, 78, 0.96));
+      border: 8px solid rgba(255, 255, 255, 0.16);
+      box-shadow:
+        0 22px 48px rgba(24, 35, 58, 0.28),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+      backface-visibility: hidden;
+      transform: translateY(var(--screen-lift));
+      filter: brightness(var(--screen-brightness));
+      will-change: transform, filter;
+    }
+
+    .skills-laptop-screen::selection,
+    .skills-laptop-screen *::selection {
+      background: rgba(255, 247, 239, 0.18);
+    }
+
+    .skills-atlas.screen-live .skills-laptop-screen {
+      animation: skillsCellarBulb 5.8s linear infinite;
+    }
+
+    .skills-laptop-screen::before {
+      content: "";
+      position: absolute;
+      top: 9px;
+      left: 50%;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateX(-50%);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.04);
+    }
+
+    .skills-laptop-screen::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.08) 42%, transparent 62%);
+      transform: translateX(-120%);
+      animation: skillsScreenSweep 4.6s ease-in-out infinite 1.6s;
+      pointer-events: none;
+    }
+
+    .skills-screen-flicker {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(255, 244, 201, 0.22), transparent 32%),
+        linear-gradient(180deg, rgba(255, 238, 176, 0.12), transparent 20%, rgba(6, 10, 18, 0.2) 100%);
+      mix-blend-mode: screen;
+      opacity: 0.18;
+      pointer-events: none;
+    }
+
+    .skills-atlas.screen-live .skills-screen-flicker {
+      animation: skillsCellarGlow 4.9s linear infinite;
+    }
+
+    .skills-screen-noise {
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 3px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02), transparent 40%, rgba(255, 255, 255, 0.03));
+      opacity: 0.1;
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+    }
+
+    .skills-screen-ui {
+      position: relative;
+      display: grid;
+      gap: 8px;
+      height: 100%;
+      margin-top: 10px;
+      opacity: 0.16;
+      transform: translateY(18px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+
+    .skills-atlas.screen-live .skills-screen-ui {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .skills-screen-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      color: rgba(255, 247, 239, 0.72);
+      font: 700 11px/1 "Space Mono", monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .skills-screen-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255, 247, 239, 0.58);
+      font: 700 9px/1 "Space Mono", monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .skills-screen-status::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255, 233, 168, 0.92);
+      box-shadow: 0 0 10px rgba(255, 233, 168, 0.54);
+      animation: skillsStatusBlink 1.7s ease-in-out infinite;
+    }
+
+    .skills-screen-dots {
+      display: inline-flex;
+      gap: 6px;
+    }
+
+    .skills-screen-dots span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255, 247, 239, 0.32);
+    }
+
+    .skills-screen-vault-line {
+      position: relative;
+      height: 24px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255, 247, 239, 0.08), rgba(255, 247, 239, 0.02));
+      border: 1px solid rgba(255, 247, 239, 0.08);
+    }
+
+    .skills-screen-vault-line::before {
+      content: "";
+      position: absolute;
+      inset: 50% 10% auto 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 244, 201, 0.8), transparent);
+      transform: translateY(-50%);
+    }
+
+    .skills-screen-vault-line::after {
+      content: "ROOT VAULT";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      padding: 0 10px;
+      color: rgba(255, 247, 239, 0.72);
+      font: 700 9px/1 "Space Mono", monospace;
+      letter-spacing: 0.16em;
+      background: rgba(16, 24, 42, 0.92);
+      transform: translate(-50%, -50%);
+    }
+
+    .skills-screen-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      flex: 1 1 auto;
+      height: 100%;
+    }
+
+    .skills-screen-card {
+      display: grid;
+      align-content: start;
+      gap: 6px;
+      padding: 10px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(91, 124, 250, 0.2), rgba(255, 247, 239, 0.08));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+      min-height: 0;
+    }
+
+    /* Invisible endpoint target for the cable SVG inside the laptop screen cards. */
+    .skills-card-socket {
+      position: absolute;
+      left: 50%;
+      bottom: -2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(232, 99, 42, 0.9);
+      box-shadow: 0 0 0 8px rgba(232, 99, 42, 0.08);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    .skills-screen-card::before {
+      content: "";
+      position: absolute;
+      inset: auto 12px 12px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255, 244, 201, 0.86), rgba(91, 124, 250, 0.18));
+    }
+
+    .skills-screen-card small {
+      color: rgba(255, 247, 239, 0.54);
+      font: 700 10px/1.3 "Space Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .skills-screen-card strong {
+      color: var(--cream);
+      font-size: 0.94rem;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .skills-screen-card em {
+      color: rgba(255, 247, 239, 0.66);
+      font: 600 11px/1.45 "Sora", sans-serif;
+      font-style: normal;
+      display: none;
+    }
+
+    .skills-screen-root-content {
+      display: grid;
+      gap: 10px;
+      padding-top: 6px;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+      overflow-y: auto;
+      max-height: 100%;
+      padding-right: 6px;
+      scrollbar-width: thin;
+    }
+
+    .skills-atlas.screen-live .skills-screen-root-content {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .skills-screen-root-full {
+      margin: 0;
+      color: rgba(255, 247, 239, 0.78);
+      font-size: 11.5px;
+      line-height: 1.55;
+      max-height: none;
+      overflow: visible;
+    }
+
+    .skills-screen-root-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .skills-screen-root-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(232, 99, 42, 0.24);
+      background: rgba(232, 99, 42, 0.08);
+      color: rgba(255, 247, 239, 0.9);
+      font: 800 9px/1 "Space Mono", monospace;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .skills-screen-root-details {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .skills-screen-root-group {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 247, 239, 0.1);
+      background: rgba(255, 247, 239, 0.04);
+    }
+
+    .skills-screen-root-group strong {
+      color: rgba(255, 247, 239, 0.92);
+      font-size: 12px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .skills-screen-root-group .skills-screen-root-group-label {
+      color: rgba(255, 247, 239, 0.62);
+      font: 700 10px/1.2 "Space Mono", monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .skills-screen-root-group p {
+      margin: 0;
+      color: rgba(255, 247, 239, 0.72);
+      font-size: 11.5px;
+      line-height: 1.6;
+    }
+
+    .skills-screen-card.is-connected {
+      box-shadow:
+        0 0 0 1px rgba(232, 99, 42, 0.38),
+        0 18px 40px rgba(232, 99, 42, 0.12);
+    }
+
+    .skills-screen-card.is-connected .skills-screen-root-chip {
+      border-color: rgba(232, 99, 42, 0.52);
+      background: rgba(232, 99, 42, 0.14);
+    }
+
+    .skills-laptop-base {
+      position: relative;
+      width: 100%;
+      padding: 24px 24px 18px;
+      border-radius: 24px 24px 28px 28px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(221, 230, 248, 0.96));
+      border: 1px solid rgba(36, 50, 79, 0.08);
+      box-shadow:
+        0 24px 46px rgba(36, 50, 79, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.85);
+      overflow: hidden;
+      transform: translateY(var(--base-rise));
+      will-change: transform;
+    }
+
+    .skills-laptop-base::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 78%;
+      height: 12px;
+      border-radius: 0 0 18px 18px;
+      background: linear-gradient(180deg, rgba(36, 50, 79, 0.22), rgba(36, 50, 79, 0.04));
+      transform: translateX(-50%);
+    }
+
+    .skills-laptop-base::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 2px;
+      width: 86%;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(36, 50, 79, 0.12), rgba(36, 50, 79, 0));
+      transform: translateX(-50%);
+    }
+
+    .skills-laptop-deck {
+      height: 118px;
+      width: 78%;
+      margin: 0 auto;
+      border-radius: 16px;
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      padding: 18px 16px 16px;
+      background: linear-gradient(180deg, rgba(36, 50, 79, 0.86), rgba(36, 50, 79, 0.28));
+      opacity: 0.95;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        inset 0 -10px 30px rgba(0, 0, 0, 0.14);
+    }
+
+    .skills-keyboard-key {
+      display: block;
+      border-radius: 10px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.02)),
+        radial-gradient(circle at 50% 10%, rgba(255, 255, 255, 0.14), transparent 55%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 6px 16px rgba(0, 0, 0, 0.16);
+    }
+
+    .skills-laptop-trackpad {
+      display: block;
+      width: 42%;
+      height: 18px;
+      margin: 18px auto 0;
+      border-radius: 999px;
+      background: rgba(36, 50, 79, 0.12);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+
+    .skills-laptop-shadow {
+      position: relative;
+      width: min(70%, 520px);
+      height: 54px;
+      margin: 14px auto 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(36, 50, 79, 0.22), rgba(36, 50, 79, 0.02) 72%, transparent 100%);
+      filter: blur(12px);
+      opacity: var(--shadow-opacity);
+      transform: scaleX(var(--shadow-scale-x)) scaleY(var(--shadow-scale-y));
+      transform-origin: center;
+      will-change: transform, opacity;
+    }
+
+    .skills-card-socket {
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      z-index: 2;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.98), rgba(199, 221, 255, 0.92));
+      border: 2px solid rgba(232, 99, 42, 0.34);
+      box-shadow: 0 0 0 8px rgba(232, 99, 42, 0.08);
+      transform: translateX(-50%) scale(var(--socket-scale, 0.88));
+      opacity: var(--socket-opacity, 0.36);
+      will-change: transform, opacity;
+    }
+
+    .skills-card-socket::after {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border-radius: 50%;
+      background: rgba(232, 99, 42, 0.74);
+    }
+
+    .skills-branch.is-connected .skills-card-socket {
+      box-shadow:
+        0 0 0 8px rgba(232, 99, 42, 0.12),
+        0 0 22px rgba(232, 99, 42, 0.28);
+    }
+
+    .skills-root-card.is-connected .skills-card-socket {
+      box-shadow:
+        0 0 0 8px rgba(232, 99, 42, 0.12),
+        0 0 22px rgba(232, 99, 42, 0.28);
+    }
+
     .skills-atlas {
       position: relative;
       display: grid;
@@ -1459,12 +2128,12 @@
       margin-bottom: 34px;
       padding: 28px 28px 30px;
       border-radius: 34px;
-      border: 1px solid rgba(36, 50, 79, 0.08);
+      border: 1px solid rgba(26, 16, 8, 0.08);
       background:
-        radial-gradient(circle at 50% 22%, rgba(91, 124, 250, 0.12), transparent 30%),
+        radial-gradient(circle at 50% 22%, rgba(232, 99, 42, 0.12), transparent 30%),
         linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(247, 244, 239, 0.94));
-      box-shadow: 0 22px 48px rgba(36, 50, 79, 0.08);
-      overflow: hidden;
+      box-shadow: 0 22px 48px rgba(26, 16, 8, 0.08);
+      overflow: visible;
     }
 
     .skills-atlas::before {
@@ -1472,7 +2141,7 @@
       position: absolute;
       inset: 16px;
       border-radius: 26px;
-      border: 1px solid rgba(91, 124, 250, 0.08);
+      border: 1px solid rgba(232, 99, 42, 0.08);
       pointer-events: none;
     }
 
@@ -1488,8 +2157,14 @@
       text-align: center;
       border-radius: 999px;
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 247, 239, 0.92));
-      border: 1px solid rgba(91, 124, 250, 0.14);
-      box-shadow: 0 18px 42px rgba(36, 50, 79, 0.08);
+      border: 1px solid rgba(232, 99, 42, 0.14);
+      box-shadow: 0 18px 42px rgba(26, 16, 8, 0.08);
+    }
+
+    /* Root boxes now render on the laptop screen only. */
+    .skills-atlas-nexus,
+    .skills-atlas-branches {
+      display: none;
     }
 
     .skills-atlas-nexus h3 {
@@ -1524,12 +2199,140 @@
       width: min(72%, 720px);
       height: 68px;
       transform: translateX(-50%);
-      border-left: 1px solid rgba(91, 124, 250, 0.16);
-      border-right: 1px solid rgba(91, 124, 250, 0.16);
-      border-bottom: 1px solid rgba(91, 124, 250, 0.16);
+      border-left: 1px solid rgba(232, 99, 42, 0.16);
+      border-right: 1px solid rgba(232, 99, 42, 0.16);
+      border-bottom: 1px solid rgba(232, 99, 42, 0.16);
       border-bottom-left-radius: 180px 58px;
       border-bottom-right-radius: 180px 58px;
       pointer-events: none;
+    }
+
+    @keyframes skillsScreenSweep {
+      0%,
+      14% {
+        transform: translateX(-120%);
+      }
+
+      30%,
+      100% {
+        transform: translateX(140%);
+      }
+    }
+
+    @keyframes skillsCellarBulb {
+      0%,
+      9%,
+      12%,
+      16%,
+      28%,
+      55%,
+      72%,
+      100% {
+        filter: brightness(var(--screen-brightness)) saturate(1);
+      }
+
+      10% {
+        filter: brightness(calc(var(--screen-brightness) * 0.58)) saturate(0.84);
+      }
+
+      11% {
+        filter: brightness(calc(var(--screen-brightness) * 1.16)) saturate(1.1);
+      }
+
+      14% {
+        filter: brightness(calc(var(--screen-brightness) * 0.42)) saturate(0.72);
+      }
+
+      21% {
+        filter: brightness(calc(var(--screen-brightness) * 0.68)) saturate(0.86);
+      }
+
+      29% {
+        filter: brightness(calc(var(--screen-brightness) * 1.08)) saturate(1.08);
+      }
+
+      57% {
+        filter: brightness(calc(var(--screen-brightness) * 0.62)) saturate(0.82);
+      }
+
+      73% {
+        filter: brightness(calc(var(--screen-brightness) * 0.52)) saturate(0.8);
+      }
+    }
+
+    @keyframes skillsCellarGlow {
+      0%,
+      9%,
+      12%,
+      16%,
+      28%,
+      55%,
+      72%,
+      100% {
+        opacity: 0.18;
+      }
+
+      10% {
+        opacity: 0.04;
+      }
+
+      11% {
+        opacity: 0.26;
+      }
+
+      14% {
+        opacity: 0.03;
+      }
+
+      21% {
+        opacity: 0.09;
+      }
+
+      29% {
+        opacity: 0.24;
+      }
+
+      57% {
+        opacity: 0.08;
+      }
+
+      73% {
+        opacity: 0.05;
+      }
+    }
+
+    @keyframes skillsCableFlow {
+      from {
+        stroke-dashoffset: 0;
+      }
+
+      to {
+        stroke-dashoffset: -190;
+      }
+    }
+
+    @keyframes skillsCablePulse {
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 0.88;
+      }
+
+      50% {
+        transform: scale(1.18);
+        opacity: 1;
+      }
+    }
+
+    @keyframes skillsStatusBlink {
+      0%,
+      100% {
+        opacity: 0.82;
+      }
+
+      50% {
+        opacity: 1;
+      }
     }
 
     .skills-branch {
@@ -1553,6 +2356,11 @@
       height: 26px;
       transform: translateX(-50%);
       background: linear-gradient(180deg, rgba(91, 124, 250, 0), rgba(91, 124, 250, 0.32));
+    }
+
+    .skills-branch.is-connected::before {
+      height: 56px;
+      background: linear-gradient(180deg, rgba(232, 99, 42, 0), rgba(232, 99, 42, 0.42));
     }
 
     .skills-branch h3 {
@@ -1997,7 +2805,7 @@
       position: relative;
       margin-top: 18px;
       padding-top: 16px;
-      border-top: 1px solid rgba(91, 124, 250, 0.22);
+      border-top: 1px solid rgba(232, 99, 42, 0.22);
     }
 
     .skills-marquee-track {
@@ -2013,12 +2821,12 @@
       min-height: 34px;
       padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(91, 124, 250, 0.08);
+      background: rgba(232, 99, 42, 0.08);
       color: var(--dark);
       font: 700 11px/1 "Space Mono", monospace;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      border: 1px solid rgba(91, 124, 250, 0.14);
+      border: 1px solid rgba(232, 99, 42, 0.14);
     }
 
     .skills-root-card {
@@ -2050,23 +2858,23 @@
       inset: auto auto -18px 28px;
       width: 1px;
       height: 26px;
-      background: linear-gradient(180deg, rgba(91, 124, 250, 0.24), rgba(91, 124, 250, 0));
+      background: linear-gradient(180deg, rgba(232, 99, 42, 0.24), rgba(232, 99, 42, 0));
       pointer-events: none;
     }
 
     .skills-grid .branch-engineering {
-      border-color: rgba(91, 124, 250, 0.16);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(234, 242, 255, 0.88));
+      border-color: rgba(232, 99, 42, 0.18);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 247, 239, 0.9));
     }
 
     .skills-grid .branch-science {
-      border-color: rgba(36, 50, 79, 0.08);
+      border-color: rgba(232, 99, 42, 0.12);
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 247, 239, 0.92));
     }
 
     .skills-grid .branch-analysis {
-      border-color: rgba(91, 124, 250, 0.16);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(239, 246, 255, 0.92));
+      border-color: rgba(232, 99, 42, 0.16);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 247, 239, 0.92));
     }
 
     .skills-grid .branch-engineering .section-kicker,
@@ -2090,7 +2898,7 @@
       left: 4px;
       width: 2px;
       border-radius: 999px;
-      background: linear-gradient(180deg, rgba(91, 124, 250, 0.2), rgba(91, 124, 250, 0.86), rgba(91, 124, 250, 0.16));
+      background: linear-gradient(180deg, rgba(232, 99, 42, 0.22), rgba(232, 99, 42, 0.86), rgba(232, 99, 42, 0.18));
     }
 
     .skills-thread-step {
@@ -2274,7 +3082,7 @@
 
     .skills-cluster .tag,
     .skills-cluster .quick-pill {
-      border-color: rgba(91, 124, 250, 0.12);
+      border-color: rgba(232, 99, 42, 0.14);
       background: rgba(255, 255, 255, 0.82);
       color: var(--dark);
     }
@@ -2292,7 +3100,7 @@
       padding: 14px 16px;
       border-radius: 18px;
       background: rgba(255, 255, 255, 0.82);
-      border: 1px solid rgba(91, 124, 250, 0.12);
+      border: 1px solid rgba(232, 99, 42, 0.16);
     }
 
     .skills-link-label {
@@ -2302,7 +3110,7 @@
       min-height: 32px;
       padding: 6px 10px;
       border-radius: 999px;
-      background: rgba(91, 124, 250, 0.1);
+      background: rgba(232, 99, 42, 0.1);
       color: var(--dark);
       font: 700 10px/1 "Space Mono", monospace;
       letter-spacing: 0.08em;
@@ -2933,6 +3741,54 @@
       transform: scaleY(1);
     }
 
+    .project-rail-preview {
+      position: fixed;
+      top: 50%;
+      right: 66px;
+      transform: translateY(-50%) translateX(8px);
+      width: min(420px, 36vw);
+      z-index: 880;
+      padding: 18px 18px 16px;
+      border-radius: 22px;
+      border: 1px solid rgba(36, 50, 79, 0.12);
+      background: rgba(255, 247, 239, 0.94);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 22px 48px rgba(26, 16, 8, 0.08);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      will-change: opacity, transform;
+    }
+
+    .project-rail-preview.is-visible {
+      opacity: 1;
+      transform: translateY(-50%) translateX(0);
+    }
+
+    .project-rail-preview-title {
+      color: var(--dark);
+      font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin: 0;
+      font-weight: 800;
+    }
+
+    .project-rail-preview-summary {
+      margin: 10px 0 14px;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.72;
+      max-height: 4.9em;
+      overflow: hidden;
+    }
+
+    .project-rail-preview-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
     .project-stack {
       display: grid;
     }
@@ -3318,12 +4174,17 @@
     /* D3 Visualization Cards */
     .visual-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
     }
 
     .visual-card.featured {
       grid-column: span 2;
+    }
+
+    /* Hide any legacy/non-spec D3 cards so only .d3-card renders */
+    .visual-grid > article.visual-card:not(.featured):not(.d3-card) {
+      display: none;
     }
 
     .d3-card {
@@ -3336,7 +4197,7 @@
       margin-top: 16px;
       border-radius: 12px;
       overflow: hidden;
-      height: 200px;
+      height: 220px;
     }
 
     .viz-iframe {
@@ -3406,8 +4267,8 @@
 
     .visual-card:hover {
       transform: translateY(-8px);
-      border-color: rgba(91, 124, 250, 0.6);
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
+      border-color: rgba(232, 99, 42, 0.6);
+      box-shadow: 0 24px 60px rgba(232, 99, 42, 0.12);
     }
 
     .visual-line {
@@ -3445,7 +4306,7 @@
 
     .visual-frame {
       position: relative;
-      min-height: 180px;
+      min-height: 210px;
       border-radius: 14px;
       overflow: hidden;
       background: rgba(255, 247, 239, 0.04);
@@ -3453,7 +4314,7 @@
 
     .visual-frame iframe {
       width: 100%;
-      height: 180px;
+      height: 210px;
       pointer-events: none;
       background: #fff;
     }
@@ -3692,6 +4553,148 @@
       padding-bottom: 118px;
     }
 
+    /* Journey "spaceship orbiting globe" */
+    #journey .journey-orbit-area {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    #journey .journey-orbit-system {
+      position: absolute;
+      left: 50%;
+      top: 44%;
+      width: min(46vw, 280px);
+      height: min(46vw, 280px);
+      transform-style: preserve-3d;
+      perspective: 1800px;
+      z-index: 3;
+      --orbit-deg: 0deg;
+      transform: translate(-50%, -50%) rotateX(75deg) rotateY(-30deg);
+    }
+
+    #journey .journey-planet {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 44%;
+      height: 44%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 28%, rgba(255, 247, 239, 0.18), transparent 42%),
+        radial-gradient(circle at 50% 50%, rgba(91, 124, 250, 0.18), transparent 58%),
+        radial-gradient(circle at 60% 70%, rgba(232, 99, 42, 0.10), transparent 55%);
+      border: 1px solid rgba(255, 247, 239, 0.10);
+      box-shadow:
+        inset 0 0 0 1px rgba(91, 124, 250, 0.10),
+        0 18px 58px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+    }
+
+    #journey .journey-satellite-orbit {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 88%;
+      height: 88%;
+      transform: translate(-50%, -50%) rotateZ(var(--orbit-deg));
+      border-radius: 50%;
+      border: 1px solid rgba(255, 247, 239, 0.14);
+      transform-style: preserve-3d;
+      pointer-events: none;
+    }
+
+    #journey .journey-satellite {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      width: 18%;
+      height: 18%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background:
+        linear-gradient(180deg, rgba(255, 247, 239, 0.92), rgba(91, 124, 250, 0.18));
+      border: 1px solid rgba(255, 247, 239, 0.18);
+      box-shadow:
+        0 16px 44px rgba(0, 0, 0, 0.30),
+        0 0 0 6px rgba(232, 99, 42, 0.08);
+    }
+
+    #journey .journey-satellite::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 10px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      transform: translateX(-50%);
+      background:
+        radial-gradient(circle, rgba(232, 99, 42, 0.95), rgba(232, 99, 42, 0.0) 62%);
+      opacity: 0.95;
+      filter: blur(0.15px);
+    }
+
+    #journey .journey-satellite.is-engaged {
+      box-shadow:
+        0 16px 44px rgba(0, 0, 0, 0.30),
+        0 0 0 7px rgba(232, 99, 42, 0.12),
+        0 0 44px rgba(232, 99, 42, 0.18);
+    }
+
+    #journey .journey-beam-svg {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+
+    #journey .journey-beam-line {
+      stroke: rgba(232, 99, 42, 0.92);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      filter: drop-shadow(0 0 12px rgba(232, 99, 42, 0.50));
+    }
+
+    #journey .journey-cord-svg {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #journey .journey-cord-path {
+      fill: none;
+      stroke: rgba(232, 99, 42, 0.95);
+      stroke-width: 6;
+      stroke-linecap: round;
+      filter: drop-shadow(0 0 14px rgba(232, 99, 42, 0.45));
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+    }
+
+    #journey .journey-cord-plug {
+      fill: rgba(232, 99, 42, 0.98);
+      stroke: rgba(255, 247, 239, 0.22);
+      stroke-width: 1.1;
+      filter: drop-shadow(0 0 10px rgba(232, 99, 42, 0.35));
+      opacity: 0.95;
+    }
+
+    #journey .journey-stop.journey-ship-active {
+      border-color: rgba(232, 99, 42, 0.32);
+      box-shadow:
+        0 22px 48px rgba(0, 0, 0, 0.10),
+        0 0 0 1px rgba(232, 99, 42, 0.18),
+        0 0 40px rgba(232, 99, 42, 0.12);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
     .journey-head {
       display: grid;
       gap: 18px;
@@ -3737,8 +4740,9 @@
     .journey-track-shell {
       overflow-x: auto;
       padding-bottom: 6px;
+      scroll-snap-type: x mandatory;
       scrollbar-width: thin;
-      scrollbar-color: rgba(91, 124, 250, 0.4) transparent;
+      scrollbar-color: rgba(232, 99, 42, 0.4) transparent;
       position: relative;
     }
 
@@ -3757,7 +4761,11 @@
       position: relative;
       min-height: 620px;
       padding: 28px;
-      background: rgba(255, 247, 239, 0.04);
+      background: rgba(255, 247, 239, 0.05);
+      border-radius: 18px;
+      border: 1px solid rgba(255, 247, 239, 0.08);
+      box-shadow: 0 22px 48px rgba(0, 0, 0, 0.12);
+      scroll-snap-align: start;
     }
 
     .journey-stop.has-node {
@@ -3807,7 +4815,7 @@
       height: 14px;
       border-radius: 50%;
       background: var(--orange);
-      box-shadow: 0 0 0 6px rgba(91, 124, 250, 0.08);
+      box-shadow: 0 0 0 6px rgba(232, 99, 42, 0.08);
       transform: scale(0.72);
       opacity: 0.7;
     }
@@ -3815,7 +4823,7 @@
     .journey-node-line {
       width: 2px;
       height: 124px;
-      background: linear-gradient(180deg, rgba(91, 124, 250, 0.98), rgba(91, 124, 250, 0.1));
+      background: linear-gradient(180deg, rgba(232, 99, 42, 0.98), rgba(232, 99, 42, 0.1));
       transform-origin: top center;
       transform: scaleY(0);
     }
@@ -3839,8 +4847,8 @@
     .timeline {
       padding: 18px;
       border-radius: 18px;
-      background: rgba(255, 247, 239, 0.04);
-      border: 1px solid rgba(255, 247, 239, 0.08);
+      background: rgba(255, 247, 239, 0.06);
+      border: 1px solid rgba(255, 247, 239, 0.12);
     }
 
     .timeline h4,
@@ -3903,9 +4911,10 @@
       max-width: 860px;
       margin: 0 auto;
       padding: 28px;
-      background: rgba(255, 255, 255, 0.78);
+      background: rgba(255, 255, 255, 0.93);
       border: 1px solid rgba(36, 50, 79, 0.08);
       box-shadow: var(--shadow-soft);
+      color: #111111;
     }
 
     .resume-actions {
@@ -4139,6 +5148,16 @@
         display: none;
       }
 
+      .skills-machine-stage {
+        min-height: 344px;
+      }
+
+      .skills-machine-cables {
+        top: 132px;
+        width: min(100%, 920px);
+        height: 500px;
+      }
+
       .skills-transition-portal {
         min-height: 328px;
       }
@@ -4221,6 +5240,10 @@
 
       .project-rail {
         right: 12px;
+      }
+
+      .project-rail-preview {
+        display: none;
       }
     }
 
@@ -4327,6 +5350,72 @@
 
       .skills-atlas {
         padding: 22px 18px 20px;
+      }
+
+      .skills-machine {
+        padding: 8px 4px 0;
+      }
+
+      .skills-machine-stage {
+        min-height: 292px;
+      }
+
+      .skills-machine-cables {
+        top: 148px;
+        width: min(100%, 420px);
+        height: 320px;
+      }
+
+      .skills-machine-cables .cable-left,
+      .skills-machine-cables .cable-right,
+      .skills-machine-cables .plug-left,
+      .skills-machine-cables .plug-right {
+        display: none;
+      }
+
+      .skills-laptop-wrap {
+        width: min(100%, 420px);
+      }
+
+      .skills-computer-rear {
+        top: 150px;
+      }
+
+      .skills-laptop-lid {
+        height: 174px;
+      }
+
+      .skills-laptop-deck {
+        height: 62px;
+        gap: 8px;
+        padding: 12px 12px 10px;
+        border-radius: 14px;
+      width: 86%;
+      }
+
+      .skills-laptop-trackpad {
+        height: 12px;
+        margin-top: 12px;
+      }
+
+      .skills-keyboard-key {
+        border-radius: 8px;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.1),
+          0 4px 12px rgba(0, 0, 0, 0.16);
+      }
+
+      .skills-laptop-shadow {
+        width: min(70%, 380px);
+        height: 34px;
+      }
+
+      .skills-screen-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .skills-laptop-base {
+        padding: 22px 18px 16px;
       }
 
       .skills-atlas-nexus {
@@ -4819,6 +5908,74 @@
       </div>
 
       <div class="skills-atlas">
+        <svg class="skills-machine-cables skills-atlas-cables" viewBox="0 0 1000 560" preserveAspectRatio="none" aria-hidden="true">
+          <path class="skills-cable-shell cable-left" d="M500 86 C 446 96, 344 136, 274 214 S 194 382, 182 470"></path>
+          <path class="skills-cable-shell cable-center" d="M500 86 C 500 156, 500 244, 500 454"></path>
+          <path class="skills-cable-shell cable-right" d="M500 86 C 554 96, 656 136, 726 214 S 806 382, 818 470"></path>
+          <path class="skills-cable-core cable-left" d="M500 86 C 446 96, 344 136, 274 214 S 194 382, 182 470"></path>
+          <path class="skills-cable-core cable-center" d="M500 86 C 500 156, 500 244, 500 454"></path>
+          <path class="skills-cable-core cable-right" d="M500 86 C 554 96, 656 136, 726 214 S 806 382, 818 470"></path>
+          <circle class="skills-cable-plug plug-left" cx="182" cy="470" r="11"></circle>
+          <circle class="skills-cable-plug plug-center" cx="500" cy="454" r="11"></circle>
+          <circle class="skills-cable-plug plug-right" cx="818" cy="470" r="11"></circle>
+        </svg>
+        <div class="skills-machine" id="laptopScene" aria-hidden="true">
+          <div class="skills-machine-stage">
+            <div class="skills-machine-glow"></div>
+            <div class="skills-laptop-wrap">
+              <div class="skills-laptop" id="skillsLaptop">
+                <div class="skills-computer-rear">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="skills-laptop-lid" id="laptopLid">
+                  <div class="skills-laptop-screen skills-computer-screen">
+                    <div class="skills-screen-flicker"></div>
+                    <div class="skills-screen-noise"></div>
+                    <div class="skills-screen-ui">
+                      <div class="skills-screen-topbar">
+                        <span>Root Chamber</span>
+                        <div class="skills-screen-dots"><span></span><span></span><span></span></div>
+                      </div>
+                      <div class="skills-screen-status">Voltage Feed</div>
+                      <div class="skills-screen-vault-line"></div>
+                      <div class="skills-screen-grid">
+                        <article class="skills-screen-card">
+                          <small>Root 01</small>
+                          <strong>Data Engineering</strong>
+                          <em>Ingest / clean / route</em>
+                          <span class="skills-card-socket" aria-hidden="true"></span>
+                          <div class="skills-screen-root-content" aria-hidden="true"></div>
+                        </article>
+                        <article class="skills-screen-card">
+                          <small>Root 02</small>
+                          <strong>Data Science</strong>
+                          <em>Model / test / tune</em>
+                          <span class="skills-card-socket" aria-hidden="true"></span>
+                          <div class="skills-screen-root-content" aria-hidden="true"></div>
+                        </article>
+                        <article class="skills-screen-card">
+                          <small>Root 03</small>
+                          <strong>Data Analysis</strong>
+                          <em>Frame / show / explain</em>
+                          <span class="skills-card-socket" aria-hidden="true"></span>
+                          <div class="skills-screen-root-content" aria-hidden="true"></div>
+                        </article>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="skills-laptop-base skills-computer-base">
+                  <div class="skills-laptop-deck" aria-hidden="true">
+                    <span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span>
+                    <span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span><span class="skills-keyboard-key"></span>
+                  </div>
+                  <span class="skills-laptop-trackpad"></span>
+                </div>
+              </div>
+              <div class="skills-laptop-shadow"></div>
+            </div>
+          </div>
+        </div>
         <div class="skills-atlas-nexus">
           <p class="section-kicker">Skills Architecture</p>
           <h3>Three roots feed the whole portfolio.</h3>
@@ -4826,6 +5983,7 @@
         </div>
         <div class="skills-atlas-branches">
           <article class="skills-branch branch-engineering">
+            <span class="skills-card-socket" aria-hidden="true"></span>
             <p class="section-kicker">Root 01</p>
             <h3>Data Engineering</h3>
             <p>Used to ingest, clean, structure, and route data so the rest of the work has dependable inputs.</p>
@@ -4839,6 +5997,7 @@
             </div>
           </article>
           <article class="skills-branch branch-science">
+            <span class="skills-card-socket" aria-hidden="true"></span>
             <p class="section-kicker">Root 02</p>
             <h3>Data Science</h3>
             <p>Used to build models, test assumptions, engineer features, and measure whether predictions are actually working.</p>
@@ -4852,6 +6011,7 @@
             </div>
           </article>
           <article class="skills-branch branch-analysis">
+            <span class="skills-card-socket" aria-hidden="true"></span>
             <p class="section-kicker">Root 03</p>
             <h3>Data Analysis</h3>
             <p>Used to explore patterns, shape dashboards, and communicate results in forms a recruiter or teammate can read quickly.</p>
@@ -4873,6 +6033,7 @@
         </div>
         <article class="bento-card skills-root-card branch-engineering">
           <p class="section-kicker">Data Engineering</p>
+          <span class="skills-card-socket" aria-hidden="true"></span>
           <h3>The engineering spine that everything else depends on.</h3>
           <p>When projects need reliable inputs, structure, or a usable route into an app or dashboard, this is the layer doing the work.</p>
           <div class="skills-showcase skills-pipeline-showcase">
@@ -4923,6 +6084,7 @@
 
         <article class="bento-card skills-root-card branch-science">
           <p class="section-kicker">Data Science</p>
+          <span class="skills-card-socket" aria-hidden="true"></span>
           <h3>Modeling sits in the middle and pulls signal out of the cleaned data.</h3>
           <p>This branch covers the parts of the portfolio where the goal is prediction, classification, experimentation, and measured performance.</p>
           <div class="skills-showcase skills-lab-showcase">
@@ -4981,6 +6143,7 @@
 
         <article class="bento-card skills-root-card branch-analysis">
           <p class="section-kicker">Data Analysis</p>
+          <span class="skills-card-socket" aria-hidden="true"></span>
           <h3>The analysis side turns technical work into dashboards, stories, and decisions.</h3>
           <p>This is the branch that makes results legible: dashboards, semantic models, maps, charts, and the framing around what matters.</p>
           <div class="skills-showcase skills-insight-showcase">
@@ -5101,6 +6264,12 @@
             Website</span></a>
         <a href="#project-sentiment" data-project="sentiment"><span class="rail-bar" aria-hidden="true"></span><span class="sr-only">News Sentiment Analysis</span></a>
       </nav>
+
+      <div id="projectRailPreview" class="project-rail-preview is-visible" aria-hidden="true">
+        <div class="project-rail-preview-title"></div>
+        <p class="project-rail-preview-summary"></p>
+        <div class="project-rail-preview-metrics"></div>
+      </div>
 
       <div class="project-stack">
         <article class="project-section" id="project-fraud" data-project-section="fraud">
@@ -5439,12 +6608,133 @@
               </div>
             </div>
           </article>
+          <!-- D3 Visualization Cards -->
+          <article class="visual-card d3-card">
+            <div class="visual-line"></div>
+            <div class="visual-card-body">
+              <span class="visual-label">United States GDP Growth Dynamics</span>
+              <div class="tag-row">
+                <span class="gallery-tag">D3.js</span>
+                <span class="gallery-tag">Time Series</span>
+                <span class="gallery-tag">SVG</span>
+              </div>
+              <div class="viz-frame-wrap">
+                <iframe data-src="projects/web/visualizations/bar_chart.html" class="viz-iframe" loading="lazy"
+                  title="US GDP Growth Dynamics"
+                  onerror="this.closest('.viz-frame-wrap').innerHTML='<div class=viz-fallback><span>Coming Soon</span></div>'"></iframe>
+                <div class="viz-hover-overlay"><span>Open Visualization →</span></div>
+              </div>
+              <a class="project-open viz-open" href="projects/web/visualizations/bar_chart.html" target="_blank"
+                rel="noopener noreferrer">Open Visualization</a>
+            </div>
+          </article>
+
+          <article class="visual-card d3-card">
+            <div class="visual-line"></div>
+            <div class="visual-card-body">
+              <span class="visual-label">Doping in Professional Cycling</span>
+              <div class="tag-row">
+                <span class="gallery-tag">D3.js</span>
+                <span class="gallery-tag">Scatter</span>
+                <span class="gallery-tag">EDA</span>
+              </div>
+              <div class="viz-frame-wrap">
+                <iframe data-src="projects/web/visualizations/scatter_plot.html" class="viz-iframe" loading="lazy"
+                  title="Doping in Cycling"
+                  onerror="this.closest('.viz-frame-wrap').innerHTML='<div class=viz-fallback><span>Coming Soon</span></div>'"></iframe>
+                <div class="viz-hover-overlay"><span>Open Visualization →</span></div>
+              </div>
+              <a class="project-open viz-open" href="projects/web/visualizations/scatter_plot.html" target="_blank"
+                rel="noopener noreferrer">Open Visualization</a>
+            </div>
+          </article>
+
+          <article class="visual-card d3-card">
+            <div class="visual-line"></div>
+            <div class="visual-card-body">
+              <span class="visual-label">Global Temperature Heatmap</span>
+              <div class="tag-row">
+                <span class="gallery-tag">D3.js</span>
+                <span class="gallery-tag">Heatmap</span>
+                <span class="gallery-tag">Climate</span>
+              </div>
+              <div class="viz-frame-wrap">
+                <iframe data-src="projects/web/visualizations/heatmap.html" class="viz-iframe" loading="lazy"
+                  title="Global Temperature Heatmap"
+                  onerror="this.closest('.viz-frame-wrap').innerHTML='<div class=viz-fallback><span>Coming Soon</span></div>'"></iframe>
+                <div class="viz-hover-overlay"><span>Open Visualization →</span></div>
+              </div>
+              <a class="project-open viz-open" href="projects/web/visualizations/heatmap.html" target="_blank"
+                rel="noopener noreferrer">Open Visualization</a>
+            </div>
+          </article>
+
+          <article class="visual-card d3-card">
+            <div class="visual-line"></div>
+            <div class="visual-card-body">
+              <span class="visual-label">Cincinnati Food Access Map</span>
+              <div class="tag-row">
+                <span class="gallery-tag">D3.js</span>
+                <span class="gallery-tag">GeoJSON</span>
+                <span class="gallery-tag">Choropleth</span>
+              </div>
+              <div class="viz-frame-wrap">
+                <iframe data-src="projects/web/visualizations/choropleth_map.html" class="viz-iframe" loading="lazy"
+                  title="Cincinnati Food Access"
+                  onerror="this.closest('.viz-frame-wrap').innerHTML='<div class=viz-fallback><span>Coming Soon</span></div>'"></iframe>
+                <div class="viz-hover-overlay"><span>Open Visualization →</span></div>
+              </div>
+              <a class="project-open viz-open" href="projects/web/visualizations/choropleth_map.html" target="_blank"
+                rel="noopener noreferrer">Open Visualization</a>
+            </div>
+          </article>
+
+          <article class="visual-card d3-card">
+            <div class="visual-line"></div>
+            <div class="visual-card-body">
+              <span class="visual-label">Multi-Dataset Treemap Dashboard</span>
+              <div class="tag-row">
+                <span class="gallery-tag">D3.js</span>
+                <span class="gallery-tag">Hierarchical</span>
+                <span class="gallery-tag">Dynamic</span>
+              </div>
+              <div class="viz-frame-wrap">
+                <iframe data-src="projects/web/visualizations/treemap.html" class="viz-iframe" loading="lazy"
+                  title="Treemap Dashboard"
+                  onerror="this.closest('.viz-frame-wrap').innerHTML='<div class=viz-fallback><span>Coming Soon</span></div>'"></iframe>
+                <div class="viz-hover-overlay"><span>Open Visualization →</span></div>
+              </div>
+              <a class="project-open viz-open" href="projects/web/visualizations/treemap.html" target="_blank"
+                rel="noopener noreferrer">Open Visualization</a>
+            </div>
+          </article>
+
+          <article class="visual-card d3-card">
+            <div class="visual-line"></div>
+            <div class="visual-card-body">
+              <span class="visual-label">Cincinnati Food Deserts</span>
+              <div class="tag-row">
+                <span class="gallery-tag">D3.js</span>
+                <span class="gallery-tag">Map</span>
+                <span class="gallery-tag">Access</span>
+              </div>
+              <div class="viz-frame-wrap">
+                <iframe data-src="projects/web/visualizations/food_deserts.html" class="viz-iframe" loading="lazy"
+                  title="Cincinnati Food Deserts"
+                  onerror="this.closest('.viz-frame-wrap').innerHTML='<div class=viz-fallback><span>Coming Soon</span></div>'"></iframe>
+                <div class="viz-hover-overlay"><span>Open Visualization →</span></div>
+              </div>
+              <a class="project-open viz-open" href="projects/web/visualizations/food_deserts.html" target="_blank"
+                rel="noopener noreferrer">Open Visualization</a>
+            </div>
+          </article>
+
           <article class="visual-card">
             <div class="visual-line"></div>
             <div class="visual-card-body">
               <h3>United States GDP Growth Dynamics</h3>
               <div class="visual-frame">
-                <iframe src="projects/web/visualizations/bar_chart.html" title="United States GDP Growth Dynamics"
+                <iframe data-src="projects/web/visualizations/bar_chart.html" title="United States GDP Growth Dynamics"
                   loading="lazy"></iframe>
                 <div class="viz-fallback" hidden>Coming Soon</div>
               </div>
@@ -5463,7 +6753,7 @@
             <div class="visual-card-body">
               <h3>Doping in Professional Cycling</h3>
               <div class="visual-frame">
-                <iframe src="projects/web/visualizations/scatter_plot.html" title="Doping in Professional Cycling"
+                <iframe data-src="projects/web/visualizations/scatter_plot.html" title="Doping in Professional Cycling"
                   loading="lazy"></iframe>
                 <div class="viz-fallback" hidden>Coming Soon</div>
               </div>
@@ -5482,7 +6772,7 @@
             <div class="visual-card-body">
               <h3>Global Temperature Heatmap</h3>
               <div class="visual-frame">
-                <iframe src="projects/web/visualizations/heatmap.html" title="Global Temperature Heatmap"
+                <iframe data-src="projects/web/visualizations/heatmap.html" title="Global Temperature Heatmap"
                   loading="lazy"></iframe>
                 <div class="viz-fallback" hidden>Coming Soon</div>
               </div>
@@ -5501,7 +6791,7 @@
             <div class="visual-card-body">
               <h3>Cincinnati Food Access Map</h3>
               <div class="visual-frame">
-                <iframe src="projects/web/visualizations/choropleth_map.html" title="Cincinnati Food Access Map"
+                <iframe data-src="projects/web/visualizations/choropleth_map.html" title="Cincinnati Food Access Map"
                   loading="lazy"></iframe>
                 <div class="viz-fallback" hidden>Coming Soon</div>
               </div>
@@ -5520,7 +6810,7 @@
             <div class="visual-card-body">
               <h3>Multi-Dataset Treemap Dashboard</h3>
               <div class="visual-frame">
-                <iframe src="projects/web/visualizations/treemap.html" title="Multi-Dataset Treemap Dashboard"
+                <iframe data-src="projects/web/visualizations/treemap.html" title="Multi-Dataset Treemap Dashboard"
                   loading="lazy"></iframe>
                 <div class="viz-fallback" hidden>Coming Soon</div>
               </div>
@@ -5539,7 +6829,7 @@
             <div class="visual-card-body">
               <h3>Cincinnati Food Deserts</h3>
               <div class="visual-frame">
-                <iframe src="projects/web/visualizations/food_deserts.html" title="Cincinnati Food Deserts"
+                <iframe data-src="projects/web/visualizations/food_deserts.html" title="Cincinnati Food Deserts"
                   loading="lazy"></iframe>
                 <div class="viz-fallback" hidden>Coming Soon</div>
               </div>
@@ -5560,6 +6850,21 @@
       <div class="journey-ambient" aria-hidden="true">
         <div class="orb orb-a"></div>
         <div class="orb orb-b"></div>
+        <div class="journey-orbit-area" aria-hidden="true">
+          <div class="journey-orbit-system" aria-hidden="true">
+            <div class="journey-satellite-orbit">
+              <div class="journey-satellite" aria-hidden="true"></div>
+            </div>
+            <div class="journey-planet" aria-hidden="true"></div>
+          </div>
+          <svg class="journey-beam-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <line class="journey-beam-line" x1="50" y1="50" x2="50" y2="50"></line>
+          </svg>
+          <svg class="journey-cord-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <path class="journey-cord-path" d="M 50 50 Q 50 50 50 50"></path>
+            <circle class="journey-cord-plug" cx="50" cy="50" r="2.1"></circle>
+          </svg>
+        </div>
       </div>
       <div class="section-shell">
         <div class="journey-head">
@@ -5619,127 +6924,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-          </article>
-
-          <!-- D3 Visualization Cards -->
-          <article class="visual-card d3-card">
-            <div class="visual-line"></div>
-            <div class="visual-card-body">
-              <span class="visual-label">United States GDP Growth Dynamics</span>
-              <div class="tag-row">
-                <span class="gallery-tag">D3.js</span>
-                <span class="gallery-tag">Time Series</span>
-                <span class="gallery-tag">SVG</span>
-              </div>
-              <div class="viz-frame-wrap">
-                <iframe src="projects/web/visualizations/bar_chart.html" class="viz-iframe" loading="lazy"
-                  title="US GDP Growth Dynamics"
-                  onerror="this.closest('.viz-frame-wrap').innerHTML='<div class=viz-fallback><span>Coming Soon</span></div>'"></iframe>
-                <div class="viz-hover-overlay"><span>Open Visualization →</span></div>
-              </div>
-              <a class="project-open viz-open" href="projects/web/visualizations/bar_chart.html" target="_blank"
-                rel="noopener noreferrer">Open Visualization</a>
-            </div>
-          </article>
-
-          <article class="visual-card d3-card">
-            <div class="visual-line"></div>
-            <div class="visual-card-body">
-              <span class="visual-label">Doping in Professional Cycling</span>
-              <div class="tag-row">
-                <span class="gallery-tag">D3.js</span>
-                <span class="gallery-tag">Scatter</span>
-                <span class="gallery-tag">EDA</span>
-              </div>
-              <div class="viz-frame-wrap">
-                <iframe src="projects/web/visualizations/scatter_plot.html" class="viz-iframe" loading="lazy"
-                  title="Doping in Cycling"
-                  onerror="this.closest('.viz-frame-wrap').innerHTML='<div class=viz-fallback><span>Coming Soon</span></div>'"></iframe>
-                <div class="viz-hover-overlay"><span>Open Visualization →</span></div>
-              </div>
-              <a class="project-open viz-open" href="projects/web/visualizations/scatter_plot.html" target="_blank"
-                rel="noopener noreferrer">Open Visualization</a>
-            </div>
-          </article>
-
-          <article class="visual-card d3-card">
-            <div class="visual-line"></div>
-            <div class="visual-card-body">
-              <span class="visual-label">Global Temperature Heatmap</span>
-              <div class="tag-row">
-                <span class="gallery-tag">D3.js</span>
-                <span class="gallery-tag">Heatmap</span>
-                <span class="gallery-tag">Climate</span>
-              </div>
-              <div class="viz-frame-wrap">
-                <iframe src="projects/web/visualizations/heatmap.html" class="viz-iframe" loading="lazy"
-                  title="Global Temperature Heatmap"
-                  onerror="this.closest('.viz-frame-wrap').innerHTML='<div class=viz-fallback><span>Coming Soon</span></div>'"></iframe>
-                <div class="viz-hover-overlay"><span>Open Visualization →</span></div>
-              </div>
-              <a class="project-open viz-open" href="projects/web/visualizations/heatmap.html" target="_blank"
-                rel="noopener noreferrer">Open Visualization</a>
-            </div>
-          </article>
-
-          <article class="visual-card d3-card">
-            <div class="visual-line"></div>
-            <div class="visual-card-body">
-              <span class="visual-label">Cincinnati Food Access Map</span>
-              <div class="tag-row">
-                <span class="gallery-tag">D3.js</span>
-                <span class="gallery-tag">GeoJSON</span>
-                <span class="gallery-tag">Choropleth</span>
-              </div>
-              <div class="viz-frame-wrap">
-                <iframe src="projects/web/visualizations/choropleth_map.html" class="viz-iframe" loading="lazy"
-                  title="Cincinnati Food Access"
-                  onerror="this.closest('.viz-frame-wrap').innerHTML='<div class=viz-fallback><span>Coming Soon</span></div>'"></iframe>
-                <div class="viz-hover-overlay"><span>Open Visualization →</span></div>
-              </div>
-              <a class="project-open viz-open" href="projects/web/visualizations/choropleth_map.html" target="_blank"
-                rel="noopener noreferrer">Open Visualization</a>
-            </div>
-          </article>
-
-          <article class="visual-card d3-card">
-            <div class="visual-line"></div>
-            <div class="visual-card-body">
-              <span class="visual-label">Multi-Dataset Treemap Dashboard</span>
-              <div class="tag-row">
-                <span class="gallery-tag">D3.js</span>
-                <span class="gallery-tag">Hierarchical</span>
-                <span class="gallery-tag">Dynamic</span>
-              </div>
-              <div class="viz-frame-wrap">
-                <iframe src="projects/web/visualizations/treemap.html" class="viz-iframe" loading="lazy"
-                  title="Treemap Dashboard"
-                  onerror="this.closest('.viz-frame-wrap').innerHTML='<div class=viz-fallback><span>Coming Soon</span></div>'"></iframe>
-                <div class="viz-hover-overlay"><span>Open Visualization →</span></div>
-              </div>
-              <a class="project-open viz-open" href="projects/web/visualizations/treemap.html" target="_blank"
-                rel="noopener noreferrer">Open Visualization</a>
-            </div>
-          </article>
-
-          <article class="visual-card d3-card">
-            <div class="visual-line"></div>
-            <div class="visual-card-body">
-              <span class="visual-label">Cincinnati Food Deserts</span>
-              <div class="tag-row">
-                <span class="gallery-tag">D3.js</span>
-                <span class="gallery-tag">Map</span>
-                <span class="gallery-tag">Access</span>
-              </div>
-              <div class="viz-frame-wrap">
-                <iframe src="projects/web/visualizations/food_deserts.html" class="viz-iframe" loading="lazy"
-                  title="Cincinnati Food Deserts"
-                  onerror="this.closest('.viz-frame-wrap').innerHTML='<div class=viz-fallback><span>Coming Soon</span></div>'"></iframe>
-                <div class="viz-hover-overlay"><span>Open Visualization →</span></div>
-              </div>
-              <a class="project-open viz-open" href="projects/web/visualizations/food_deserts.html" target="_blank"
-                rel="noopener noreferrer">Open Visualization</a>
             </div>
           </article>
 
@@ -6004,37 +7188,54 @@
   <script>
     (function () {
       const shell = document.querySelector('.pb-shell');
-      if (shell) shell.classList.add('powerbi-shell-embed');
-
       const container = document.getElementById('powerbiReportContainer');
       if (!container) return;
 
-      const cfg = window.powerbiEmbedConfig;
-      if (!cfg || !cfg.embedUrl || !cfg.reportId || !cfg.accessToken) return;
+      const embedNow = () => {
+        if (shell) shell.classList.add('powerbi-shell-embed');
 
-      const models = window['powerbi-client']?.models;
-      if (!models) return;
+        const cfg = window.powerbiEmbedConfig;
+        if (!cfg || !cfg.embedUrl || !cfg.reportId || !cfg.accessToken) return;
 
-      const service = window.powerbi;
-      if (!service) return;
+        const models = window['powerbi-client']?.models;
+        if (!models) return;
 
-      const embedConfig = {
-        type: 'report',
-        id: cfg.reportId,
-        embedUrl: cfg.embedUrl,
-        accessToken: cfg.accessToken,
-        tokenType: models.TokenType.Embed,
-        settings: Object.assign(
-          {
-            panes: { filters: { visible: false }, pageNavigation: { visible: true } },
-            background: models.BackgroundType.Transparent,
-          },
-          cfg.settings || {}
-        )
+        const service = window.powerbi;
+        if (!service) return;
+
+        const embedConfig = {
+          type: 'report',
+          id: cfg.reportId,
+          embedUrl: cfg.embedUrl,
+          accessToken: cfg.accessToken,
+          tokenType: models.TokenType.Embed,
+          settings: Object.assign(
+            {
+              panes: { filters: { visible: false }, pageNavigation: { visible: true } },
+              background: models.BackgroundType.Transparent,
+            },
+            cfg.settings || {}
+          )
+        };
+
+        const report = service.embed(container, embedConfig);
+        report && report.off && report.off('loaded');
       };
 
-      const report = service.embed(container, embedConfig);
-      report && report.off && report.off('loaded');
+      if (!('IntersectionObserver' in window)) {
+        embedNow();
+        return;
+      }
+
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          embedNow();
+          io.disconnect();
+        });
+      }, { rootMargin: '300px 0px', threshold: 0.01 });
+
+      io.observe(container);
     })();
   </script>
 </body>
