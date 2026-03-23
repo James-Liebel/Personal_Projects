@@ -5,6 +5,7 @@ const path = require("path");
 const ROOT = path.resolve(__dirname);
 const PORT = 3000;
 
+/** Serves the full monorepo from the repo root so `index.html` and every other path (notebooks, subprojects, etc.) work when linked. */
 const MIME = {
   ".html": "text/html; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
@@ -15,6 +16,13 @@ const MIME = {
   ".mp4": "video/mp4",
   ".json": "application/json; charset=utf-8",
   ".mjs": "text/javascript; charset=utf-8",
+  ".pbix": "application/octet-stream",
+  ".woff2": "font/woff2",
+  ".ipynb": "application/json; charset=utf-8",
+  ".md": "text/markdown; charset=utf-8",
+  ".py": "text/x-python; charset=utf-8",
+  ".txt": "text/plain; charset=utf-8",
+  ".csv": "text/csv; charset=utf-8",
 };
 
 function send404(res) {
@@ -61,5 +69,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`http://localhost:${PORT} — monorepo (repo root)`);
 });

@@ -64,9 +64,9 @@ Various models including Image Classification, Fraud Detection, and Housing Pric
    jupyter notebook
    ```
 
-### 🌐 Web & Resume
-- **Resume:** Located at `projects/web/resume.html`.
-- **Interactive portfolio (`index.html`):** From the repo root run `npm install` once, then `npm start` and open **http://localhost:3000**. Animation scripts load from `projects/web/vendor/` (no CDN required for GSAP / Lenis / Power BI embed client).
+### Deployment (full monorepo)
+- **Local:** `npm install` then `npm start` → **http://localhost:3000** serves the whole repo; `/` is root `index.html`.
+- **GitHub Pages:** Repo **Settings → Pages → Build: GitHub Actions**. The workflow ships the full tree (excludes `.git`, `node_modules`, `.venv`, `__pycache__`, `.cursor` to keep the upload small).
 
 ### 🎮 Games
 - **Traffic Simulator:** located at `projects/games/traffic_simulator.ipynb`.
