@@ -34,8 +34,8 @@ const server = http.createServer((req, res) => {
   try {
     const pathname = decodeURIComponent(new URL(req.url, `http://${req.headers.host}`).pathname);
     let rel = pathname.replace(/^\/+/, "");
-    if (rel === "") {
-      rel = "index.html";
+    if (rel === "" || rel === "index.html") {
+      rel = "projects/web/index.html";
     }
     rel = path.normalize(rel).replace(/^(\.\.(\/|\\))+/, "");
 

@@ -1,5 +1,7 @@
 # Personal Data Science & Engineering Portfolio
 
+Monorepo layout: the **interactive portfolio** lives at **`projects/web/index.html`** (scripts, vendor, D3, Power BI assets are alongside it). Repo-root **`index.html`** redirects there so `/` on GitHub Pages still lands on the portfolio. Everything else stays under **`projects/`** (ML, games, tools, etc.).
+
 Welcome to my personal portfolio repository. This collection houses a diverse range of projects spanning machine learning, game development, web visualization, and utility tools.
 
 ## 📂 Project Structure
@@ -65,8 +67,9 @@ Various models including Image Classification, Fraud Detection, and Housing Pric
    ```
 
 ### Deployment (full monorepo)
-- **Local:** `npm install` then `npm start` → **http://localhost:3000** serves the whole repo; `/` is root `index.html`.
-- **GitHub Pages:** Repo **Settings → Pages → Build: GitHub Actions**. The workflow ships the full tree (excludes `.git`, `node_modules`, `.venv`, `__pycache__`, `.cursor` to keep the upload small).
+- **Portfolio URL:** **`/projects/web/`** (or **`/projects/web/index.html`**). Root **`/`** redirects there via repo-root `index.html`.
+- **Local:** `npm install` then `npm start` → **http://localhost:3000** serves the repo; **`/`** is mapped to **`projects/web/index.html`** so it matches the canonical location.
+- **GitHub Pages:** **Settings → Pages → GitHub Actions**. Workflow deploys the full tree (excludes `.git`, `node_modules`, `.venv`, `__pycache__`, `.cursor`).
 
 ### 🎮 Games
 - **Traffic Simulator:** located at `projects/games/traffic_simulator.ipynb`.
