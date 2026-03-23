@@ -1,0 +1,29 @@
+# Keep Cursor Composer scoped to the portfolio site instead of the full Personal_Projects repo.
+*
+!.cursorignore
+!.vscode/
+!.vscode/**
+!.gitattributes
+!.gitignore
+!README.md
+!index.html
+!package.json
+!package-lock.json
+!server.js
+!start_site.cmd
+!start_site.ps1
+!scripts/
+!scripts/**
+!projects/
+!projects/web/
+!projects/web/**
+!tests/
+!tests/**
+
+# Re-ignore heavyweight or generated content even inside the allowed app surface.
+projects/web/visualizations/node_modules/
+projects/web/**/*.jpg
+projects/web/**/*.jpeg
+projects/web/**/*.png
+projects/web/**/*.mp4
+projects/web/**/*.pbix

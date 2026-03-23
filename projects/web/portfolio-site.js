@@ -1,6 +1,10 @@
 (() => {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const preloader = document.getElementById("preloader");
+  if (reduced) {
+    document.getElementById("intro-canvas")?.remove();
+    document.getElementById("introSkip")?.remove();
+    document.getElementById("intro-poster")?.remove();
+  }
   const siteNav = document.getElementById("siteNav");
   const scrollProgress = document.getElementById("scroll-progress");
   const brandBadges = [...document.querySelectorAll(".brand-badge")];
@@ -46,6 +50,39 @@
   const resumePanel = document.querySelector(".resume-panel");
   const footer = document.querySelector(".site-footer");
   const pdfButtons = [document.getElementById("pdfBtn")].filter(Boolean);
+  const themeToggle = document.getElementById("themeToggle");
+
+  function applyStoredTheme() {
+    try {
+      const stored = localStorage.getItem("portfolio-theme");
+      if (stored === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+      } else {
+        document.documentElement.removeAttribute("data-theme");
+      }
+      if (themeToggle) {
+        themeToggle.setAttribute("aria-pressed", stored === "light" ? "true" : "false");
+      }
+    } catch {
+      /* ignore */
+    }
+  }
+
+  applyStoredTheme();
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      const isLight = document.documentElement.getAttribute("data-theme") === "light";
+      if (isLight) {
+        document.documentElement.removeAttribute("data-theme");
+        localStorage.setItem("portfolio-theme", "dark");
+        themeToggle.setAttribute("aria-pressed", "false");
+      } else {
+        document.documentElement.setAttribute("data-theme", "light");
+        localStorage.setItem("portfolio-theme", "light");
+        themeToggle.setAttribute("aria-pressed", "true");
+      }
+    });
+  }
 
   const modeData = {
     builder: {
@@ -96,6 +133,7 @@
   let heroWordTimer = null;
   let heroTypeTimer = null;
   let heroMotionStarted = false;
+  let heroWordCycleStarted = false;
   let journeyScrollTrigger = null;
 
   function animateCountUpItem(item, duration = 1.4) {
@@ -1430,6 +1468,8 @@
 
   function setupJourneyMotion() {
     if (reduced || !window.gsap || !window.ScrollTrigger || !journey || !journeyTrack || !journeyStops.length) return;
+    // Rebuilt site: rocket canvas scrub zone handles journey intro; avoid conflicting pin.
+    if (document.getElementById("journey-rocket-zone")) return;
     if (window.innerWidth <= 768) {
       journey.classList.remove("journey-motion-active");
       journeyScrollTrigger = null;
@@ -2089,11 +2129,65 @@
       .from(pillItems, { opacity: 0, y: 14, stagger: 0.07, duration: 0.38 }, "-=0.2")
       .from("#heroTerminal", { opacity: 0, x: 80, scale: 0.96, duration: 0.9, ease: "power3.out", onComplete: typeSignalBody }, 0.35);
 
-    setupHeroWordCycle();
+    if (!heroWordCycleStarted) {
+      heroWordCycleStarted = true;
+      setupHeroWordCycle();
+    }
   }
 
+  /** Run full hero entrance in final state (for desktop intro: layout resolves under the canvas before crossfade). */
+  function startHeroMotionInstantFinal() {
+    if (heroMotionStarted || !window.gsap) return;
+    heroMotionStarted = true;
+    setupHeroGrain();
+    setupHeroParallax();
+    splitHeadlineWords();
+
+    const { gsap } = window;
+    const pillItems = heroPills ? heroPills.querySelectorAll(".pill") : [];
+    const activeMode =
+      modeButtons.find(button => button.classList.contains("active"))?.dataset.mode || "builder";
+    const bodyFallback = modeData[activeMode]?.body ?? signalBody?.textContent ?? "";
+
+    gsap.set(".eyebrow", { opacity: 1, y: 0 });
+    gsap.set(".hw", { y: "0%", opacity: 1 });
+    gsap.set(".summary", { opacity: 1, y: 0 });
+    gsap.set(pillItems, { opacity: 1, y: 0 });
+    gsap.set("#heroTerminal", { opacity: 1, x: 0, scale: 1 });
+    if (signalBody) {
+      signalBody.textContent = bodyFallback;
+    }
+    movePillIndicator(modeIndicator, document.querySelector(".switch button.active"), false);
+    window.__heroIntroHandoff = true;
+  }
+
+  function prepareHeroUnderIntroCanvas() {}
+
   function initHeroEntrance() {
-    startHeroMotion();
+    if (window.__portfolioIntroExitHandled) {
+      if (!heroMotionStarted) {
+        heroMotionStarted = true;
+        setupHeroGrain();
+        setupHeroParallax();
+        splitHeadlineWords();
+        startHeroMotionInstantFinal();
+      }
+      if (!heroWordCycleStarted) {
+        heroWordCycleStarted = true;
+        setupHeroWordCycle();
+      }
+      window.dispatchEvent(new Event("portfolio-hero-ready"));
+      return;
+    }
+    if (heroMotionStarted) {
+      if (!heroWordCycleStarted) {
+        heroWordCycleStarted = true;
+        setupHeroWordCycle();
+      }
+    } else {
+      startHeroMotion();
+    }
+    window.dispatchEvent(new Event("portfolio-hero-ready"));
   }
 
   function setupVizFallbacks() {
@@ -2240,15 +2334,41 @@
     gsapScrollProgress = true;
   }
 
+  /** Called from intro handoff so the home view is always at scroll top (Lenis + native fallback). */
+  window.portfolioForceScrollTop = function portfolioForceScrollTop() {
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+  };
+
   function setupPreloader() {
-    if (!preloader) {
+    const finish = () => {
       initHeroEntrance();
+    };
+
+    const desktopIntro =
+      !reduced &&
+      document.getElementById("intro-canvas") &&
+      !window.matchMedia("(max-width: 767px)").matches;
+
+    // Desktop canvas intro: hero resolves to final layout under the intro before crossfade (see index.html timers).
+    if (desktopIntro) {
+      prepareHeroUnderIntroCanvas();
+      window.addEventListener("intro-complete", finish, { once: true });
       return;
     }
-    // Safety: bypass preloader visuals entirely and go straight to hero
-    preloader.classList.add("is-done");
-    preloader.style.pointerEvents = "none";
-    initHeroEntrance();
+
+    // Mobile poster / no intro canvas: wait for intro-complete if poster path still runs.
+    if (!reduced && document.getElementById("intro-poster")) {
+      window.addEventListener("intro-complete", finish, { once: true });
+      return;
+    }
+
+    finish();
   }
 
   function setupCustomCursor() {
@@ -2394,8 +2514,6 @@
     setupCustomCursor();
     setupMicroInteractions();
     setupScrollReveals();
-  } else if (preloader) {
-    preloader.classList.add("is-done");
   }
 
   updateProgress();
@@ -2404,4 +2522,7 @@
   updateProjectRail("project-fraud");
   updateJourneyRail("overview");
   movePillIndicator(modeIndicator, document.querySelector(".switch button.active"));
+
+  window.__portfolioShellReady = true;
+  window.dispatchEvent(new Event("portfolio-shell-ready"));
 })();

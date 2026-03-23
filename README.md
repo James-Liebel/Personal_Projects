@@ -66,6 +66,7 @@ Various models including Image Classification, Fraud Detection, and Housing Pric
 
 ### 🌐 Web & Resume
 - **Resume:** Located at `projects/web/resume.html`.
+- **Interactive portfolio (`index.html`):** From the repo root run `npm install` once, then `npm start` and open **http://localhost:3000**. Animation scripts load from `projects/web/vendor/` (no CDN required for GSAP / Lenis / Power BI embed client).
 
 ### 🎮 Games
 - **Traffic Simulator:** located at `projects/games/traffic_simulator.ipynb`.

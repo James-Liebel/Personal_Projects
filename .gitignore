@@ -29,3 +29,14 @@ projects/tools/click_typer/
 .bash_history
 .git-credentials
 %USERPROFILE%
+
+# Local runtime and archive clutter that slows editor/git scans
+.tmp/
+.jupyter_runtime/
+globe/
+intro/
+rockets/
+servers/
+*.zip
+notebook_execution_report.txt
+portfolio-site/
